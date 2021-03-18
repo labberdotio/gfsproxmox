@@ -3,3 +3,6 @@ proxmoxer==1.2.0b1
 requests
 paramiko
 openssh_wrapper
+
+# 
+python-graphql-client

@@ -1,0 +1,36 @@
+
+> pipenv shell
+
+> pip install -r ./requirements.txt
+> python subscription.py
+
+output:
+
+ New Machine event: 
+ Event: create_node
+ Chain: []
+{
+	'event': 'create_node',
+	'chain': [],
+	'node': {
+		'id': '68',
+		'name': 'botnode11',
+		'arch': 'x86_64',
+		'cpus': '1',
+		'cores': '2',
+		'memory': '4096',
+		'ht': 'ht',
+		'Configured': [{
+			'id': '69',
+			'name': 'net6E:C6:6C:28:6F:EE',
+			'hwaddr': '6E:C6:6C:28:6F:EE',
+			'AssignedTo': [{
+				'id': '70',
+				'name': 'devIp10.88.88.202',
+				'address': '10.88.88.202'
+			}]
+		}]
+	}
+}
+
+...
