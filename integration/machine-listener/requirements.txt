@@ -1,6 +1,16 @@
-flask
-proxmoxer==1.2.0b1
+
+six==1.11.0
 requests
+
+# flask
+flask==1.0.2
+flask_socketio
+python-engineio
+python-socketio
+werkzeug==0.14.1
+
+proxmoxer==1.2.0b1
+
 paramiko
 openssh_wrapper
 

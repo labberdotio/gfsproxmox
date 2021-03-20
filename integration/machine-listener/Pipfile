@@ -8,9 +8,15 @@ verify_ssl = true
 [packages]
 proxmoxer = "==1.2.0b1"
 requests = "*"
+python-graphql-client = "*"
+six = "==1.11.0"
+python-engineio = "*"
+python-socketio = "*"
 paramiko = "*"
 openssh-wrapper = "*"
-Flask = "*"
+Flask = "==1.0.2"
+Flask-SocketIO = "*"
+Werkzeug = "==0.14.1"
 
 [requires]
 python_version = "3.8"
