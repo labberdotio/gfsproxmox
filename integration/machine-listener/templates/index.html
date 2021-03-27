@@ -35,22 +35,19 @@
                 );
             });
 
-            // Event handler for server sent data.
-            // The callback function is invoked whenever the server emits data
-            // to the client. The data is then displayed in the "Received"
-            // section of the page.
             socket.on('response', function(msg, callback) {
-                $('#log').append('<br>' + $('<div/>').text('Received from server: ' + msg.data).html());
-                if( msg.data == 'Ping!' ) {
-                    socket.emit(
-                        'fromclient', {
-                            data: 'Pong!'
-                        }
-                );
-                }
-                if (callback) {
-                    callback();
-                }
+                
+            });
+
+            socket.on('update', function(msg, callback) {
+                console.log("Update: ");
+                console.log(msg);
+                node = $("<li class=\"list-group-item active\">" + 
+                    "<p>Event: " + msg.event + "</p>" + 
+                    "<p>Chain: " + msg.chain + "</p>" + 
+                    "<p>" + msg.id + ": " + msg.description + "</p>" + 
+                "</li>");
+                $('#modellist').append(node);
             });
 
         });
@@ -58,10 +55,20 @@
 
 </head>
 <body>
-	<div class="container text-center">
+	<div class="container">
 		<h1>GFS event listener</h1>
-		<h2>Log:</h2>
-		<div id="log"></div>
+        <div class="alert alert-{{status}}" role="alert">
+            API: {{GFSHOST}}:{{GFSPORT}}, active: {{active}}
+        </div>
+        <ul id="modellist" class="list-group">
+        {% for model in models %}
+            <li class="list-group-item">
+                <p>Event: {{model.event}}</p> 
+                <p>Chain: {{model.chain}}</p> 
+                <p>{{model.id}}: {{model.description}}</p> 
+            </li>
+        {% endfor %}
+        </ul>
 	</div>
 </body>
 </html>
