@@ -1,4 +1,3 @@
-
 six==1.11.0
 requests
 
@@ -9,10 +8,6 @@ python-engineio
 python-socketio
 werkzeug==0.14.1
 
-proxmoxer==1.2.0b1
-
-paramiko
-openssh_wrapper
-
-# 
 python-graphql-client
+
+polling

@@ -1,0 +1,154 @@
+#
+# Autonomic project implementation
+#
+#
+
+---
+version: "1.0"
+types:
+  ProxmoxMachineType:
+    name: "ProxmoxMachine"
+    version: 1
+    property: 
+      name: string
+      arch: string
+      memory: string
+      cpus: string
+      cores: string
+      ht: string
+      diskController0: string
+      diskDevice0: string
+      diskController1: string
+      diskDevice1: string
+      diskDevice2: string
+      diskDevice3: string
+      diskDevice4: string
+      diskDevice5: string
+      diskDevice6: string
+      diskDevice7: string
+    required:
+      - name
+      - arch
+      - memory
+      - cpus
+      - cores
+      - ht
+    show:
+      - name
+      - version
+
+  ProxmoxTemplateType:
+    name: "ProxmoxTemplate"
+    version: 1
+    property:
+      name: string
+      memory: string
+      cpus: string
+      cores: string
+      arch: string
+      os: string
+      osmajorversion: string 
+      osminorversion: string
+      ospatchversion: string
+      oshotfixversion: string
+      ostype: string
+      diskController0: string
+      diskDevice0: string
+      diskController1: string
+      diskDevice1: string
+      diskDevice2: string
+      diskDevice3: string
+      diskDevice4: string
+      diskDevice5: string
+      diskDevice6: string
+      diskDevice7: string
+    required:
+      - name
+      - arch
+      - memory
+      - cpus
+      - cores
+      - ht
+    show:
+      - name
+      - version
+
+# *************************************
+# I N S T A N C E S 
+# *************************************
+ProxmoMachineTypes:
+  botnode100:
+    data:
+      arch: "x86_64"
+      memory: "8192"
+      cpus: "1"
+      cores: "4"
+      ht: "true"
+      diskController0: "VirtIO SCSI"
+      diskDevice0: "local-lvm-1TB:vm-100-disk-0"
+    show:
+      - id
+      - name
+      - arch
+      - memory
+      - cpus
+      - cores
+      - ht
+      - diskController0
+      - diskDevice0
+  # botnode100:
+  #   data:
+  #     arch: "x86_64"
+  #     memory: "8192"
+  #     cpus: "1"
+  #     cores: "4"
+  #     ht: "true"
+  #     diskController0: "VirtIO SCSI"
+  #     diskDevice0: "local-lvm-1TB:vm-100-disk-0"
+  #   show:
+  #     - id
+  #     - name
+  #     - arch
+  #     - memory
+  #     - cpus
+  #     - cores
+  #     - ht
+  #     - diskController0
+  #     - diskDevice0
+
+# NetDeviceTypes:
+# # External, 192.168.0/24 for controller
+#   net560AFFE78095:
+#     data:
+#       hwaddr: "56:0A:FF:E7:80:95"
+#     show:
+#       - id
+#       - name
+#       - hwaddr
+
+############################################
+## Type LINKS 
+############################################
+  # Configured:
+  #   label: "Configured"
+  #   from: NetDeviceType
+  #   to: Proxmox
+  SubclassOf:
+    label: "SubclassOf"
+    from: ProxmoxMachineType
+    to: MachineType
+############################
+### Instance Links
+############################
+  # devAssignedTo1:
+  #   label: "AssignedTo"
+  #   from: devIp1
+  #   to: net8646C1C11889
+  # devConfigured1:
+  #   label: "Configured"  
+  #   from: net8646C1C11889
+  #   to: router
+  # devDefault1:
+  #   label: "Default"
+  #   from: net8646C1C11889
+  #   to: router

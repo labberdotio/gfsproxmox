@@ -3,7 +3,7 @@ import asyncio
 
 from python_graphql_client import GraphqlClient
 
-GFSHOST = "localhost"
+GFSHOST = "192.168.0.160"
 GFSPORT = 5000
 
 endpoint = "ws://" + GFSHOST + ":" + str(GFSPORT) + "/gfs1/graphql/subscriptions"

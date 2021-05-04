@@ -1,0 +1,6 @@
+export PMOXAPI_HOST="192.168.0.180"
+export PMOXAPI_PORT=8006
+export PMOXAPI_TOKEN="PVEAPIToken=bots@pam!botcanics=bc1f0af3-49f1-41a2-8729-003e99ec3625"
+export GFS_API_HOST="192.168.0.160"
+export GFS_APT_PORT="5000"
+export GFS_API_NAMESPACe="gfs1"

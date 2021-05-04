@@ -15,13 +15,8 @@ from flask_socketio import disconnect
 
 from python_graphql_client import GraphqlClient
 
-from proxmoxer import ProxmoxAPI
-
-
-
-# 
-# 
-# 
+# from proxmoxer import ProxmoxAPI
+from implementation import create_handler
 
 # Set this variable to "threading", "eventlet" or "gevent" to test the
 # different async modes, or leave it set to None for the application to choose
@@ -39,7 +34,7 @@ thread_lock = Lock()
 # 
 # 
 
-GFSHOST = "localhost"
+GFSHOST = "192.168.0.160"
 GFSPORT = 5000
 
 state = {
@@ -102,6 +97,7 @@ def callback(data = {}):
         "event": event, 
         "chain": chain, 
         "id": machinenodeid, 
+        "data": machinenode,
         "description": machinenodedesc
     }
 
@@ -120,6 +116,8 @@ def callback(data = {}):
     socketio.emit(
         'update', statedata
     )
+    # delegate to the implementation.py 
+    create_handler(statedata)
 
 def background_thread():
     """Example of how to send server generated events to clients."""

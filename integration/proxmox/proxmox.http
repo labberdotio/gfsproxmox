@@ -1,0 +1,61 @@
+# Proxmox CRUD for cloning a VM 
+#
+#
+#
+
+@baseUrl = https://192.168.0.180:8006
+@PVEAPIToken = PVEAPIToken=bots@pam!botcanics=bc1f0af3-49f1-41a2-8729-003e99ec3625
+@baseTemplateId = 10000
+@pool = botcanics
+@targetHost = botcore 
+
+###
+# @name callNodes
+GET {{baseUrl}}/api2/extjs/nodes
+Content-Type: application/json
+Authorization: {{PVEAPIToken}}
+
+###
+# @name callNextid
+GET {{baseUrl}}/api2/json/cluster/nextid HTTP/1.1
+Content-Type: application/json
+Authorization: {{PVEAPIToken}}
+
+###
+@nextId = {{callNextid.response.body.$.data}}
+
+###
+# @name callClone
+POST {{baseUrl}}/api2/extjs/nodes/botcore/qemu/{{baseTemplateId}}/clone?newid={{nextId}}&pool={{pool}}&name=testVM123&target={{targetHost}} HTTP/1.1
+Content-Type: application/json
+Authorization: {{PVEAPIToken}}
+
+### 
+# @name callStatus
+GET {{baseUrl}}/api2/json/nodes/botcore/qemu/{{nextId}}/status/current
+Content-Type: application/json
+Authorization: {{PVEAPIToken}}
+
+### 
+# @name callConfig
+GET {{baseUrl}}/api2/json/nodes/botcore/qemu/{{nextId}}/config
+Content-Type: application/json
+Authorization: {{PVEAPIToken}}
+
+### 
+# @name callStart
+POST {{baseUrl}}/api2/extjs/nodes/botcore/qemu/{{nextId}}/status/start HTTP/1.1
+Content-Type: application/json
+Authorization: {{PVEAPIToken}}
+
+###
+# @name callStop
+POST {{baseUrl}}/api2/extjs/nodes/botcore/qemu/{{nextId}}/status/stop HTTP/1.1
+Content-Type: application/json
+Authorization: {{PVEAPIToken}}
+
+### 
+# @name callDelete
+DELETE {{baseUrl}}/api2/extjs/nodes/botcore/qemu/{{nextId}}?purge=1 HTTP/1.1
+Content-Type: application/json
+Authorization: {{PVEAPIToken}}
