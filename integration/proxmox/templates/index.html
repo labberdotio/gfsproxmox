@@ -47,7 +47,8 @@
                     "<p>Chain: " + msg.chain + "</p>" + 
                     "<p>" + msg.id + ": " + msg.description + "</p>" + 
                 "</li>");
-                $('#modellist').append(node);
+                //$('#modellist').append(node);
+                $('#modellist').prepend(node);
             });
 
         });

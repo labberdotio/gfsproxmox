@@ -11,7 +11,7 @@
 
 ###
 # @name callGetAllNodes
-GET {{baseUrl}}/api/v1.0/gfs1/vertex HTTP/1.1
+GET {{baseUrl}}/api/v1.0/gfs1/graph HTTP/1.1
 Content-Type: application/json
 
 ###
@@ -19,13 +19,13 @@ Content-Type: application/json
 POST {{baseUrl}}/gfs1/graphql HTTP/1.1
 Content-Type: application/json
 
-{"query": "\n            mutation createMachine($name:String, $arch:String, $memory:String, $cpus:String, $cores:String, $ht:String) {\n                createMachine(name:$name, arch:$arch, memory:$memory, cpus:$cpus, cores:$cores, ht:$ht) {\n                    instance {\n                        id, name, \n                    },\n                    ok\n                }\n            }\n        ", 
+{"query": "\n            mutation createMachine($name:String!, $arch:String!, $memory:String!, $cpus:String!, $cores:String!, $ht:String!) {\n                createMachine(name:$name, arch:$arch, memory:$memory, cpus:$cpus, cores:$cores, ht:$ht) {\n                    instance {\n                        id, name, \n                    },\n                    ok\n                }\n            }\n        ", 
   "variables": {
-    "name": "{{machineName}}", 
-    "arch": "{{machineArch}}", 
-    "memory": "{{machineMemory}}", 
-    "cpus": "{{machineCPUs}}", 
-    "cores": "{{machineCores}}", 
+    "name": "{{machineName}}",
+    "arch": "{{machineArch}}",
+    "memory": "{{machineMemory}}",
+    "cpus": "{{machineCPUs}}",
+    "cores": "{{machineCores}}",
     "ht": "{{machineHT}}"
   }
 }
@@ -46,6 +46,8 @@ Content-Type: application/json
 @updateMachineCores = 1
 @updateMachineHT = yes
 
+###
+# @name callUpdateMachine
 POST {{baseUrl}}/gfs1/graphql HTTP/1.1
 Content-Type: application/json
 
@@ -53,10 +55,10 @@ Content-Type: application/json
   "query": "\n            mutation updateMachine($id:String!, $name:String, $arch:String, $memory:String, $cpus:String, $cores:String, $ht:String) {\n                updateMachine(id:$id, name:$name, arch:$arch, memory:$memory, cpus:$cpus, cores:$cores, ht:$ht) {\n                    instance {\n                        id, name, \n                    },\n                    ok\n                }\n            }\n        ", 
   "variables": {
     "id": "{{GFSID}}", 
-    "name": "{{machineName}}", 
-    "arch": "{{updateMachineArch}}", 
-    "memory": "{{updateMachineMemory}}", 
-    "cpus": "{{updateMachineCPUs}}", 
+    "name": "{{machineName}}",
+    "arch": "{{updateMachineArch}}",
+    "memory": "{{updateMachineMemory}}",
+    "cpus": "{{updateMachineCPUs}}",
     "cores": "{{updateMachineCores}}", 
     "ht": "{{updateMachineHT}}"
   }
@@ -72,3 +74,18 @@ Content-Type: application/json
 DELETE {{baseUrl}}/api/v1.0/gfs1/vertex/{{GFSID}} HTTP/1.1
 Content-Type: application/json
 
+### 
+POST {{baseUrl}}/api/v1.0/gfs1/edge HTTP/1.1
+Content-Type: application/json
+
+{
+    "@type": "g:Edge",
+    "@value": {
+        "label": "linkName",
+        "inVLabel": None,
+        "outVLabel": None,
+        "inV": "toId",
+        "outV": "fromId",
+        "properties": {}
+    }
+}

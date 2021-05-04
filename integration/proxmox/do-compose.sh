@@ -1,6 +1,15 @@
 #!/bin/bash
 set -e
 
+export GFS_NAMESPACE="gfs1"
+export GFS_HOST="192.168.0.160"
+export GFS_PORT="5000"
+export GFS_USERNAME="root"
+export GFS_PASSWORD="root"
+
+export GRAPH_URL="http://$GFS_HOST:$GFS_PORT/api/v1.0/gfs1/graph"
+export GRAPH_API_URL="http://$GFS_HOST:$GFS_PORT"
+
 SOURCE="${BASH_SOURCE[0]}"
 while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
   DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
@@ -10,34 +19,17 @@ done
 THIS_DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 source $THIS_DIR/settings.sh
 
-#########################################################
-## Main Automation Pipeline
-#########################################################
-
 # echo "Deleting Graph: curl -s -X 'DELETE' $GRAPH_URL"
 # DELETE_RETVAL=$(curl -s -X "DELETE" $GRAPH_URL)
 # echo "DELETE_RETVAL: $DELETE_RETVAL"
 
-# TYPES_FILE="./autonomic-compose-types.yml"
-# INSTANCES_FILE="./autonomic-compose-instances.yml"
-# LINKS_FILE="./autonomic-compose-links.yml"
-# echo "Running $TYPES_FILE"
-# gfscli create --file ./autonomic-compose-types.yml
-# echo "Running $INSTANCES_FILE"
-# gfscli create --file ./autonomic-compose-instances.yml
-# echo "Running $LINKS_FILE"
-# gfscli create --file ./autonomic-compose-links.yml
+#########################################################
+## Main Automation Pipeline
+#########################################################
 
-#gfscli create --file ./autonomic-compose.yml
-# gfscli create --file ./sample.yml
-# gfscli create --file ./test-compose.yml
-
-/usr/local/bin/gfscompose create --file $THIS_DIR/proxmox-compose.yml
-# gfscli create --file ./sample.yml
-# gfscli create --file ./test-compose.yml
-
-
-# function finish {
-#   popd
-# }
-# trap finish EXIT
+/usr/local/bin/gfscompose create \
+  --host $GFS_HOST \
+  --port $GFS_PORT \
+  --namespace $GFS_NAMESPACE \
+  --file $THIS_DIR/proxmox-compose.yml
+# /usr/local/bin/gfscompose create --file $THIS_DIR/proxmox-compose2.yml

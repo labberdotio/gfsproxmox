@@ -20,40 +20,20 @@ PMOXAPI_START_ENDPOINT = PMOXAPI + "/api2/extjs/nodes/botcore/qemu/{vmId}/status
 PMOXAPI_STOP_ENDPOINT = PMOXAPI + "/api2/extjs/nodes/botcore/qemu/{vmId}/status/stop"
 
 def create_handler(statedata):
-    print ("-------------------------")
+    print ("---------Create Handler----------------")
     print ("Machine Name: " + statedata["data"]["name"])
 
-def check_vm_status(response): 
-    # print (response.text)
-    jsonResponse = response.json()
-    print(jsonResponse)
-    result = "running" == jsonResponse["data"]["status"]; 
-    print ("")
-    print ("Returning - 'running' == jsonResponse['data']['status'] == " + str(result))
-    return result
+def update_handler(statedata):
+    print ("---------Update Handler----------------")
+    print ("Machine Name: " + statedata["data"]["name"])
 
-def test_polling():
-    cookies = {
-    }
-    headers = {
-        'user-agent': "bootplane-agent",
-        'content-type': "application/json",
-        'authorization': PVEAPIToken
-    }
+def delete_handler(statedata):
+    print ("---------Delete Handler----------------")
+    print ("Machine Name: " + statedata["data"]["name"])
 
-    polling.poll(
-        lambda: requests.get (
-        PMOXAPI_STATUS_ENDPOINT, 
-        headers=headers,
-        verify=False),
-        check_success=check_vm_status,
-        step=1,
-        timeout=10
-    )
-
-if __name__ == '__main__':
-    test_polling()
-
+def link_handler(statedata):
+    print ("---------Link Handler----------------")
+    print ("Machine Name: " + statedata["data"]["name"])
 
 ### Saved Stuff for Reference
     # response = requests.get (
