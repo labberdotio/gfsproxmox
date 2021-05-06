@@ -21,6 +21,11 @@ from implementation import update_handler
 from implementation import delete_handler
 from implementation import link_handler
 
+
+# 
+# 
+# 
+
 # Set this variable to "threading", "eventlet" or "gevent" to test the
 # different async modes, or leave it set to None for the application to choose
 # the best option based on installed packages.
@@ -33,35 +38,13 @@ socketio = SocketIO(app, async_mode=async_mode)
 thread = None
 thread_lock = Lock()
 
+# 
+# 
+# 
+
 GFSHOST = "192.168.0.160"
 GFSPORT = 5000
 TYPE="ProxmoxMachine"
-
-# state = {
-#     "GFSHOST": GFSHOST, 
-#     "GFSPORT": GFSPORT, 
-#     "endpoint": "ws://" + GFSHOST + ":" + str(GFSPORT) + "/gfs1/graphql/subscriptions", 
-#     "active": False, 
-#     "query": """
-# subscription """ + TYPE + """"Subscriber {
-#   """ + TYPE + """ {
-#     event, 
-#     chain, 
-#     node {
-#       id,
-#       name,
-#       bootdisk,
-#       cores,
-#       memory,
-#       numa,      
-#       ostype,
-#       sockets
-#     }
-#   }
-# }
-# """, 
-#     "models": []
-# }
 
 state = {
     "GFSHOST": GFSHOST, 
@@ -69,25 +52,52 @@ state = {
     "endpoint": "ws://" + GFSHOST + ":" + str(GFSPORT) + "/gfs1/graphql/subscriptions", 
     "active": False, 
     "query": """
-subscription ProxmoxMachineSubscriber {
-  ProxmoxMachine {
+subscription """ + TYPE + """Subscriber {
+  """ + TYPE + """ {
     event, 
     chain, 
     node {
-       id,
-       name,
-       bootdisk,
-       cores,
-       memory,
-       numa,      
-       ostype,
-       sockets
+      id,
+      name,
+      bootdisk,
+      cores,
+      memory,
+      numa,      
+      ostype,
+      sockets
     }
   }
 }
 """, 
     "models": []
 }
+print ("state: ")
+print (state)
+
+# state = {
+#     "GFSHOST": GFSHOST, 
+#     "GFSPORT": GFSPORT, 
+#     "endpoint": "ws://" + GFSHOST + ":" + str(GFSPORT) + "/gfs1/graphql/subscriptions", 
+#     "active": False, 
+#     "query": """
+# subscription MachineSubscriber {
+#   Machine {
+#     event,
+#     chain,
+#     node {
+#       id,
+#       name,
+#       arch,
+#       cpus,
+#       cores,
+#       memory,
+#       ht
+#     }
+#   }
+# }
+# """, 
+#     "models": []
+# }
 
 client = GraphqlClient(
     endpoint=state.get("endpoint")
@@ -110,6 +120,7 @@ def callback(data = {}):
     chain = ", ".join(machine.get("chain", []))
 
     typenodeid = typenode.get("id")
+
     typenodedesc = TYPE + ": " + typenode.get("name") + " - " + typenode.get("bootdisk") + " bootdisk, " + typenode.get("cores") + " cores, " + typenode.get("memory") + " MB RAM, " + typenode.get("numa") + " NUMA setting, "  + typenode.get("ostype") + " ostype, " + typenode.get("sockets") + " sockets. "
 
     statedata = {
