@@ -441,7 +441,7 @@ links:
   CloneOf:
     label: "CloneOf"
     from: ProxmoxMachineType
-    to: ProxmoxTemplateType
+    to: ProxmoxMachineTemplateType
   
 ############################
 ### Instance LINKS
