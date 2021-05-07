@@ -16,15 +16,10 @@ from flask_socketio import disconnect
 from python_graphql_client import GraphqlClient
 
 # from proxmoxer import ProxmoxAPI
-from implementation import create_handler
-from implementation import update_handler
-from implementation import delete_handler
-from implementation import link_handler
-
-
-# 
-# 
-# 
+# from implementation import create_handler
+# from implementation import update_handler
+# from implementation import delete_handler
+# from implementation import link_handler
 
 # Set this variable to "threading", "eventlet" or "gevent" to test the
 # different async modes, or leave it set to None for the application to choose
@@ -38,66 +33,38 @@ socketio = SocketIO(app, async_mode=async_mode)
 thread = None
 thread_lock = Lock()
 
-# 
-# 
-# 
-
-GFSHOST = "192.168.0.160"
+GFSHOST = "localhost" # "192.168.0.160"
 GFSPORT = 5000
-TYPE="ProxmoxMachine"
+TYPE="Machine"
+
+LISTENERADDR = "0.0.0.0"
+LISTENERPORT = 5001
 
 state = {
     "GFSHOST": GFSHOST, 
     "GFSPORT": GFSPORT, 
     "endpoint": "ws://" + GFSHOST + ":" + str(GFSPORT) + "/gfs1/graphql/subscriptions", 
     "active": False, 
-    "query": """
-subscription """ + TYPE + """Subscriber {
+    "type": TYPE, 
+    "query": """subscription """ + TYPE + """Subscriber {
   """ + TYPE + """ {
     event, 
+    id, 
+    label, 
+    sourceid, 
+    sourcelabel, 
+    targetid, 
+    targetlabel, 
     chain, 
     node {
-      id,
-      name,
-      bootdisk,
-      cores,
-      memory,
-      numa,      
-      ostype,
-      sockets
+       id,
+       name
     }
   }
 }
 """, 
     "models": []
 }
-print ("state: ")
-print (state)
-
-# state = {
-#     "GFSHOST": GFSHOST, 
-#     "GFSPORT": GFSPORT, 
-#     "endpoint": "ws://" + GFSHOST + ":" + str(GFSPORT) + "/gfs1/graphql/subscriptions", 
-#     "active": False, 
-#     "query": """
-# subscription MachineSubscriber {
-#   Machine {
-#     event,
-#     chain,
-#     node {
-#       id,
-#       name,
-#       arch,
-#       cpus,
-#       cores,
-#       memory,
-#       ht
-#     }
-#   }
-# }
-# """, 
-#     "models": []
-# }
 
 client = GraphqlClient(
     endpoint=state.get("endpoint")
@@ -105,34 +72,52 @@ client = GraphqlClient(
 
 def callback(data = {}):
 
-    machine = data.get("data", {}).get(TYPE, {})
-    typenode = machine.get("node", {})
+    typedata = data.get("data", {}).get(TYPE, {})
+    typenode = typedata.get("node", {})
 
     print(" ")
     print(" New " + TYPE + " event: ")
-    print(" Event: " + str( machine.get("event", "")) )
-    print(" Chain: " + str( machine.get("chain", "")) )
+    print(" Event: " + str( typedata.get("event", "")) )
+    print(" Id: " + str( typedata.get("id", "")) )
+    print(" Label: " + str( typedata.get("label", "")) )
+    print(" SourceId: " + str( typedata.get("sourceid", "")) )
+    print(" SourceLabel: " + str( typedata.get("sourceid", "")) )
+    print(" TargetId: " + str( typedata.get("targetid", "")) )
+    print(" TargetLabel: " + str( typedata.get("targetlabel", "")) )
+    print(" Chain: " + str( typedata.get("chain", "")) )
     # print(data)
-    print(machine)
+    # print(typedata)
     print(" ")
 
-    event = machine.get("event")
-    chain = ", ".join(machine.get("chain", []))
+    event = typedata.get("event", None)
+    id = typedata.get("id", None)
+    label = typedata.get("label", None)
+    sourceid = typedata.get("sourceid", None)
+    sourcelabel = typedata.get("sourcelabel", None)
+    targetid = typedata.get("targetid", None)
+    targetlabel = typedata.get("targetlabel", None)
+    chain = ", ".join(typedata.get("chain", []))
 
     typenodeid = typenode.get("id")
-
-    typenodedesc = TYPE + ": " + typenode.get("name") + " - " + typenode.get("bootdisk") + " bootdisk, " + typenode.get("cores") + " cores, " + typenode.get("memory") + " MB RAM, " + typenode.get("numa") + " NUMA setting, "  + typenode.get("ostype") + " ostype, " + typenode.get("sockets") + " sockets. "
+    typenodedesc = TYPE + "(" + typenodeid + ")"
+    for key in typenode:
+        typenodedesc += ", " + key + ": " + typenode.get(key, "[NONE]")
 
     statedata = {
         "event": event, 
+        "id": id, 
+        "label": label, 
+        "sourceid": sourceid, 
+        "sourcelabel": sourcelabel, 
+        "targetid": targetid, 
+        "targetlabel": targetlabel, 
         "chain": chain,
-        "id": typenodeid,
         "data": typenode,
         "description": typenodedesc
     }
 
-    print(statedata)
-    print(" ")
+    # print(statedata)
+    # print(" ")
 
     state.get("models", []).insert(0, statedata)
 
@@ -147,14 +132,14 @@ def callback(data = {}):
     )
 
     # delegate to implementation.py methods
-    if event == "create_node":
-        create_handler(statedata)
-    elif event == "update_node":
-        update_handler(statedata)
-    elif event == "delete_node":
-        delete_handler(statedata)
-    elif event == "create_link":
-        link_handler(statedata)
+    # if event == "create_node":
+    #     create_handler(statedata)
+    # elif event == "update_node":
+    #     update_handler(statedata)
+    # elif event == "delete_node":
+    #     delete_handler(statedata)
+    # elif event == "create_link":
+    #     link_handler(statedata)
 
 def background_thread():
     """Example of how to send server generated events to clients."""
@@ -197,6 +182,7 @@ def index():
         # state = state, 
         GFSHOST = state.get("GFSHOST"), 
         GFSPORT = state.get("GFSPORT"), 
+        type = state.get("type", TYPE), 
         active = state.get("active", False), 
         status = status, 
         models = state.get("models", []), 
@@ -247,4 +233,4 @@ if __name__ == '__main__':
     client = GraphqlClient(
         endpoint=state.get("endpoint")
     )
-    socketio.run(app, host='0.0.0.0', port=5001)
+    socketio.run(app, host=LISTENERADDR, port=LISTENERPORT)

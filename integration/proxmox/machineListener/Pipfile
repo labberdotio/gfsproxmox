@@ -6,14 +6,12 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-proxmoxer = "==1.2.0b1"
-requests = "*"
-python-graphql-client = "*"
 six = "==1.11.0"
+requests = "*"
 python-engineio = "*"
 python-socketio = "*"
-paramiko = "*"
-openssh-wrapper = "*"
+python-graphql-client = "*"
+polling = "*"
 Flask = "==1.0.2"
 Flask-SocketIO = "*"
 Werkzeug = "==0.14.1"
