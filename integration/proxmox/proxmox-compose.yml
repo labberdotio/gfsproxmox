@@ -411,6 +411,20 @@ ProxmoxMachineTemplateTypes:
   centos8ConfluentTemplate:
     data:
       proxmoxVmID: "50001"
+      cores: "4"
+      ide2: "none,media=cdrom"
+      memory: "2048"
+      name: "centos-8-confluent-template"
+      net0: "virtio=E6:79:9B:3F:B5:04,bridge=vmbr0"
+      numa: "0"
+      ostype: "l26"
+      scsi0: "local-lvm-1TB:base-50001-disk-0,size=50G"
+      scsi1: "local-lvm-1TB:base-50001-disk-1,size=50G"
+      scsihw: "pvscsi"
+      smbios1: "uuid=beb1ac2d-e543-47d3-a0ca-c4040b07b8a2"
+      sockets: "1"
+      template: "1"
+      vmgenid: "488bbd1a-2ec4-4187-a194-8330004d7207"
     show:
       - id
       - name
