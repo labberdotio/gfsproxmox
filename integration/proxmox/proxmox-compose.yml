@@ -82,7 +82,7 @@ types:
     name: "ProxmoxMachineTemplate"
     version: 1
     extends:
-      - name: "Machine"
+      - name: "ProxmoxMachine"
         version: 1
     property: 
       name: string
@@ -501,7 +501,7 @@ links:
     to: centos8ConfluentTemplate
 
 ############################################
-## Template LINKS 
+## Templates LINKS 
 ############################################
   viewdevBotcanicsDHCP:
     label: "view"
