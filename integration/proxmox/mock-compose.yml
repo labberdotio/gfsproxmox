@@ -1,0 +1,38 @@
+#
+# Mocked in types that represent forms from another project / base collection 
+# of Types. Meant to test cross-compose inheritance, primarily. 
+#
+#
+---
+version: "1.0"
+types:
+  MachineType:
+    name: "Machine"
+    version: 1
+    property: 
+      name: string
+      arch: string
+      memory: string
+      cpus: string
+      cores: string
+      ht: string
+      diskController0: string
+      diskDevice0: string
+      diskController1: string
+      diskDevice1: string
+      diskDevice2: string
+      diskDevice3: string
+      diskDevice4: string
+      diskDevice5: string
+      diskDevice6: string
+      diskDevice7: string
+    required:
+      - name
+      - arch
+      - memory
+      - cpus
+      - cores
+      - ht
+    show:
+      - name
+      - version

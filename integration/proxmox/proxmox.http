@@ -21,7 +21,6 @@ GET {{baseUrl}}/api2/json/nodes/botcore/disks/lvm
 Content-Type: application/json
 Authorization: {{PVEAPIToken}}
 
-
 ###
 # @name callNextid
 GET {{baseUrl}}/api2/json/cluster/nextid HTTP/1.1
@@ -69,7 +68,7 @@ Authorization: {{PVEAPIToken}}
 
 ###
 # @name callStop
-POST {{baseUrl}}/api2/extjs/nodes/botcore/qemu/{{nextId}}/status/stop HTTP/1.1
+POST {{baseUrl}}/api2/json/nodes/botcore/qemu/{{nextId}}/status/stop HTTP/1.1
 Content-Type: application/json
 Authorization: {{PVEAPIToken}}
 

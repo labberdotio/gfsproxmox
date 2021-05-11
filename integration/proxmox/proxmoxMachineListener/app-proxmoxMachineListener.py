@@ -38,7 +38,7 @@ socketio = SocketIO(app, async_mode=async_mode)
 thread = None
 thread_lock = Lock()
 
-GFSHOST = "localhost" # "192.168.0.160"
+GFSHOST = "192.168.0.160" # "192.168.0.160"
 GFSPORT = 5000
 TYPE="ProxmoxMachine"
 
@@ -104,23 +104,18 @@ def callback(data = {}):
     chain = ", ".join(typedata.get("chain", []))
 
     typenodeid = typenode.get("id")
-<<<<<<< HEAD:integration/proxmox/app.py
-
-    typenodedesc = TYPE + ": " + typenode.get("name") + " - " + typenode.get("bootdisk") + " bootdisk, " + typenode.get("cores") + " cores, " + typenode.get("memory") + " MB RAM, " + typenode.get("numa") + " NUMA setting, "  + typenode.get("ostype") + " ostype, " + typenode.get("sockets") + " sockets. "
-=======
     typenodedesc = TYPE + "(" + typenodeid + ")"
     for key in typenode:
         typenodedesc += ", " + key + ": " + typenode.get(key, "[NONE]")
->>>>>>> 109331d (Broke out and cleaned up event listeners):integration/proxmox/proxmoxMachineListener/app.py
 
     statedata = {
-        "event": event, 
-        "id": id, 
-        "label": label, 
-        "sourceid": sourceid, 
-        "sourcelabel": sourcelabel, 
-        "targetid": targetid, 
-        "targetlabel": targetlabel, 
+        "event": event,
+        "id": id,
+        "label": label,
+        "sourceid": sourceid,
+        "sourcelabel": sourcelabel,
+        "targetid": targetid,
+        "targetlabel": targetlabel,
         "chain": chain,
         "data": typenode,
         "description": typenodedesc

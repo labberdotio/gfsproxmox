@@ -4,10 +4,10 @@
 @baseUrl = http://192.168.0.160:5000
 @machineName = botnode{{$randomInt 1000 10000}}
 @machineBootdisk = bootdisk
-@machineCores = machineCores
-@machineMemory = machineMemory
-@machineNuma = numa
-@machineOstype = ostype
+@machineCores = 4
+@machineMemory = 4096
+@machineNuma = 0
+@machineOstype = l26
 @machineSockets = sockets
 
 ###
@@ -15,12 +15,13 @@
 GET {{baseUrl}}/api/v1.0/gfs1/graph HTTP/1.1
 Content-Type: application/json
 
+{}
 ###
-# @name callCreateMachine
+# @name callCreateProxmoxMachine
 POST {{baseUrl}}/gfs1/graphql HTTP/1.1
 Content-Type: application/json
 
-{"query": "\n            mutation createProxmoxmachine($name:String!, $bootdisk:String!, $cores:String!, $memory:String!, $numa:String!, $ostype:String!, $sockets:String!) {\n                createProxmoxmachine(name:$name, bootdisk:$bootdisk, cores:$cores, memory:$memory, numa:$numa, ostype:$ostype, sockets:$sockets) {\n                    instance {\n                        id, name, \n                    },\n                    ok\n                }\n            }\n        ", 
+{"query": "\n            mutation createProxmoxMachine($name:String!, $bootdisk:String!, $cores:String!, $memory:String!, $numa:String!, $ostype:String!, $sockets:String!) {\n                createProxmoxMachine(name:$name, bootdisk:$bootdisk, cores:$cores, memory:$memory, numa:$numa, ostype:$ostype, sockets:$sockets) {\n                    instance {\n                        id, name, \n                    },\n                    ok\n                }\n            }\n        ", 
   "variables": {
     "name": "{{machineName}}",
     "bootdisk": "{{machineBootdisk}}",
@@ -33,7 +34,7 @@ Content-Type: application/json
 }
 
 ###
-@GFSID = {{callCreateMachine.response.body.$.data.createProxmoxmachine.instance.id}}
+@GFSID = {{callCreateProxmoxMachine.response.body.$.data.createProxmoxMachine.instance.id}}
 
 ###
 # @name callGetContext

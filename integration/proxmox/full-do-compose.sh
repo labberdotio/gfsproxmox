@@ -16,9 +16,10 @@ source $THIS_DIR/settings.sh
 
 $THIS_DIR/../../system/controller/gfs/do-compose.sh
 
-/usr/local/bin/gfscompose create \
+/home/bots/git/gremlinfscl/dist/gfscompose create \
   --host $GFS_HOST \
   --port $GFS_PORT \
   --namespace $GFS_NAMESPACE \
-  --file $THIS_DIR/proxmox-compose.yml
+  --file $THIS_DIR/proxmox-compose.yml \
+  --verbose
 # /usr/local/bin/gfscompose create --file $THIS_DIR/proxmox-compose2.yml

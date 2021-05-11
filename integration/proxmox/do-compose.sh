@@ -19,13 +19,19 @@ done
 THIS_DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 source $THIS_DIR/settings.sh
 
-# echo "Deleting Graph: curl -s -X 'DELETE' $GRAPH_URL"
-# DELETE_RETVAL=$(curl -s -X "DELETE" $GRAPH_URL)
-# echo "DELETE_RETVAL: $DELETE_RETVAL"
+echo "Deleting Graph: curl -s -X 'DELETE' $GRAPH_URL"
+DELETE_RETVAL=$(curl -s -X "DELETE" $GRAPH_URL)
+echo "DELETE_RETVAL: $DELETE_RETVAL"
 
 #########################################################
 ## Main Automation Pipeline
 #########################################################
+
+# /usr/local/bin/gfscompose create \
+#   --host $GFS_HOST \
+#   --port $GFS_PORT \
+#   --namespace $GFS_NAMESPACE \
+#   --file $THIS_DIR/mock-compose.yml
 
 /usr/local/bin/gfscompose create \
   --host $GFS_HOST \

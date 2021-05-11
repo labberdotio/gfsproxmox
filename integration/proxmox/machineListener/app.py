@@ -33,7 +33,7 @@ socketio = SocketIO(app, async_mode=async_mode)
 thread = None
 thread_lock = Lock()
 
-GFSHOST = "localhost" # "192.168.0.160"
+GFSHOST = "192.168.0.160" # "192.168.0.160"
 GFSPORT = 5000
 TYPE="Machine"
 
