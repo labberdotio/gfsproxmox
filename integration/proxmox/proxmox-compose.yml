@@ -501,7 +501,7 @@ links:
     to: centos8ConfluentTemplate
 
 ############################################
-## Templates LINKS 
+## Template LINKS 
 ############################################
   viewdevBotcanicsDHCP:
     label: "view"
