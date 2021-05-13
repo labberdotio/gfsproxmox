@@ -84,7 +84,7 @@ types:
     extends:
       - name: "Machine"
         version: 1
-    property: 
+    property:
       name: string
       bootdisk: string
       cores: string
