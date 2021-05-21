@@ -9,6 +9,7 @@
 @machineNuma = 0
 @machineOstype = l26
 @machineSockets = sockets
+@architecture = x86_64
 
 ###
 # @name callGetAllNodes
@@ -21,7 +22,7 @@ Content-Type: application/json
 POST {{baseUrl}}/gfs1/graphql HTTP/1.1
 Content-Type: application/json
 
-{"query": "\n            mutation createProxmoxMachine($name:String!, $bootdisk:String!, $cores:String!, $memory:String!, $numa:String!, $ostype:String!, $sockets:String!) {\n                createProxmoxMachine(name:$name, bootdisk:$bootdisk, cores:$cores, memory:$memory, numa:$numa, ostype:$ostype, sockets:$sockets) {\n                    instance {\n                        id, name, \n                    },\n                    ok\n                }\n            }\n        ", 
+{"query": "\n            mutation createProxmoxMachine($name:String!, $bootdisk:String!, $cores:String!, $memory:String!, $numa:String!, $ostype:String!, $sockets:String!, $arch:String!) {\n                createProxmoxMachine(name:$name, bootdisk:$bootdisk, cores:$cores, memory:$memory, numa:$numa, ostype:$ostype, sockets:$sockets, arch:$arch) {\n                    instance {\n                        id, name, \n                    },\n                    ok\n                }\n            }\n        ", 
   "variables": {
     "name": "{{machineName}}",
     "bootdisk": "{{machineBootdisk}}",
@@ -29,7 +30,8 @@ Content-Type: application/json
     "memory": "{{machineMemory}}",
     "numa": "{{machineNuma}}",
     "ostype": "{{machineOstype}}",
-    "sockets": "{{machineSockets}}"
+    "sockets": "{{machineSockets}}",
+    "arch": "{{architecture}}"
   }
 }
 
