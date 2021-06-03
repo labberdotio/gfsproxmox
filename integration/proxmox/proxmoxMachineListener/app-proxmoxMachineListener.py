@@ -1,6 +1,4 @@
-
 import asyncio
-# import threading
 
 from threading import Lock
 
@@ -21,11 +19,6 @@ from implementation import update_handler
 from implementation import delete_handler
 from implementation import link_handler
 
-
-# 
-# 
-# 
-
 # Set this variable to "threading", "eventlet" or "gevent" to test the
 # different async modes, or leave it set to None for the application to choose
 # the best option based on installed packages.
@@ -35,12 +28,13 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, async_mode=async_mode)
 
-thread = None
-thread_lock = Lock()
+websocket_thread = None
+websocket_thread_lock = Lock()
 
 GFSHOST = "192.168.0.160" # "192.168.0.160"
+#GFSHOST = "localhost" # "192.168.0.160"
 GFSPORT = 5000
-TYPE="ProxmoxMachine"
+TYPE = "ProxmoxMachine"
 
 LISTENERADDR = "0.0.0.0"
 LISTENERPORT = 5002
@@ -50,7 +44,7 @@ state = {
     "GFSPORT": GFSPORT, 
     "endpoint": "ws://" + GFSHOST + ":" + str(GFSPORT) + "/gfs1/graphql/subscriptions", 
     "active": False, 
-     "type": TYPE, 
+    "type": TYPE, 
     "query": """subscription """ + TYPE + """Subscriber {
   """ + TYPE + """ {
     event, 
@@ -80,30 +74,17 @@ def callback(data = {}):
     typedata = data.get("data", {}).get(TYPE, {})
     typenode = typedata.get("node", {})
 
-    if data and "message" in data:
-        print("")
-        print(" *** ")
-        print(" *** GFS GraphQL subscription callback message. Please make sure TYPE " + TYPE + " exists.")
-        print(data.get("message"))
-        print(" *** ")
-        print(" *** ")
-        print(" ")
-        # quit()
-        exit()
-
-    print(" ")
-    print(" New " + TYPE + " event: ")
-    print(" Event: " + str( typedata.get("event", "")) )
-    print(" Id: " + str( typedata.get("id", "")) )
-    print(" Label: " + str( typedata.get("label", "")) )
-    print(" SourceId: " + str( typedata.get("sourceid", "")) )
-    print(" SourceLabel: " + str( typedata.get("sourceid", "")) )
-    print(" TargetId: " + str( typedata.get("targetid", "")) )
-    print(" TargetLabel: " + str( typedata.get("targetlabel", "")) )
-    print(" Chain: " + str( typedata.get("chain", "")) )
-    # print(data)
-    # print(typedata)
-    print(" ")
+    # print(" ")
+    # print(" New " + TYPE + " event: ")
+    # print(" Event: " + str( typedata.get("event", "")) )
+    # print(" Id: " + str( typedata.get("id", "")) )
+    # print(" Label: " + str( typedata.get("label", "")) )
+    # print(" SourceId: " + str( typedata.get("sourceid", "")) )
+    # print(" SourceLabel: " + str( typedata.get("sourceid", "")) )
+    # print(" TargetId: " + str( typedata.get("targetid", "")) )
+    # print(" TargetLabel: " + str( typedata.get("targetlabel", "")) )
+    # print(" Chain: " + str( typedata.get("chain", "")) )
+    # print(" ")
 
     event = typedata.get("event", None)
     id = typedata.get("id", None)
@@ -132,22 +113,10 @@ def callback(data = {}):
         "description": typenodedesc
     }
 
-    # print(statedata)
-    # print(" ")
-
-    state.get("models", []).insert(0, statedata)
-
-    # socketio.emit(
-    #     'update', {
-    #         'data': statedata
-    #     }
-    # )
-
     socketio.emit(
         'update', statedata
     )
 
-    # delegate to implementation.py methods
     if event == "create_node":
         create_handler(statedata)
     elif event == "update_node":
@@ -157,36 +126,25 @@ def callback(data = {}):
     elif event == "create_link":
         link_handler(statedata)
 
-def background_thread():
-    """Example of how to send server generated events to clients."""
-
+def websocket_background_thread():
     state["active"] = True
-
-    # Asynchronous request
-    # loop = asyncio.get_event_loop()
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     loop.run_until_complete(
         client.subscribe(
             query=state.get("query"), 
             handle=callback
-            # handle=print
         )
     )
-
     state["active"] = False
 
-def launch_background_thread():
-    global thread
-    with thread_lock:
-        if thread is None:
-            thread = socketio.start_background_task(background_thread)
+def launch_websocket_background_thread():
+    global websocket_thread
+    with websocket_thread_lock:
+        if websocket_thread is None:
+            websocket_thread = socketio.start_background_task(websocket_background_thread)
 
-launch_background_thread()
-
-# 
-# 
-# 
+launch_websocket_background_thread()
 
 @app.route('/')
 def index():
@@ -240,10 +198,6 @@ def connect():
 @socketio.on('disconnect')
 def test_disconnect():
     print('Client disconnected')
-
-# 
-# 
-# 
 
 if __name__ == '__main__':
     client = GraphqlClient(

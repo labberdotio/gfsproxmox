@@ -1,0 +1,16 @@
+ProxmoxMachineTypes:
+  cp10000:
+    data:
+      status: "PENDING"
+      statusTimeoutSecs: 3
+      memory: "8192"
+      arch: "x86_64"
+      bootdisk: "oneofum"
+      cores: "4"
+      memory: "2048"
+      numa: "0"
+      ostype: "l26"
+      sockets: "1"
+      CloneOf:
+        - "#centos8confluentTemplate"
+
