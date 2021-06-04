@@ -15,6 +15,7 @@ types:
       statusTimeoutSecs: integer
       lastPulseModifiedTime: integer
       step: integer
+      discovered: string
   MachineType:
     name: "Machine"
     version: 1
@@ -91,6 +92,8 @@ types:
       # cores: string
       # memory: string
       # sockets: string
+      HostedOn: 
+      - "#ProxmoxNodeType"
       numa: string
       ostype: string
 # the below are generated on creation and need synced back in
@@ -109,6 +112,7 @@ types:
       startup: string
       vga: string
       onboot: string
+      digest: string
       serial0: string
       serial1: string
       serial2: string
@@ -265,7 +269,7 @@ types:
     property: 
       name: string
       CloneOf: 
-      - "#ProxmoxMachineTemplateType"
+        "#ProxmoxMachineTemplateType"
     required:
       - name
 
@@ -274,14 +278,58 @@ types:
 ############################################
 # I N S T A N C E S 
 ############################################
-ProxmoxMachineTemplateTypes:
-  centos8ConfluentTemplate:
+ProxmoxNodeTypes:
+  botcore:
     data:
-      name: "centos8confluentTemplate"
+      name: "botcore"
+      networkDevice0: string
+      networkDevice1: string
+      networkDevice2: string
+      networkDevice3: string
+      networkDevice4: string
+      networkDevice5: string
+      networkDevice6: string
+      networkDevice7: string
+      certs: string
+      dns: string
+      hosts: string
+      time: string
+      firewall: string
+      diskController0: string
+      diskController1: string
+      diskDevice0: string
+      diskDevice1: string
+      diskDevice2: string
+      diskDevice3: string
+      diskDevice4: string
+      diskDevice5: string
+      diskDevice6: string
+      diskDevice7: string
+      lvmDevice0: string
+      lvmDevice1: string
+      lvmDevice2: string
+      lvmDevice3: string
+      lvmDevice4: string
+      lvmDevice5: string
+      lvmDevice6: string
+      lvmDevice7: string
+      lvmThinDevice0: string
+      lvmThinDevice1: string
+      lvmThinDevice2: string
+      lvmThinDevice3: string
+      lvmThinDevice4: string
+      lvmThinDevice5: string
+      lvmThinDevice6: string
+      lvmThinDevice7: string
+      directory: string
+      zfs: string
+      ceph: string
+
+ProxmoxMachineTemplateTypes:
+  centos8-template:
+    data:
       status: "PENDING"
-      lastStatusModifiedTime: 1000000
-      statusTimeoutSecs: 30
-      lastPulseModifiedTime: 1000000
+      statusTimeoutSecs: 3
       bootdisk: "scsi0"
       cores: "4"
       sockets: "1"
@@ -295,16 +343,17 @@ ProxmoxMachineTemplateTypes:
       scsi0: "local-lvm-1TB:base-50001-disk-0,size=50G"
       scsi1: "local-lvm-1TB:base-50001-disk-1,size=50G"
       net0: "virtio=E6:79:9B:3F:B5:04,bridge=vmbr0"
-      proxmoxVmID: "50001"
+      proxmoxVmID: "10000"
       smbios1: "uuid=beb1ac2d-e543-47d3-a0ca-c4040b07b8a2"
       vmgenid: "488bbd1a-2ec4-4187-a194-8330004d7207"
-  centos81ConfluentTemplate:
+      hasClones:
+        - cp10000
+        - cp10001
+      
+  debian-10.6.0-template-johns:
     data:
-      name: "centos8confluentTemplate"
       status: "PENDING"
-      lastStatusModifiedTime: 1000000
-      statusTimeoutSecs: 30
-      lastPulseModifiedTime: 1000000
+      statusTimeoutSecs: 3
       bootdisk: "scsi0"
       cores: "4"
       sockets: "1"
@@ -318,12 +367,14 @@ ProxmoxMachineTemplateTypes:
       scsi0: "local-lvm-1TB:base-50001-disk-0,size=50G"
       scsi1: "local-lvm-1TB:base-50001-disk-1,size=50G"
       net0: "virtio=E6:79:9B:3F:B5:04,bridge=vmbr0"
-      proxmoxVmID: "50001"
+      proxmoxVmID: "10001"
       smbios1: "uuid=beb1ac2d-e543-47d3-a0ca-c4040b07b8a2"
       vmgenid: "488bbd1a-2ec4-4187-a194-8330004d7207"
 ProxmoxMachineTypes:
   cp10000:
     data:
+      # status: "PENDING"
+      # statusTimeoutSecs: 3
       memory: "8192"
       arch: "x86_64"
       bootdisk: "oneofum"
@@ -333,9 +384,14 @@ ProxmoxMachineTypes:
       ostype: "l26"
       sockets: "1"
       CloneOf:
-        - "#centos8confluentTemplate"
+        "#centos8-template"
+      hasClones:
+        - cp10000
+        
   cp10001:
     data:
+      # status: "PENDING"
+      # statusTimeoutSecs: 3
       memory: "8192"
       arch: "x86_64"
       bootdisk: "oneofum"
@@ -345,7 +401,9 @@ ProxmoxMachineTypes:
       ostype: "l26"
       sockets: "1"
       CloneOf:
-        - "#centos8confluentTemplate"
+        "#centos8-template"
+      hasClones:
+        - cp10001
 
 ############################################
 ## Templates
