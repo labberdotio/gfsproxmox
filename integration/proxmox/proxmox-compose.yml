@@ -346,9 +346,6 @@ ProxmoxMachineTemplateTypes:
       proxmoxVmID: "10000"
       smbios1: "uuid=beb1ac2d-e543-47d3-a0ca-c4040b07b8a2"
       vmgenid: "488bbd1a-2ec4-4187-a194-8330004d7207"
-      hasClones:
-        - cp10000
-        - cp10001
       
   debian-10.6.0-template-johns:
     data:

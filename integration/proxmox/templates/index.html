@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>GFS event listener</title>
+	<title>{{type}} event listener</title>
 	<link 
         rel="stylesheet" 
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
@@ -43,9 +43,10 @@
                 console.log("Update: ");
                 console.log(msg);
                 node = $("<li class=\"list-group-item active\">" + 
-                    "<p>Event: " + msg.event + "</p>" + 
+                    "<p>Event: " + msg.event + ", ID: " + msg.id + ", Label: " + msg.label + "</p>" + 
+                    "<p>Source ID: " + msg.sourceid + ", Target ID: " + msg.targetid + "</p>" + 
                     "<p>Chain: " + msg.chain + "</p>" + 
-                    "<p>" + msg.id + ": " + msg.description + "</p>" + 
+                    "<p>" + msg.description + "</p>" + 
                 "</li>");
                 //$('#modellist').append(node);
                 $('#modellist').prepend(node);
@@ -57,16 +58,17 @@
 </head>
 <body>
 	<div class="container">
-		<h1>GFS event listener</h1>
+		<h1>{{type}} event listener</h1>
         <div class="alert alert-{{status}}" role="alert">
             API: {{GFSHOST}}:{{GFSPORT}}, active: {{active}}
         </div>
         <ul id="modellist" class="list-group">
         {% for model in models %}
             <li class="list-group-item">
-                <p>Event: {{model.event}}</p> 
+                <p>Event: {{model.event}}, ID: {{model.id}}, Label: {{model.label}}</p> 
+                <p>Source ID: {{model.sourceid}}, Target ID: {{model.targetid}}</p> 
                 <p>Chain: {{model.chain}}</p> 
-                <p>{{model.id}}: {{model.description}}</p> 
+                <p>{{model.description}}</p> 
             </li>
         {% endfor %}
         </ul>

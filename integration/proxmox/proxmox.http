@@ -2,9 +2,11 @@
 #
 #
 #
+# @PVEAPIToken = PVEAPIToken=bots@pam!botcanics=bc1f0af3-49f1-41a2-8729-003e99ec3625
+# @PVEAPIToken = PVEAPIToken=infra@pam!infraro=4a6127c9-ddaa-4992-8352-c797903d13c1
 
-@baseUrl = https://192.168.0.180:8006
 @PVEAPIToken = PVEAPIToken=bots@pam!botcanics=bc1f0af3-49f1-41a2-8729-003e99ec3625
+@baseUrl = https://192.168.0.180:8006
 @baseTemplateId = 10000
 @pool = botcanics
 @targetHost = botcore 
@@ -14,6 +16,27 @@
 GET {{baseUrl}}/api2/json/nodes
 Content-Type: application/json
 Authorization: {{PVEAPIToken}}
+
+# @nextId = {{callNodes.response.body.$.id}}
+
+###
+# @name callNode
+GET {{baseUrl}}/api2/json/nodes/botcore
+Content-Type: application/json
+Authorization: {{PVEAPIToken}}
+
+###
+# @name callQemu
+GET {{baseUrl}}/api2/json/nodes/botcore/qemu
+Content-Type: application/json
+Authorization: {{PVEAPIToken}}
+
+###
+# @name callVM
+GET {{baseUrl}}/api2/json/nodes/botcore/qemu/102/config
+Content-Type: application/json
+Authorization: {{PVEAPIToken}}
+
 
 ###
 # @name callNodeConfig
@@ -35,6 +58,8 @@ Authorization: {{PVEAPIToken}}
 POST {{baseUrl}}/api2/extjs/nodes/botcore/qemu/{{baseTemplateId}}/clone?newid={{nextId}}&pool={{pool}}&name=testVM123&target={{targetHost}} HTTP/1.1
 Content-Type: application/json
 Authorization: {{PVEAPIToken}}
+
+###
 
 ###
 # @name callCloneWithAvailableID

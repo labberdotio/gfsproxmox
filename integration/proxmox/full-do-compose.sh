@@ -14,12 +14,16 @@ source $THIS_DIR/settings.sh
 ## Main Automation Pipeline
 #########################################################
 
-$THIS_DIR/../../system/controller/gfs/do-compose.sh
+rm -f $THIS_DIR/full-do-compose.log
 
-/home/bots/git/gremlinfscl/dist/gfscompose create \
+$THIS_DIR/../../system/controller/gfs/do-compose.sh 
+# > $THIS_DIR/full-do-compose.log
+
+/home/bots/git/gremlinfscl/dist/gfscompose --verbose create \
   --host $GFS_HOST \
   --port $GFS_PORT \
   --namespace $GFS_NAMESPACE \
   --file $THIS_DIR/proxmox-compose.yml \
-  --verbose
+  --verbose 
+  # >> $THIS_DIR/full-do-compose.log
 # /usr/local/bin/gfscompose create --file $THIS_DIR/proxmox-compose2.yml

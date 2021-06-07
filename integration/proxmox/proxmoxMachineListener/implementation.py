@@ -20,9 +20,19 @@ PMOXAPI_CLONE_ENDPOINT = PMOXAPI + "/api2/extjs/nodes/botcore/qemu/{baseTemplate
 PMOXAPI_STATUS_ENDPOINT = PMOXAPI + "/api2/json/nodes/botcore/qemu/{vmId}/status/current"
 PMOXAPI_START_ENDPOINT = PMOXAPI + "/api2/extjs/nodes/botcore/qemu/{vmId}/status/start"
 PMOXAPI_STOP_ENDPOINT = PMOXAPI + "/api2/extjs/nodes/botcore/qemu/{vmId}/status/stop"
+PMOXAPI_NEXTID_ENDPOINT = PMOXAPI + "/api2/json/cluster/nextid"
+PMOXAPI_CLONE_ENDPOINT = PMOXAPI + "/api2/extjs/nodes/botcore/qemu/{baseTemplateId}/clone?newid={nextId}\&pool={pool}\&name={name}\&target={targetHost}"
+
+###
 
 GFSAPI_HOST = "192.168.0.160" # "192.168.0.160"
 GFSAPI_PORT = 5000
+
+headers = {
+    'user-agent': "botcanics-restclient",
+    'content-type': "application/json",
+    'authorization': "PVEAPIToken=bots@pam!botcanics=bc1f0af3-49f1-41a2-8729-003e99ec3625"
+}
 
 gfs_gqlclient = GFSGQL(
     gfs_host = GFSAPI_HOST, # gfs_host,
@@ -34,10 +44,62 @@ gfs_gqlclient = GFSGQL(
 def current_sec_time():
     return round(time.time())
 
+### Saved Stuff for Reference
+    # response = requests.get (
+    #     PMOXAPI_STATUS_ENDPOINT, 
+    #     headers=headers,
+    #     verify=False)
+    # print (response.text)
+
+# {'event': 'create_node', 
+# 'id': '98', 
+# 'label': 'ProxmoxMachine', 
+# 'sourceid': None, 
+# 'sourcelabel': None, 
+# 'targetid': None, 
+# 'targetlabel': None, 
+# 'chain': '', 
+# 'data': {'id': '98', 'name': 'test-vm'}, 'description': 'ProxmoxMachine(98), id: 98, name: test-vm'}
+# ---------Link Handler----------------
+# {'event': 'create_link', 'id': '187', 'label': 'instanceOf', 'sourceid': '98', 'sourcelabel': None, 'targetid': '60', 'targetlabel': None, 'chain': '', 'data': {'id': '98', 'name': 'test-vm'}, 'description': 'ProxmoxMachine(98), id: 98, name: test-vm'}
+
+
 def create_handler(statedata):
-    print ("---------Create Handler----------------")
-    print ("Machine Name: ")
+    # print ("---------Create Handler----------------")
+    # print ("Machine Name: ")
+    # print (statedata)
+    print ("--------------------------------------")
     print (statedata)
+    gfs_gqlclient.get(
+        resource=statedata['label'],
+        arguments={
+            "id": "String!"
+        },
+        variables={
+
+        },
+        fields={
+
+        }
+    )
+    nextid_response = requests.get (
+        url=PMOXAPI_NEXTID_ENDPOINT, 
+        headers=headers,
+        verify=False)
+    nextid_dict = json.loads(nextid_response.text)
+    next_id = nextid_dict['data']
+    print (next_id)
+    # clone_response = requests.post (
+    #     url=PMOXAPI_CLONE_ENDPOINT.format(
+    #         baseTemplateId=,
+    #         nextId=,
+    #         pool,
+    #         name,
+    #         targetHost
+    #     )
+    # )
+
+
 
 def update_handler(statedata):
     print ("---------Update Handler----------------")
@@ -49,7 +111,7 @@ def delete_handler(statedata):
 
 def link_handler(statedata):
     print ("---------Link Handler----------------")
-    print ("Machine Name: " + statedata["data"]["name"])
+    print (statedata)
 
 ### Saved Stuff for Reference
     # response = requests.get (
@@ -59,7 +121,7 @@ def link_handler(statedata):
     # print (response.text)
 
 def main():
-    gfs_gqlclient.create(
+    print (gfs_gqlclient.create(
         resource = "ProxmoxMachine", 
         arguments = {
             "name": "String!",
@@ -77,8 +139,6 @@ def main():
             "scsi0": "String",
             "cores": "String",
             "numa": "String",
-            "lastStatusModifiedTime": "Int",
-            "status": "String"
         }, 
         variables = {
             "name": "test-vm",
@@ -96,14 +156,11 @@ def main():
             "scsi0": "local-lvm-1TB:vm-102-disk-0,size=50G",
             "cores": "4",
             "numa": "0",
-            "lastStatusModifiedTime": current_sec_time(),
-            "status": "CREATED"
         }, 
         fields = [
-            "id",
-            "lastStatusModifiedTime"
+            "id"
         ]
-    )
+    ))
 
 if __name__ == "__main__":
     main()

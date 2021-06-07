@@ -1,0 +1,91 @@
+# Rough implementation of the GFS API HTTP exec'r
+#
+#
+@baseUrl = http://192.168.0.160:5000
+@machineName = botnode{{$randomInt 1000 10000}}
+@machineArch = x86_64
+@machineMemory = 4096
+@machineCPUs = 2
+@machineCores = 2
+@machineHT = yes
+
+###
+# @name callGetAllNodes
+GET {{baseUrl}}/api/v1.0/gfs1/graph HTTP/1.1
+Content-Type: application/json
+
+###
+# @name callCreateMachine
+POST {{baseUrl}}/gfs1/graphql HTTP/1.1
+Content-Type: application/json
+
+{"query": "\n            mutation createMachine($name:String!, $arch:String!, $memory:String!, $cpus:String!, $cores:String!, $ht:String!) {\n                createMachine(name:$name, arch:$arch, memory:$memory, cpus:$cpus, cores:$cores, ht:$ht) {\n                    instance {\n                        id, name, \n                    },\n                    ok\n                }\n            }\n        ", 
+  "variables": {
+    "name": "{{machineName}}",
+    "arch": "{{machineArch}}",
+    "memory": "{{machineMemory}}",
+    "cpus": "{{machineCPUs}}",
+    "cores": "{{machineCores}}",
+    "ht": "{{machineHT}}"
+  }
+}
+
+###
+@GFSID = {{callCreateMachine.response.body.$.data.createMachine.instance.id}}
+
+###
+# @name callGetContext
+GET {{baseUrl}}/api/v1.0/gfs1/context/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+###
+# @updateMachineName = botnode123
+@updateMachineArch = x86_64
+@updateMachineMemory = 8192
+@updateMachineCPUs = 1
+@updateMachineCores = 1
+@updateMachineHT = yes
+
+###
+# @name callUpdateMachine
+POST {{baseUrl}}/gfs1/graphql HTTP/1.1
+Content-Type: application/json
+
+{ 
+  "query": "\n            mutation updateMachine($id:String!, $name:String!, $arch:String!, $memory:String!, $cpus:String!, $cores:String!, $ht:String!) {\n                updateMachine(id:$id, name:$name, arch:$arch, memory:$memory, cpus:$cpus, cores:$cores, ht:$ht) {\n                    instance {\n                        id, name, \n                    },\n                    ok\n                }\n            }\n        ", 
+  "variables": {
+    "id": "{{GFSID}}", 
+    "name": "{{machineName}}",
+    "arch": "{{updateMachineArch}}",
+    "memory": "{{updateMachineMemory}}",
+    "cpus": "{{updateMachineCPUs}}",
+    "cores": "{{updateMachineCores}}", 
+    "ht": "{{updateMachineHT}}"
+  }
+}
+
+###
+# @name callGetContext
+GET {{baseUrl}}/api/v1.0/gfs1/context/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+###
+# @name callDelete
+DELETE {{baseUrl}}/api/v1.0/gfs1/vertex/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+### 
+POST {{baseUrl}}/api/v1.0/gfs1/edge HTTP/1.1
+Content-Type: application/json
+
+{
+    "@type": "g:Edge",
+    "@value": {
+        "label": "linkName",
+        "inVLabel": None,
+        "outVLabel": None,
+        "inV": "toId",
+        "outV": "fromId",
+        "properties": {}
+    }
+}

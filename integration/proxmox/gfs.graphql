@@ -1,0 +1,64 @@
+query getAllTemplates {
+  ProxmoxMachineTemplates {
+    id,
+    name,
+    cores,
+    startup
+  }
+}
+
+query getAllMachines {
+  Machines {
+    id, 
+    name,
+    cores
+  }
+}
+
+query getMachineById {
+	Machine (id: "1227") {
+    id,
+    name
+  }
+}
+
+query getMachineByProperty {
+  Machines (cores:"4") {
+    id,
+    name,
+    sockets
+  }
+}
+
+mutation updateStatus
+(
+        $id:String!,
+        $status: String,
+        $lastStatusModifiedTime: Int,
+        $statusTimeoutMillis: Int,
+    )
+{
+    updateProxmoxMachineTemplate (
+        id:$id,
+        status:$status,
+        lastStatusModifiedTime:$lastStatusModifiedTime,
+        statusTimeoutMillis:$statusTimeoutMillis,
+        ) {
+        instance {
+            id,
+            status,
+            lastStatusModifiedTime,
+            statusTimeoutMillis,
+        },
+        ok
+    }
+}
+
+{
+  "id": "13",
+  "status": "FAILING",
+  "lastStatusModifiedTime": 1622425572,
+  "statusTimeoutMillis": 30000
+}
+
+

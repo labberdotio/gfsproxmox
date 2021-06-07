@@ -17,6 +17,7 @@ GET {{baseUrl}}/api/v1.0/gfs1/graph HTTP/1.1
 Content-Type: application/json
 
 {}
+
 ###
 # @name callCreateProxmoxMachine
 POST {{baseUrl}}/gfs1/graphql HTTP/1.1
@@ -38,6 +39,8 @@ Content-Type: application/json
 ###
 @GFSID = {{callCreateProxmoxMachine.response.body.$.data.createProxmoxMachine.instance.id}}
 
+@GFSID = 53
+
 ###
 # @name callGetContext
 GET {{baseUrl}}/api/v1.0/gfs1/context/{{GFSID}} HTTP/1.1
@@ -47,27 +50,31 @@ Content-Type: application/json
 # @updateMachineName = botnode123
 @updateMachineArch = x86_64
 @updateMachineMemory = 8192
-@updateMachineCPUs = 1
+@updateMachineSockets = 1
 @updateMachineCores = 1
 @updateMachineHT = yes
 
 ###
-# @name callUpdateMachine
+# @name callUpdateProxmoxMachine
 POST {{baseUrl}}/gfs1/graphql HTTP/1.1
 Content-Type: application/json
 
 { 
-  "query": "\n            mutation updateMachine($id:String!, $name:String!, $arch:String!, $memory:String!, $cpus:String!, $cores:String!, $ht:String!) {\n                updateMachine(id:$id, name:$name, arch:$arch, memory:$memory, cpus:$cpus, cores:$cores, ht:$ht) {\n                    instance {\n                        id, name, \n                    },\n                    ok\n                }\n            }\n        ", 
+  "query": "\n            mutation updateMachine($id:String!, $bootdisk:String!, $arch:String!, $memory:String!, $cpus:String!, $cores:String!, $ht:String!) {\n                updateMachine(id:$id, name:$name, arch:$arch, memory:$memory, cpus:$cpus, cores:$cores, ht:$ht) {\n                    instance {\n                        id, name, \n                    },\n                    ok\n                }\n            }\n        ", 
   "variables": {
     "id": "{{GFSID}}", 
-    "name": "{{machineName}}",
+    "bootdisk": "{{machineBootdisk}}",
     "arch": "{{updateMachineArch}}",
     "memory": "{{updateMachineMemory}}",
-    "cpus": "{{updateMachineCPUs}}",
-    "cores": "{{updateMachineCores}}", 
-    "ht": "{{updateMachineHT}}"
+    "cores": "{{updateMachineCores}}"
   }
 }
+
+###
+# @name callGetContextStatic
+GET {{baseUrl}}/api/v1.0/gfs1/context/66 HTTP/1.1
+Content-Type: application/json
+
 
 ###
 # @name callGetContext

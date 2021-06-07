@@ -1,6 +1,4 @@
-
 import asyncio
-# import threading
 
 from threading import Lock
 
@@ -16,10 +14,10 @@ from flask_socketio import disconnect
 from python_graphql_client import GraphqlClient
 
 # from proxmoxer import ProxmoxAPI
-# from implementation import create_handler
-# from implementation import update_handler
-# from implementation import delete_handler
-# from implementation import link_handler
+from implementation import create_handler
+from implementation import update_handler
+from implementation import delete_handler
+from implementation import link_handler
 
 # Set this variable to "threading", "eventlet" or "gevent" to test the
 # different async modes, or leave it set to None for the application to choose
@@ -30,12 +28,13 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, async_mode=async_mode)
 
-thread = None
-thread_lock = Lock()
+websocket_thread = None
+websocket_thread_lock = Lock()
 
 GFSHOST = "192.168.0.160" # "192.168.0.160"
+#GFSHOST = "localhost" # "192.168.0.160"
 GFSPORT = 5000
-TYPE="Machine"
+TYPE = "ProxmoxMachineTemplate"
 
 LISTENERADDR = "0.0.0.0"
 LISTENERPORT = 5001
@@ -75,19 +74,17 @@ def callback(data = {}):
     typedata = data.get("data", {}).get(TYPE, {})
     typenode = typedata.get("node", {})
 
-    print(" ")
-    print(" New " + TYPE + " event: ")
-    print(" Event: " + str( typedata.get("event", "")) )
-    print(" Id: " + str( typedata.get("id", "")) )
-    print(" Label: " + str( typedata.get("label", "")) )
-    print(" SourceId: " + str( typedata.get("sourceid", "")) )
-    print(" SourceLabel: " + str( typedata.get("sourceid", "")) )
-    print(" TargetId: " + str( typedata.get("targetid", "")) )
-    print(" TargetLabel: " + str( typedata.get("targetlabel", "")) )
-    print(" Chain: " + str( typedata.get("chain", "")) )
-    # print(data)
-    # print(typedata)
-    print(" ")
+    # print(" ")
+    # print(" New " + TYPE + " event: ")
+    # print(" Event: " + str( typedata.get("event", "")) )
+    # print(" Id: " + str( typedata.get("id", "")) )
+    # print(" Label: " + str( typedata.get("label", "")) )
+    # print(" SourceId: " + str( typedata.get("sourceid", "")) )
+    # print(" SourceLabel: " + str( typedata.get("sourceid", "")) )
+    # print(" TargetId: " + str( typedata.get("targetid", "")) )
+    # print(" TargetLabel: " + str( typedata.get("targetlabel", "")) )
+    # print(" Chain: " + str( typedata.get("chain", "")) )
+    # print(" ")
 
     event = typedata.get("event", None)
     id = typedata.get("id", None)
@@ -104,73 +101,50 @@ def callback(data = {}):
         typenodedesc += ", " + key + ": " + typenode.get(key, "[NONE]")
 
     statedata = {
-        "event": event, 
-        "id": id, 
-        "label": label, 
-        "sourceid": sourceid, 
-        "sourcelabel": sourcelabel, 
-        "targetid": targetid, 
-        "targetlabel": targetlabel, 
+        "event": event,
+        "id": id,
+        "label": label,
+        "sourceid": sourceid,
+        "sourcelabel": sourcelabel,
+        "targetid": targetid,
+        "targetlabel": targetlabel,
         "chain": chain,
         "data": typenode,
         "description": typenodedesc
     }
 
-    # print(statedata)
-    # print(" ")
-
-    state.get("models", []).insert(0, statedata)
-
-    # socketio.emit(
-    #     'update', {
-    #         'data': statedata
-    #     }
-    # )
-
     socketio.emit(
         'update', statedata
     )
 
-    # delegate to implementation.py methods
-    # if event == "create_node":
-    #     create_handler(statedata)
-    # elif event == "update_node":
-    #     update_handler(statedata)
-    # elif event == "delete_node":
-    #     delete_handler(statedata)
-    # elif event == "create_link":
-    #     link_handler(statedata)
+    if event == "create_node":
+        create_handler(statedata)
+    elif event == "update_node":
+        update_handler(statedata)
+    elif event == "delete_node":
+        delete_handler(statedata)
+    elif event == "create_link":
+        link_handler(statedata)
 
-def background_thread():
-    """Example of how to send server generated events to clients."""
-
+def websocket_background_thread():
     state["active"] = True
-
-    # Asynchronous request
-    # loop = asyncio.get_event_loop()
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     loop.run_until_complete(
         client.subscribe(
             query=state.get("query"), 
             handle=callback
-            # handle=print
         )
     )
-
     state["active"] = False
 
-def launch_background_thread():
-    global thread
-    with thread_lock:
-        if thread is None:
-            thread = socketio.start_background_task(background_thread)
+def launch_websocket_background_thread():
+    global websocket_thread
+    with websocket_thread_lock:
+        if websocket_thread is None:
+            websocket_thread = socketio.start_background_task(websocket_background_thread)
 
-launch_background_thread()
-
-# 
-# 
-# 
+launch_websocket_background_thread()
 
 @app.route('/')
 def index():
@@ -224,10 +198,6 @@ def connect():
 @socketio.on('disconnect')
 def test_disconnect():
     print('Client disconnected')
-
-# 
-# 
-# 
 
 if __name__ == '__main__':
     client = GraphqlClient(

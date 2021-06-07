@@ -4,3 +4,4 @@ autonomic-compose.yml
 scratch.txt
 proxmox-compose-save.yml
 ..
+schema.graphql
