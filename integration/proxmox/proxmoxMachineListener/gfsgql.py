@@ -1,4 +1,3 @@
-
 import logging
 
 # logging.basicConfig(level=logging.WARNING)
@@ -7,8 +6,6 @@ import logging
 
 from python_graphql_client import GraphqlClient
 
-
-
 # 
 # GFS GraphQL client error class
 # 
@@ -16,8 +13,6 @@ class GFSGQLError(Exception):
 
     def __init__(self, error):
         pass
-
-
 
 # 
 # GFS GraphQL client
@@ -104,6 +99,8 @@ class GFSGQL():
                 val = fields.get(key)
                 if isinstance(val, dict):
                     ret += key + " {" + self.gqlfields(val) + "}" + ", "
+                elif isinstance(val, list):
+                    ret.append(val)
                 elif val:
                     ret += key + ", "
 

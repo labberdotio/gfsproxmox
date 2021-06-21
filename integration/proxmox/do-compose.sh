@@ -2,7 +2,7 @@
 set -e
 
 export GFS_NAMESPACE="gfs1"
-export GFS_HOST="192.168.0.160"
+export GFS_HOST="192.168.56.60"
 export GFS_PORT="5000"
 export GFS_USERNAME="root"
 export GFS_PASSWORD="root"
@@ -17,7 +17,7 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
   [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
 done
 THIS_DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
-source $THIS_DIR/settings.sh
+#source $THIS_DIR/settings.sh
 
 echo "Deleting Graph: curl -s -X 'DELETE' $GRAPH_URL"
 DELETE_RETVAL=$(curl -s -X "DELETE" $GRAPH_URL)

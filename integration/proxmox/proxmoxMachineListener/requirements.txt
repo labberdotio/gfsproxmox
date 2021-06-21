@@ -9,5 +9,3 @@ python-socketio
 werkzeug==0.14.1
 
 python-graphql-client
-
-polling

@@ -1,52 +1,60 @@
 # Proxmox CRUD for cloning a VM 
 #
-#
-#
 # @PVEAPIToken = PVEAPIToken=bots@pam!botcanics=bc1f0af3-49f1-41a2-8729-003e99ec3625
 # @PVEAPIToken = PVEAPIToken=infra@pam!infraro=4a6127c9-ddaa-4992-8352-c797903d13c1
 
-@PVEAPIToken = PVEAPIToken=bots@pam!botcanics=bc1f0af3-49f1-41a2-8729-003e99ec3625
-@baseUrl = https://192.168.0.180:8006
+@PVEAPIToken = PVEAPIToken=root@pam!root=c02e7bef-e140-40b2-a5e2-8b4674d66645
+@baseUrl = https://192.168.56.180:8006
 @baseTemplateId = 10000
 @pool = botcanics
-@targetHost = botcore 
+@targetHost = pve 
 
 ###
 # @name callNodes
 GET {{baseUrl}}/api2/json/nodes
 Content-Type: application/json
-Authorization: {{PVEAPIToken}}
-
-# @nextId = {{callNodes.response.body.$.id}}
+authorization: {{PVEAPIToken}}
 
 ###
-# @name callNode
-GET {{baseUrl}}/api2/json/nodes/botcore
+# @name callNodeStatus
+GET {{baseUrl}}/api2/json/nodes/pve/status
 Content-Type: application/json
 Authorization: {{PVEAPIToken}}
 
 ###
+# @name callNodeOther
+GET {{baseUrl}}/api2/json/nodes/pve/network/vmbr1
+Content-Type: application/json
+Authorization: {{PVEAPIToken}}
+
+
+###
 # @name callQemu
-GET {{baseUrl}}/api2/json/nodes/botcore/qemu
+GET {{baseUrl}}/api2/json/nodes/pve/qemu
+Content-Type: application/json
+Authorization: {{PVEAPIToken}}
+
+### 
+# @name manual 
+GET {{baseUrl}}/api2/extjs/nodes/pve/qemu
 Content-Type: application/json
 Authorization: {{PVEAPIToken}}
 
 ###
 # @name callVM
-GET {{baseUrl}}/api2/json/nodes/botcore/qemu/102/config
+GET {{baseUrl}}/api2/json/nodes/pve/qemu/101/config
 Content-Type: application/json
 Authorization: {{PVEAPIToken}}
 
-
 ###
 # @name callNodeConfig
-GET {{baseUrl}}/api2/json/nodes/botcore/disks/lvm
+GET {{baseUrl}}/api2/json/nodes/pve/disks/lvm
 Content-Type: application/json
 Authorization: {{PVEAPIToken}}
 
 ###
 # @name callNextid
-GET {{baseUrl}}/api2/json/cluster/nextid HTTP/1.1
+GET {{baseUrl}}/api2/json/cluster/nextid
 Content-Type: application/json
 Authorization: {{PVEAPIToken}}
 
@@ -55,50 +63,48 @@ Authorization: {{PVEAPIToken}}
 
 ###
 # @name callCloneWithNextID
-POST {{baseUrl}}/api2/extjs/nodes/botcore/qemu/{{baseTemplateId}}/clone?newid={{nextId}}&pool={{pool}}&name=testVM123&target={{targetHost}} HTTP/1.1
+POST {{baseUrl}}/api2/extjs/nodes/pve/qemu/{{baseTemplateId}}/clone?newid={{nextId}}&pool={{pool}}&name=testVM123&target={{targetHost}} HTTP/1.1
 Content-Type: application/json
 Authorization: {{PVEAPIToken}}
 
 ###
-
-###
 # @name callCloneWithAvailableID
-POST {{baseUrl}}/api2/extjs/nodes/botcore/qemu/{{baseTemplateId}}/clone?newid={{nextId}}&pool={{pool}}&name=testVM123&target={{targetHost}} HTTP/1.1
+POST {{baseUrl}}/api2/extjs/nodes/pve/qemu/{{baseTemplateId}}/clone?newid={{nextId}}&pool={{pool}}&name=testVM123&target={{targetHost}} HTTP/1.1
 Content-Type: application/json
 Authorization: {{PVEAPIToken}}
 
 ### 
 # @name callStatus
-GET {{baseUrl}}/api2/json/nodes/botcore/qemu/{{nextId}}/status/current HTTP/1.1
+GET {{baseUrl}}/api2/json/nodes/pve/qemu/{{nextId}}/status/current HTTP/1.1
 Content-Type: application/json
 Authorization: {{PVEAPIToken}}
 
 ### 
 # @name callConfig
-GET {{baseUrl}}/api2/json/nodes/botcore/qemu/{{nextId}}/config HTTP/1.1
+GET {{baseUrl}}/api2/json/nodes/pve/qemu/{{nextId}}/config HTTP/1.1
 Content-Type: application/json
 Authorization: {{PVEAPIToken}}
 
 ###
 # @name createDisk
-GET {{baseUrl}}/api2/json/nodes/botcore/qemu/{{nextId}}/config HTTP/1.1
+GET {{baseUrl}}/api2/json/nodes/pve/qemu/{{nextId}}/config HTTP/1.1
 Content-Type: application/json
 Authorization: {{PVEAPIToken}}
 
 ### 
 # @name callStart
-POST {{baseUrl}}/api2/json/nodes/botcore/qemu/{{nextId}}/status/start HTTP/1.1
+POST {{baseUrl}}/api2/json/nodes/pve/qemu/{{nextId}}/status/start HTTP/1.1
 Content-Type: application/json
 Authorization: {{PVEAPIToken}}
 
 ###
 # @name callStop
-POST {{baseUrl}}/api2/json/nodes/botcore/qemu/{{nextId}}/status/stop HTTP/1.1
+POST {{baseUrl}}/api2/json/nodes/pve/qemu/{{nextId}}/status/stop HTTP/1.1
 Content-Type: application/json
 Authorization: {{PVEAPIToken}}
 
 ### 
 # @name callDelete
-DELETE {{baseUrl}}/api2/extjs/nodes/botcore/qemu/{{nextId}}?purge=1 HTTP/1.1
+DELETE {{baseUrl}}/api2/extjs/nodes/pve/qemu/{{nextId}}?purge=1 HTTP/1.1
 Content-Type: application/json
 Authorization: {{PVEAPIToken}}

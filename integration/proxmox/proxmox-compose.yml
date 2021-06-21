@@ -16,12 +16,13 @@ types:
       lastPulseModifiedTime: integer
       step: integer
       discovered: string
+      lastAgentUpdateID: string
   MachineType:
     name: "Machine"
     version: 1
     extends:
-      - name: "Base"
-        version: 1
+      name: "Base"
+      version: 1
     property: 
       name: string
       bootdisk: string
@@ -29,14 +30,32 @@ types:
       sockets: string
       memory: string
       arch: string
+      gpu0: string
+      gpu1: string
+      gpu2: string
+      gpu3: string
   ProxmoxNodeType: 
     name: "ProxmoxNode"
     version: 1
     extends:
-      - name: "Machine"
-        version: 1
-    property: 
+      name: "Machine"
+      version: 1
+    property:
       name: string
+# status endpoint props start.
+      cpuinfo: string
+      cpu: string
+      memory: string
+      swap: string
+      uptime: string
+      loadavg: string
+      idle: string
+      wait: string
+      ksm: string
+      rootfs: string
+      kversion: string
+      pveversion: string
+# status endpoint props end.
       networkDevice0: string
       networkDevice1: string
       networkDevice2: string
@@ -46,7 +65,10 @@ types:
       networkDevice6: string
       networkDevice7: string
       certs: string
-      dns: string
+      dns1: string
+      dns2: string
+      dns3: string
+      search: string
       hosts: string
       time: string
       firewall: string
@@ -79,13 +101,12 @@ types:
       directory: string
       zfs: string
       ceph: string
-
-  ProxmoxBaseMachineType:
-    name: "ProxmoxBaseMachine"
+  ProxmoxBaseVMType:
+    name: "ProxmoxBaseVM"
     version: 1
     extends:
-      - name: "Machine"
-        version: 1
+      name: "Machine"
+      version: 1
     property:
       name: string
       # bootdisk: string
@@ -93,11 +114,10 @@ types:
       # memory: string
       # sockets: string
       HostedOn: 
-      - "#ProxmoxNodeType"
+        "#ProxmoxNodeType"
       numa: string
       ostype: string
-# the below are generated on creation and need synced back in
-      proxmoxVmID: string
+# the below are generated on creation of config and need synced back in 
       smbios1: string
       vmgenid: string
 # the below seem optional
@@ -112,7 +132,18 @@ types:
       startup: string
       vga: string
       onboot: string
+      boot: string
+# proxmox API /qemu item bound
+      vmid: string
+      cpus: string
+      uptime: string
+      pid: string
       digest: string
+      maxdisk: string
+      diskwrite: string
+      netout: string
+      netin: string
+# proxmox API /qemu item bound end.
       serial0: string
       serial1: string
       serial2: string
@@ -246,175 +277,126 @@ types:
       ideSize1: string
       ideSize2: string
       ideSize3: string
-
-  ProxmoxMachineTemplateType:
-    name: "ProxmoxMachineTemplate"
+  ProxmoxVMTemplateType:
+    name: "ProxmoxVMTemplate"
     version: 1
     extends:
-      - name: "ProxmoxBaseMachine"
-        version: 1
-    property: 
+      name: "ProxmoxBaseVM"
+      version: 1
+    property:
       name: string
       template: string
     required:
       - name
       - template
-
-  ProxmoxMachineType:
-    name: "ProxmoxMachine"
+  ProxmoxVMType:
+    name: "ProxmoxVM"
     version: 1
     extends:
-      - name: "ProxmoxBaseMachine"
-        version: 1
+      name: "ProxmoxBaseVM"
+      version: 1
     property: 
       name: string
       CloneOf: 
-        "#ProxmoxMachineTemplateType"
+        "#ProxmoxVMTemplateType"
     required:
       - name
-
-
 
 ############################################
 # I N S T A N C E S 
 ############################################
 ProxmoxNodeTypes:
-  botcore:
+  pve1:
     data:
-      name: "botcore"
-      networkDevice0: string
-      networkDevice1: string
-      networkDevice2: string
-      networkDevice3: string
-      networkDevice4: string
-      networkDevice5: string
-      networkDevice6: string
-      networkDevice7: string
-      certs: string
-      dns: string
-      hosts: string
-      time: string
-      firewall: string
-      diskController0: string
-      diskController1: string
-      diskDevice0: string
-      diskDevice1: string
-      diskDevice2: string
-      diskDevice3: string
-      diskDevice4: string
-      diskDevice5: string
-      diskDevice6: string
-      diskDevice7: string
-      lvmDevice0: string
-      lvmDevice1: string
-      lvmDevice2: string
-      lvmDevice3: string
-      lvmDevice4: string
-      lvmDevice5: string
-      lvmDevice6: string
-      lvmDevice7: string
-      lvmThinDevice0: string
-      lvmThinDevice1: string
-      lvmThinDevice2: string
-      lvmThinDevice3: string
-      lvmThinDevice4: string
-      lvmThinDevice5: string
-      lvmThinDevice6: string
-      lvmThinDevice7: string
-      directory: string
-      zfs: string
-      ceph: string
+      name: "pve"
+      status: "PENDING"
+      statusTimeoutSecs: 30
+      step: 10
+# ProxmoxVMTemplateTypes:
+#   centos8-template-v2:
+#     data:
+#       status: "PENDING"
+#       statusTimeoutSecs: 12
+#       step: 6
+#       boot: order=scsi0;ide2;net0
+#       cores: 3
+#       ide2: local:iso/CentOS-8.4.2105-x86_64-boot.iso,media=cdrom
+#       memory: 2048
+#       name: centos8-template-v1
+#       net0: virtio=2E:A5:6F:FC:FD:EF,bridge=vmbr1,firewall=1
+#       numa: 0
+#       ostype: l26
+#       scsi0: local-lvm:base-100-disk-0,size=10G
+#       scsihw: virtio-scsi-pci
+#       smbios1: uuid=4d8e2eac-149c-4ef3-bb7f-cdee8b7d251b
+#       sockets: 1
+#       template: 1
+#       vmgenid: 5cdeb801-04bd-480b-b3c8-28669cda8ea4
+#       vmid: "100"
+  # debian-10.6.0-template-johns:
+  #   data:
+  #     # status: "PENDING"
+  #     # statusTimeoutSecs: 3
+  #     bootdisk: "scsi0"
+  #     cores: "4"
+  #     sockets: "1"
+  #     memory: "2048"
+  #     template: "1"
+  #     numa: "0"
+  #     ostype: "l26"
+  #     arch: "x86_64"
+  #     ide2: "none,media=cdrom"
+  #     scsihw: "pvscsi"
+  #     scsi0: "local-lvm-1TB:base-50001-disk-0,size=50G"
+  #     scsi1: "local-lvm-1TB:base-50001-disk-1,size=50G"
+  #     net0: "virtio=E6:79:9B:3F:B5:04,bridge=vmbr0"
+  #     proxmoxVmID: "10001"
+  #     smbios1: "uuid=beb1ac2d-e543-47d3-a0ca-c4040b07b8a2"
+  #     vmgenid: "488bbd1a-2ec4-4187-a194-8330004d7207"
 
-ProxmoxMachineTemplateTypes:
-  centos8-template:
-    data:
-      status: "PENDING"
-      statusTimeoutSecs: 3
-      bootdisk: "scsi0"
-      cores: "4"
-      sockets: "1"
-      memory: "2048"
-      template: "1"
-      numa: "0"
-      ostype: "l26"
-      arch: "x86_64"
-      ide2: "none,media=cdrom"
-      scsihw: "pvscsi"
-      scsi0: "local-lvm-1TB:base-50001-disk-0,size=50G"
-      scsi1: "local-lvm-1TB:base-50001-disk-1,size=50G"
-      net0: "virtio=E6:79:9B:3F:B5:04,bridge=vmbr0"
-      proxmoxVmID: "10000"
-      smbios1: "uuid=beb1ac2d-e543-47d3-a0ca-c4040b07b8a2"
-      vmgenid: "488bbd1a-2ec4-4187-a194-8330004d7207"
-      
-  debian-10.6.0-template-johns:
-    data:
-      status: "PENDING"
-      statusTimeoutSecs: 3
-      bootdisk: "scsi0"
-      cores: "4"
-      sockets: "1"
-      memory: "2048"
-      template: "1"
-      numa: "0"
-      ostype: "l26"
-      arch: "x86_64"
-      ide2: "none,media=cdrom"
-      scsihw: "pvscsi"
-      scsi0: "local-lvm-1TB:base-50001-disk-0,size=50G"
-      scsi1: "local-lvm-1TB:base-50001-disk-1,size=50G"
-      net0: "virtio=E6:79:9B:3F:B5:04,bridge=vmbr0"
-      proxmoxVmID: "10001"
-      smbios1: "uuid=beb1ac2d-e543-47d3-a0ca-c4040b07b8a2"
-      vmgenid: "488bbd1a-2ec4-4187-a194-8330004d7207"
-ProxmoxMachineTypes:
-  cp10000:
-    data:
-      # status: "PENDING"
-      # statusTimeoutSecs: 3
-      memory: "8192"
-      arch: "x86_64"
-      bootdisk: "oneofum"
-      cores: "4"
-      memory: "2048"
-      numa: "0"
-      ostype: "l26"
-      sockets: "1"
-      CloneOf:
-        "#centos8-template"
-      hasClones:
-        - cp10000
-        
-  cp10001:
-    data:
-      # status: "PENDING"
-      # statusTimeoutSecs: 3
-      memory: "8192"
-      arch: "x86_64"
-      bootdisk: "oneofum"
-      cores: "4"
-      memory: "2048"
-      numa: "0"
-      ostype: "l26"
-      sockets: "1"
-      CloneOf:
-        "#centos8-template"
-      hasClones:
-        - cp10001
+# ProxmoxMachineTypes:
+#   cp10000:
+#     data:
+#       status: "PENDING"
+#       statusTimeoutSecs: 3
+#       memory: "8192"
+#       arch: "x86_64"
+#       bootdisk: "oneofum"
+#       cores: "4"
+#       memory: "2048"
+#       numa: "0"
+#       ostype: "l26"
+#       sockets: "1"
+#       CloneOf:
+#         "#centos8-template"
+#   cp10001:
+#     data:
+#       status: "PENDING"
+#       statusTimeoutSecs: 3
+#       memory: "8192"
+#       arch: "x86_64"
+#       bootdisk: "oneofum"
+#       cores: "4"
+#       memory: "2048"
+#       numa: "0"
+#       ostype: "l26"
+#       sockets: "1"
+#       CloneOf:
+#         "#centos8-template"
 
 ############################################
 ## Templates
 ############################################
-templates: 
-  proxmoxMachineTpl:
-    data:
-      template: "@./gfs_templates/proxmox-node.mustache"
+# templates: 
+#   proxmoxMachineTpl:
+#     data:
+#       template: "@./gfs_templates/proxmox-node.mustache"
 
 ############################################
 ## Templates LINKS 
 ############################################
 links:
-  viewdevBotcanicsDHCP:
+  viewProxmoxVMTemplate:
     label: "view"
     from: centos8ConfluentTemplate
     to: proxmoxMachineTpl

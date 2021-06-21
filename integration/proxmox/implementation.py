@@ -12,10 +12,19 @@ from gfsgql import GFSGQL
 
 requests.packages.urllib3.disable_warnings() 
 
+# headers = {
+#     'user-agent': "botcanics-restclient",
+#     'content-type': "application/json",
+#     'authorization': "PVEAPIToken=bots@pam!botcanics=bc1f0af3-49f1-41a2-8729-003e99ec3625"
+# }
+
+# root@pam!rootadmin
+# 02a34aa5-44cb-4e74-9c0e-6a630cc5f5b2
+
 headers = {
     'user-agent': "botcanics-restclient",
     'content-type': "application/json",
-    'authorization': "PVEAPIToken=bots@pam!botcanics=bc1f0af3-49f1-41a2-8729-003e99ec3625"
+    'authorization': "PVEAPIToken=root@pam!rootadmin=02a34aa5-44cb-4e74-9c0e-6a630cc5f5b2"
 }
 
 PROXMOX_HOST="192.168.0.180"
@@ -82,6 +91,10 @@ def sync_proxmox(statedata):
         headers = headers,
         verify = False,
     )
+
+    print ("value: ")
+    print (vm_config)
+    return
     # print (vms.content)
     vm_config_dict = dict(json.loads(vm_config.content)['data'])
     # print (vm_config_dict)
@@ -141,7 +154,6 @@ def sync_proxmox(statedata):
 
 def update_handler(statedata):
     _thread.start_new_thread(syncProxmox, (statedata,))
-    # syncProxmox(statedata=statedata)
 # print (updated_nodes)
 
 # updated_node = requests.get(
@@ -151,7 +163,6 @@ def update_handler(statedata):
 #     verify=False
 # )
 # print (updated_node.content)
-
 
 def delete_handler(statedata):
     print ("---------Delete Handler----------------")
