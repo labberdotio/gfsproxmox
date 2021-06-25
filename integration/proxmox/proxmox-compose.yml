@@ -110,6 +110,8 @@ types:
       version: 1
     property:
       name: string
+      vmId: string
+      vmName: string
       # bootdisk: string
       # cores: string
       # memory: string
@@ -135,7 +137,6 @@ types:
       onboot: string
       boot: string
 # proxmox API /qemu item bound
-      vmid: string
       cpus: string
       uptime: string
       pid: string

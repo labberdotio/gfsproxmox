@@ -34,7 +34,7 @@ websocket_thread_lock = Lock()
 GFSHOST = "192.168.56.60" # "192.168.0.160"
 #GFSHOST = "localhost" # "192.168.0.160"
 GFSPORT = 5000
-TYPE = "ProxmoxMachine"
+TYPE = "ProxmoxBaseVM"
 
 LISTENERADDR = "0.0.0.0"
 LISTENERPORT = 5002
