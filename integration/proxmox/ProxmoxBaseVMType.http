@@ -1,0 +1,1299 @@
+
+
+#
+# Automatic GFS API HTTP Crud generator
+#
+
+@baseUrl = http://192.168.0.160:5000
+
+# status: String
+@createStatus = 
+
+# scsiSize24: String
+@createScsisize24 = 
+
+# net15: String
+@createNet15 = 
+
+# scsiSize14: String
+@createScsisize14 = 
+
+# net7: String
+@createNet7 = 
+
+# pid: String
+@createPid = 
+
+# scsi1: String
+@createScsi1 = 
+
+# resourcePool: String
+@createResourcepool = 
+
+# scsiSize9: String
+@createScsisize9 = 
+
+# scsiSize6: String
+@createScsisize6 = 
+
+# net28: String
+@createNet28 = 
+
+# net25: String
+@createNet25 = 
+
+# net4: String
+@createNet4 = 
+
+# boot: String
+@createBoot = 
+
+# serial2: String
+@createSerial2 = 
+
+# ideSize0: String
+@createIdesize0 = 
+
+# net1: String
+@createNet1 = 
+
+# scsi4: String
+@createScsi4 = 
+
+# startup: String
+@createStartup = 
+
+# scsiSize27: String
+@createScsisize27 = 
+
+# net22: String
+@createNet22 = 
+
+# net12: String
+@createNet12 = 
+
+# scsiSize17: String
+@createScsisize17 = 
+
+# sata1: String
+@createSata1 = 
+
+# scsi25: String
+@createScsi25 = 
+
+# lastStatusModifiedTime: Integer
+@createLaststatusmodifiedtime = 
+
+# ide1: String
+@createIde1 = 
+
+# scsi7: String
+@createScsi7 = 
+
+# scsi10: String
+@createScsi10 = 
+
+# vmId: String
+@createVmid = 
+
+# scsi30: String
+@createScsi30 = 
+
+# ideSize3: String
+@createIdesize3 = 
+
+# scsi28: String
+@createScsi28 = 
+
+# scsiSize11: String
+@createScsisize11 = 
+
+# net18: String
+@createNet18 = 
+
+# cores: String
+@createCores = 
+
+# cpus: String
+@createCpus = 
+
+# scsi13: String
+@createScsi13 = 
+
+# netout: String
+@createNetout = 
+
+# scsi6: String
+@createScsi6 = 
+
+# scsi16: String
+@createScsi16 = 
+
+# sataSize1: String
+@createSatasize1 = 
+
+# vmName: String
+@createVmname = 
+
+# scsiSize4: String
+@createScsisize4 = 
+
+# scsiSize16: String
+@createScsisize16 = 
+
+# ideSize2: String
+@createIdesize2 = 
+
+# scsiSize29: String
+@createScsisize29 = 
+
+# bios: String
+@createBios = 
+
+# scsi26: String
+@createScsi26 = 
+
+# net20: String
+@createNet20 = 
+
+# digest: String
+@createDigest = 
+
+# numa: String
+@createNuma = 
+
+# net10: String
+@createNet10 = 
+
+# sataSize5: String
+@createSatasize5 = 
+
+# net27: String
+@createNet27 = 
+
+# scsiSize22: String
+@createScsisize22 = 
+
+# net17: String
+@createNet17 = 
+
+# lastPulseModifiedTime: Integer
+@createLastpulsemodifiedtime = 
+
+# sata3: String
+@createSata3 = 
+
+# ide3: String
+@createIde3 = 
+
+# net6: String
+@createNet6 = 
+
+# scsi15: String
+@createScsi15 = 
+
+# maxdisk: String
+@createMaxdisk = 
+
+# scsi20: String
+@createScsi20 = 
+
+# sataSize0: String
+@createSatasize0 = 
+
+# scsiSize10: String
+@createScsisize10 = 
+
+# vmgenid: String
+@createVmgenid = 
+
+# vga: String
+@createVga = 
+
+# statusTimeoutSecs: Integer
+@createStatustimeoutsecs = 
+
+# net5: String
+@createNet5 = 
+
+# scsiSize21: String
+@createScsisize21 = 
+
+# net21: String
+@createNet21 = 
+
+# scsiSize28: String
+@createScsisize28 = 
+
+# scsi5: String
+@createScsi5 = 
+
+# scsiSize3: String
+@createScsisize3 = 
+
+# net16: String
+@createNet16 = 
+
+# sata2: String
+@createSata2 = 
+
+# serial0: String
+@createSerial0 = 
+
+# name: String
+@createName = 
+
+# ideSize1: String
+@createIdesize1 = 
+
+# scsi24: String
+@createScsi24 = 
+
+# memory: String
+@createMemory = 
+
+# machine: String
+@createMachine = 
+
+# ide2: String
+@createIde2 = 
+
+# scsi21: String
+@createScsi21 = 
+
+# scsi11: String
+@createScsi11 = 
+
+# scsiSize2: String
+@createScsisize2 = 
+
+# scsi17: String
+@createScsi17 = 
+
+# scsi14: String
+@createScsi14 = 
+
+# scsi27: String
+@createScsi27 = 
+
+# step: Integer
+@createStep = 
+
+# smbios1: String
+@createSmbios1 = 
+
+# sockets: String
+@createSockets = 
+
+# net14: String
+@createNet14 = 
+
+# serial1: String
+@createSerial1 = 
+
+# scsiSize15: String
+@createScsisize15 = 
+
+# sataSize2: String
+@createSatasize2 = 
+
+# cpu: String
+@createCpu = 
+
+# scsiSize20: String
+@createScsisize20 = 
+
+# lastAgentUpdateID: String
+@createLastagentupdateid = 
+
+# net3: String
+@createNet3 = 
+
+# diskwrite: String
+@createDiskwrite = 
+
+# scsiSize5: String
+@createScsisize5 = 
+
+# net29: String
+@createNet29 = 
+
+# onboot: String
+@createOnboot = 
+
+# scsiSize18: String
+@createScsisize18 = 
+
+# scsiSize8: String
+@createScsisize8 = 
+
+# net31: String
+@createNet31 = 
+
+# scsi3: String
+@createScsi3 = 
+
+# net0: String
+@createNet0 = 
+
+# net11: String
+@createNet11 = 
+
+# scsiSize23: String
+@createScsisize23 = 
+
+# scsiSize26: String
+@createScsisize26 = 
+
+# cpulimit: String
+@createCpulimit = 
+
+# net26: String
+@createNet26 = 
+
+# scsi0: String
+@createScsi0 = 
+
+# net2: String
+@createNet2 = 
+
+# ide0: String
+@createIde0 = 
+
+# net23: String
+@createNet23 = 
+
+# uptime: String
+@createUptime = 
+
+# net13: String
+@createNet13 = 
+
+# net9: String
+@createNet9 = 
+
+# sata0: String
+@createSata0 = 
+
+# scsiSize1: String
+@createScsisize1 = 
+
+# scsiSize19: String
+@createScsisize19 = 
+
+# net30: String
+@createNet30 = 
+
+# sata4: String
+@createSata4 = 
+
+# scsi22: String
+@createScsi22 = 
+
+# scsiSize12: String
+@createScsisize12 = 
+
+# scsiSize7: String
+@createScsisize7 = 
+
+# sataSize4: String
+@createSatasize4 = 
+
+# scsi19: String
+@createScsi19 = 
+
+# scsi29: String
+@createScsi29 = 
+
+# scsi12: String
+@createScsi12 = 
+
+# netin: String
+@createNetin = 
+
+# agent: String
+@createAgent = 
+
+# scsi9: String
+@createScsi9 = 
+
+# balloon: String
+@createBalloon = 
+
+# net8: String
+@createNet8 = 
+
+# net24: String
+@createNet24 = 
+
+# scsiSize0: String
+@createScsisize0 = 
+
+# net19: String
+@createNet19 = 
+
+# scsiSize25: String
+@createScsisize25 = 
+
+# scsiSize30: String
+@createScsisize30 = 
+
+# scsi2: String
+@createScsi2 = 
+
+# scsi18: String
+@createScsi18 = 
+
+# scsihw: String
+@createScsihw = 
+
+# ostype: String
+@createOstype = 
+
+# bootdisk: String
+@createBootdisk = 
+
+# serial3: String
+@createSerial3 = 
+
+# sata5: String
+@createSata5 = 
+
+# scsi8: String
+@createScsi8 = 
+
+# sataSize3: String
+@createSatasize3 = 
+
+# scsiSize13: String
+@createScsisize13 = 
+
+# scsi23: String
+@createScsi23 = 
+
+
+###
+# @name callGetAllNodes
+GET {{baseUrl}}/api/v1.0/gfs1/graph HTTP/1.1
+Content-Type: application/json
+
+{}
+
+###
+# @name createProxmoxBaseVM
+POST {{baseUrl}}/gfs1/graphql HTTP/1.1
+Content-Type: application/json
+
+{"query": "            mutation createProxmoxBaseVM($status:String, $scsiSize24:String, $net15:String, $scsiSize14:String, $net7:String, $pid:String, $scsi1:String, $resourcePool:String, $scsiSize9:String, $scsiSize6:String, $net28:String, $net25:String, $net4:String, $boot:String, $serial2:String, $ideSize0:String, $net1:String, $scsi4:String, $startup:String, $scsiSize27:String, $net22:String, $net12:String, $scsiSize17:String, $sata1:String, $scsi25:String, $lastStatusModifiedTime:Integer, $ide1:String, $scsi7:String, $scsi10:String, $vmId:String, $scsi30:String, $ideSize3:String, $scsi28:String, $scsiSize11:String, $net18:String, $cores:String, $cpus:String, $scsi13:String, $netout:String, $scsi6:String, $scsi16:String, $sataSize1:String, $vmName:String, $scsiSize4:String, $scsiSize16:String, $ideSize2:String, $scsiSize29:String, $bios:String, $scsi26:String, $net20:String, $digest:String, $numa:String, $net10:String, $sataSize5:String, $net27:String, $scsiSize22:String, $net17:String, $lastPulseModifiedTime:Integer, $sata3:String, $ide3:String, $net6:String, $scsi15:String, $maxdisk:String, $scsi20:String, $sataSize0:String, $scsiSize10:String, $vmgenid:String, $vga:String, $statusTimeoutSecs:Integer, $net5:String, $scsiSize21:String, $net21:String, $scsiSize28:String, $scsi5:String, $scsiSize3:String, $net16:String, $sata2:String, $serial0:String, $name:String, $ideSize1:String, $scsi24:String, $memory:String, $machine:String, $ide2:String, $scsi21:String, $scsi11:String, $scsiSize2:String, $scsi17:String, $scsi14:String, $scsi27:String, $step:Integer, $smbios1:String, $sockets:String, $net14:String, $serial1:String, $scsiSize15:String, $sataSize2:String, $cpu:String, $scsiSize20:String, $lastAgentUpdateID:String, $net3:String, $diskwrite:String, $scsiSize5:String, $net29:String, $onboot:String, $scsiSize18:String, $scsiSize8:String, $net31:String, $scsi3:String, $net0:String, $net11:String, $scsiSize23:String, $scsiSize26:String, $cpulimit:String, $net26:String, $scsi0:String, $net2:String, $ide0:String, $net23:String, $uptime:String, $net13:String, $net9:String, $sata0:String, $scsiSize1:String, $scsiSize19:String, $net30:String, $sata4:String, $scsi22:String, $scsiSize12:String, $scsiSize7:String, $sataSize4:String, $scsi19:String, $scsi29:String, $scsi12:String, $netin:String, $agent:String, $scsi9:String, $balloon:String, $net8:String, $net24:String, $scsiSize0:String, $net19:String, $scsiSize25:String, $scsiSize30:String, $scsi2:String, $scsi18:String, $scsihw:String, $ostype:String, $bootdisk:String, $serial3:String, $sata5:String, $scsi8:String, $sataSize3:String, $scsiSize13:String, $scsi23:String, ) {                createProxmoxBaseVM(status:$status, scsiSize24:$scsiSize24, net15:$net15, scsiSize14:$scsiSize14, net7:$net7, pid:$pid, scsi1:$scsi1, resourcePool:$resourcePool, scsiSize9:$scsiSize9, scsiSize6:$scsiSize6, net28:$net28, net25:$net25, net4:$net4, boot:$boot, serial2:$serial2, ideSize0:$ideSize0, net1:$net1, scsi4:$scsi4, startup:$startup, scsiSize27:$scsiSize27, net22:$net22, net12:$net12, scsiSize17:$scsiSize17, sata1:$sata1, scsi25:$scsi25, lastStatusModifiedTime:$lastStatusModifiedTime, ide1:$ide1, scsi7:$scsi7, scsi10:$scsi10, vmId:$vmId, scsi30:$scsi30, ideSize3:$ideSize3, scsi28:$scsi28, scsiSize11:$scsiSize11, net18:$net18, cores:$cores, cpus:$cpus, scsi13:$scsi13, netout:$netout, scsi6:$scsi6, scsi16:$scsi16, sataSize1:$sataSize1, vmName:$vmName, scsiSize4:$scsiSize4, scsiSize16:$scsiSize16, ideSize2:$ideSize2, scsiSize29:$scsiSize29, bios:$bios, scsi26:$scsi26, net20:$net20, digest:$digest, numa:$numa, net10:$net10, sataSize5:$sataSize5, net27:$net27, scsiSize22:$scsiSize22, net17:$net17, lastPulseModifiedTime:$lastPulseModifiedTime, sata3:$sata3, ide3:$ide3, net6:$net6, scsi15:$scsi15, maxdisk:$maxdisk, scsi20:$scsi20, sataSize0:$sataSize0, scsiSize10:$scsiSize10, vmgenid:$vmgenid, vga:$vga, statusTimeoutSecs:$statusTimeoutSecs, net5:$net5, scsiSize21:$scsiSize21, net21:$net21, scsiSize28:$scsiSize28, scsi5:$scsi5, scsiSize3:$scsiSize3, net16:$net16, sata2:$sata2, serial0:$serial0, name:$name, ideSize1:$ideSize1, scsi24:$scsi24, memory:$memory, machine:$machine, ide2:$ide2, scsi21:$scsi21, scsi11:$scsi11, scsiSize2:$scsiSize2, scsi17:$scsi17, scsi14:$scsi14, scsi27:$scsi27, step:$step, smbios1:$smbios1, sockets:$sockets, net14:$net14, serial1:$serial1, scsiSize15:$scsiSize15, sataSize2:$sataSize2, cpu:$cpu, scsiSize20:$scsiSize20, lastAgentUpdateID:$lastAgentUpdateID, net3:$net3, diskwrite:$diskwrite, scsiSize5:$scsiSize5, net29:$net29, onboot:$onboot, scsiSize18:$scsiSize18, scsiSize8:$scsiSize8, net31:$net31, scsi3:$scsi3, net0:$net0, net11:$net11, scsiSize23:$scsiSize23, scsiSize26:$scsiSize26, cpulimit:$cpulimit, net26:$net26, scsi0:$scsi0, net2:$net2, ide0:$ide0, net23:$net23, uptime:$uptime, net13:$net13, net9:$net9, sata0:$sata0, scsiSize1:$scsiSize1, scsiSize19:$scsiSize19, net30:$net30, sata4:$sata4, scsi22:$scsi22, scsiSize12:$scsiSize12, scsiSize7:$scsiSize7, sataSize4:$sataSize4, scsi19:$scsi19, scsi29:$scsi29, scsi12:$scsi12, netin:$netin, agent:$agent, scsi9:$scsi9, balloon:$balloon, net8:$net8, net24:$net24, scsiSize0:$scsiSize0, net19:$net19, scsiSize25:$scsiSize25, scsiSize30:$scsiSize30, scsi2:$scsi2, scsi18:$scsi18, scsihw:$scsihw, ostype:$ostype, bootdisk:$bootdisk, serial3:$serial3, sata5:$sata5, scsi8:$scsi8, sataSize3:$sataSize3, scsiSize13:$scsiSize13, scsi23:$scsi23, ) {                    instance {                        id, status, scsiSize24, net15, scsiSize14, net7, pid, scsi1, resourcePool, scsiSize9, scsiSize6, net28, net25, net4, boot, serial2, ideSize0, net1, scsi4, startup, scsiSize27, net22, net12, scsiSize17, sata1, scsi25, lastStatusModifiedTime, ide1, scsi7, scsi10, vmId, scsi30, ideSize3, scsi28, scsiSize11, net18, cores, cpus, scsi13, netout, scsi6, scsi16, sataSize1, vmName, scsiSize4, scsiSize16, ideSize2, scsiSize29, bios, scsi26, net20, digest, numa, net10, sataSize5, net27, scsiSize22, net17, lastPulseModifiedTime, sata3, ide3, net6, scsi15, maxdisk, scsi20, sataSize0, scsiSize10, vmgenid, vga, statusTimeoutSecs, net5, scsiSize21, net21, scsiSize28, scsi5, scsiSize3, net16, sata2, serial0, name, ideSize1, scsi24, memory, machine, ide2, scsi21, scsi11, scsiSize2, scsi17, scsi14, scsi27, step, smbios1, sockets, net14, serial1, scsiSize15, sataSize2, cpu, scsiSize20, lastAgentUpdateID, net3, diskwrite, scsiSize5, net29, onboot, scsiSize18, scsiSize8, net31, scsi3, net0, net11, scsiSize23, scsiSize26, cpulimit, net26, scsi0, net2, ide0, net23, uptime, net13, net9, sata0, scsiSize1, scsiSize19, net30, sata4, scsi22, scsiSize12, scsiSize7, sataSize4, scsi19, scsi29, scsi12, netin, agent, scsi9, balloon, net8, net24, scsiSize0, net19, scsiSize25, scsiSize30, scsi2, scsi18, scsihw, ostype, bootdisk, serial3, sata5, scsi8, sataSize3, scsiSize13, scsi23,                      },                    ok                }            }        ", 
+  "variables": { 
+    "status": "{{createStatus}}",
+    "scsiSize24": "{{createScsisize24}}",
+    "net15": "{{createNet15}}",
+    "scsiSize14": "{{createScsisize14}}",
+    "net7": "{{createNet7}}",
+    "pid": "{{createPid}}",
+    "scsi1": "{{createScsi1}}",
+    "resourcePool": "{{createResourcepool}}",
+    "scsiSize9": "{{createScsisize9}}",
+    "scsiSize6": "{{createScsisize6}}",
+    "net28": "{{createNet28}}",
+    "net25": "{{createNet25}}",
+    "net4": "{{createNet4}}",
+    "boot": "{{createBoot}}",
+    "serial2": "{{createSerial2}}",
+    "ideSize0": "{{createIdesize0}}",
+    "net1": "{{createNet1}}",
+    "scsi4": "{{createScsi4}}",
+    "startup": "{{createStartup}}",
+    "scsiSize27": "{{createScsisize27}}",
+    "net22": "{{createNet22}}",
+    "net12": "{{createNet12}}",
+    "scsiSize17": "{{createScsisize17}}",
+    "sata1": "{{createSata1}}",
+    "scsi25": "{{createScsi25}}",
+    "lastStatusModifiedTime": "{{createLaststatusmodifiedtime}}",
+    "ide1": "{{createIde1}}",
+    "scsi7": "{{createScsi7}}",
+    "scsi10": "{{createScsi10}}",
+    "vmId": "{{createVmid}}",
+    "scsi30": "{{createScsi30}}",
+    "ideSize3": "{{createIdesize3}}",
+    "scsi28": "{{createScsi28}}",
+    "scsiSize11": "{{createScsisize11}}",
+    "net18": "{{createNet18}}",
+    "cores": "{{createCores}}",
+    "cpus": "{{createCpus}}",
+    "scsi13": "{{createScsi13}}",
+    "netout": "{{createNetout}}",
+    "scsi6": "{{createScsi6}}",
+    "scsi16": "{{createScsi16}}",
+    "sataSize1": "{{createSatasize1}}",
+    "vmName": "{{createVmname}}",
+    "scsiSize4": "{{createScsisize4}}",
+    "scsiSize16": "{{createScsisize16}}",
+    "ideSize2": "{{createIdesize2}}",
+    "scsiSize29": "{{createScsisize29}}",
+    "bios": "{{createBios}}",
+    "scsi26": "{{createScsi26}}",
+    "net20": "{{createNet20}}",
+    "digest": "{{createDigest}}",
+    "numa": "{{createNuma}}",
+    "net10": "{{createNet10}}",
+    "sataSize5": "{{createSatasize5}}",
+    "net27": "{{createNet27}}",
+    "scsiSize22": "{{createScsisize22}}",
+    "net17": "{{createNet17}}",
+    "lastPulseModifiedTime": "{{createLastpulsemodifiedtime}}",
+    "sata3": "{{createSata3}}",
+    "ide3": "{{createIde3}}",
+    "net6": "{{createNet6}}",
+    "scsi15": "{{createScsi15}}",
+    "maxdisk": "{{createMaxdisk}}",
+    "scsi20": "{{createScsi20}}",
+    "sataSize0": "{{createSatasize0}}",
+    "scsiSize10": "{{createScsisize10}}",
+    "vmgenid": "{{createVmgenid}}",
+    "vga": "{{createVga}}",
+    "statusTimeoutSecs": "{{createStatustimeoutsecs}}",
+    "net5": "{{createNet5}}",
+    "scsiSize21": "{{createScsisize21}}",
+    "net21": "{{createNet21}}",
+    "scsiSize28": "{{createScsisize28}}",
+    "scsi5": "{{createScsi5}}",
+    "scsiSize3": "{{createScsisize3}}",
+    "net16": "{{createNet16}}",
+    "sata2": "{{createSata2}}",
+    "serial0": "{{createSerial0}}",
+    "name": "{{createName}}",
+    "ideSize1": "{{createIdesize1}}",
+    "scsi24": "{{createScsi24}}",
+    "memory": "{{createMemory}}",
+    "machine": "{{createMachine}}",
+    "ide2": "{{createIde2}}",
+    "scsi21": "{{createScsi21}}",
+    "scsi11": "{{createScsi11}}",
+    "scsiSize2": "{{createScsisize2}}",
+    "scsi17": "{{createScsi17}}",
+    "scsi14": "{{createScsi14}}",
+    "scsi27": "{{createScsi27}}",
+    "step": "{{createStep}}",
+    "smbios1": "{{createSmbios1}}",
+    "sockets": "{{createSockets}}",
+    "net14": "{{createNet14}}",
+    "serial1": "{{createSerial1}}",
+    "scsiSize15": "{{createScsisize15}}",
+    "sataSize2": "{{createSatasize2}}",
+    "cpu": "{{createCpu}}",
+    "scsiSize20": "{{createScsisize20}}",
+    "lastAgentUpdateID": "{{createLastagentupdateid}}",
+    "net3": "{{createNet3}}",
+    "diskwrite": "{{createDiskwrite}}",
+    "scsiSize5": "{{createScsisize5}}",
+    "net29": "{{createNet29}}",
+    "onboot": "{{createOnboot}}",
+    "scsiSize18": "{{createScsisize18}}",
+    "scsiSize8": "{{createScsisize8}}",
+    "net31": "{{createNet31}}",
+    "scsi3": "{{createScsi3}}",
+    "net0": "{{createNet0}}",
+    "net11": "{{createNet11}}",
+    "scsiSize23": "{{createScsisize23}}",
+    "scsiSize26": "{{createScsisize26}}",
+    "cpulimit": "{{createCpulimit}}",
+    "net26": "{{createNet26}}",
+    "scsi0": "{{createScsi0}}",
+    "net2": "{{createNet2}}",
+    "ide0": "{{createIde0}}",
+    "net23": "{{createNet23}}",
+    "uptime": "{{createUptime}}",
+    "net13": "{{createNet13}}",
+    "net9": "{{createNet9}}",
+    "sata0": "{{createSata0}}",
+    "scsiSize1": "{{createScsisize1}}",
+    "scsiSize19": "{{createScsisize19}}",
+    "net30": "{{createNet30}}",
+    "sata4": "{{createSata4}}",
+    "scsi22": "{{createScsi22}}",
+    "scsiSize12": "{{createScsisize12}}",
+    "scsiSize7": "{{createScsisize7}}",
+    "sataSize4": "{{createSatasize4}}",
+    "scsi19": "{{createScsi19}}",
+    "scsi29": "{{createScsi29}}",
+    "scsi12": "{{createScsi12}}",
+    "netin": "{{createNetin}}",
+    "agent": "{{createAgent}}",
+    "scsi9": "{{createScsi9}}",
+    "balloon": "{{createBalloon}}",
+    "net8": "{{createNet8}}",
+    "net24": "{{createNet24}}",
+    "scsiSize0": "{{createScsisize0}}",
+    "net19": "{{createNet19}}",
+    "scsiSize25": "{{createScsisize25}}",
+    "scsiSize30": "{{createScsisize30}}",
+    "scsi2": "{{createScsi2}}",
+    "scsi18": "{{createScsi18}}",
+    "scsihw": "{{createScsihw}}",
+    "ostype": "{{createOstype}}",
+    "bootdisk": "{{createBootdisk}}",
+    "serial3": "{{createSerial3}}",
+    "sata5": "{{createSata5}}",
+    "scsi8": "{{createScsi8}}",
+    "sataSize3": "{{createSatasize3}}",
+    "scsiSize13": "{{createScsisize13}}",
+    "scsi23": "{{createScsi23}}"
+  }
+}
+
+###
+@GFSID = {{createProxmoxBaseVM.response.body.$.data.createProxmoxBaseVM.instance.id}}
+
+
+# status: String
+@updateStatus = 
+
+# scsiSize24: String
+@updateScsisize24 = 
+
+# net15: String
+@updateNet15 = 
+
+# scsiSize14: String
+@updateScsisize14 = 
+
+# net7: String
+@updateNet7 = 
+
+# pid: String
+@updatePid = 
+
+# scsi1: String
+@updateScsi1 = 
+
+# resourcePool: String
+@updateResourcepool = 
+
+# scsiSize9: String
+@updateScsisize9 = 
+
+# scsiSize6: String
+@updateScsisize6 = 
+
+# net28: String
+@updateNet28 = 
+
+# net25: String
+@updateNet25 = 
+
+# net4: String
+@updateNet4 = 
+
+# boot: String
+@updateBoot = 
+
+# serial2: String
+@updateSerial2 = 
+
+# ideSize0: String
+@updateIdesize0 = 
+
+# net1: String
+@updateNet1 = 
+
+# scsi4: String
+@updateScsi4 = 
+
+# startup: String
+@updateStartup = 
+
+# scsiSize27: String
+@updateScsisize27 = 
+
+# net22: String
+@updateNet22 = 
+
+# net12: String
+@updateNet12 = 
+
+# scsiSize17: String
+@updateScsisize17 = 
+
+# sata1: String
+@updateSata1 = 
+
+# scsi25: String
+@updateScsi25 = 
+
+# lastStatusModifiedTime: Integer
+@updateLaststatusmodifiedtime = 
+
+# ide1: String
+@updateIde1 = 
+
+# scsi7: String
+@updateScsi7 = 
+
+# scsi10: String
+@updateScsi10 = 
+
+# vmId: String
+@updateVmid = 
+
+# scsi30: String
+@updateScsi30 = 
+
+# ideSize3: String
+@updateIdesize3 = 
+
+# scsi28: String
+@updateScsi28 = 
+
+# scsiSize11: String
+@updateScsisize11 = 
+
+# net18: String
+@updateNet18 = 
+
+# cores: String
+@updateCores = 
+
+# cpus: String
+@updateCpus = 
+
+# scsi13: String
+@updateScsi13 = 
+
+# netout: String
+@updateNetout = 
+
+# scsi6: String
+@updateScsi6 = 
+
+# scsi16: String
+@updateScsi16 = 
+
+# sataSize1: String
+@updateSatasize1 = 
+
+# vmName: String
+@updateVmname = 
+
+# scsiSize4: String
+@updateScsisize4 = 
+
+# scsiSize16: String
+@updateScsisize16 = 
+
+# ideSize2: String
+@updateIdesize2 = 
+
+# scsiSize29: String
+@updateScsisize29 = 
+
+# bios: String
+@updateBios = 
+
+# scsi26: String
+@updateScsi26 = 
+
+# net20: String
+@updateNet20 = 
+
+# digest: String
+@updateDigest = 
+
+# numa: String
+@updateNuma = 
+
+# net10: String
+@updateNet10 = 
+
+# sataSize5: String
+@updateSatasize5 = 
+
+# net27: String
+@updateNet27 = 
+
+# scsiSize22: String
+@updateScsisize22 = 
+
+# net17: String
+@updateNet17 = 
+
+# lastPulseModifiedTime: Integer
+@updateLastpulsemodifiedtime = 
+
+# sata3: String
+@updateSata3 = 
+
+# ide3: String
+@updateIde3 = 
+
+# net6: String
+@updateNet6 = 
+
+# scsi15: String
+@updateScsi15 = 
+
+# maxdisk: String
+@updateMaxdisk = 
+
+# scsi20: String
+@updateScsi20 = 
+
+# sataSize0: String
+@updateSatasize0 = 
+
+# scsiSize10: String
+@updateScsisize10 = 
+
+# vmgenid: String
+@updateVmgenid = 
+
+# vga: String
+@updateVga = 
+
+# statusTimeoutSecs: Integer
+@updateStatustimeoutsecs = 
+
+# net5: String
+@updateNet5 = 
+
+# scsiSize21: String
+@updateScsisize21 = 
+
+# net21: String
+@updateNet21 = 
+
+# scsiSize28: String
+@updateScsisize28 = 
+
+# scsi5: String
+@updateScsi5 = 
+
+# scsiSize3: String
+@updateScsisize3 = 
+
+# net16: String
+@updateNet16 = 
+
+# sata2: String
+@updateSata2 = 
+
+# serial0: String
+@updateSerial0 = 
+
+# name: String
+@updateName = 
+
+# ideSize1: String
+@updateIdesize1 = 
+
+# scsi24: String
+@updateScsi24 = 
+
+# memory: String
+@updateMemory = 
+
+# machine: String
+@updateMachine = 
+
+# ide2: String
+@updateIde2 = 
+
+# scsi21: String
+@updateScsi21 = 
+
+# scsi11: String
+@updateScsi11 = 
+
+# scsiSize2: String
+@updateScsisize2 = 
+
+# scsi17: String
+@updateScsi17 = 
+
+# scsi14: String
+@updateScsi14 = 
+
+# scsi27: String
+@updateScsi27 = 
+
+# step: Integer
+@updateStep = 
+
+# smbios1: String
+@updateSmbios1 = 
+
+# sockets: String
+@updateSockets = 
+
+# net14: String
+@updateNet14 = 
+
+# serial1: String
+@updateSerial1 = 
+
+# scsiSize15: String
+@updateScsisize15 = 
+
+# sataSize2: String
+@updateSatasize2 = 
+
+# cpu: String
+@updateCpu = 
+
+# scsiSize20: String
+@updateScsisize20 = 
+
+# lastAgentUpdateID: String
+@updateLastagentupdateid = 
+
+# net3: String
+@updateNet3 = 
+
+# diskwrite: String
+@updateDiskwrite = 
+
+# scsiSize5: String
+@updateScsisize5 = 
+
+# net29: String
+@updateNet29 = 
+
+# onboot: String
+@updateOnboot = 
+
+# scsiSize18: String
+@updateScsisize18 = 
+
+# scsiSize8: String
+@updateScsisize8 = 
+
+# net31: String
+@updateNet31 = 
+
+# scsi3: String
+@updateScsi3 = 
+
+# net0: String
+@updateNet0 = 
+
+# net11: String
+@updateNet11 = 
+
+# scsiSize23: String
+@updateScsisize23 = 
+
+# scsiSize26: String
+@updateScsisize26 = 
+
+# cpulimit: String
+@updateCpulimit = 
+
+# net26: String
+@updateNet26 = 
+
+# scsi0: String
+@updateScsi0 = 
+
+# net2: String
+@updateNet2 = 
+
+# ide0: String
+@updateIde0 = 
+
+# net23: String
+@updateNet23 = 
+
+# uptime: String
+@updateUptime = 
+
+# net13: String
+@updateNet13 = 
+
+# net9: String
+@updateNet9 = 
+
+# sata0: String
+@updateSata0 = 
+
+# scsiSize1: String
+@updateScsisize1 = 
+
+# scsiSize19: String
+@updateScsisize19 = 
+
+# net30: String
+@updateNet30 = 
+
+# sata4: String
+@updateSata4 = 
+
+# scsi22: String
+@updateScsi22 = 
+
+# scsiSize12: String
+@updateScsisize12 = 
+
+# scsiSize7: String
+@updateScsisize7 = 
+
+# sataSize4: String
+@updateSatasize4 = 
+
+# scsi19: String
+@updateScsi19 = 
+
+# scsi29: String
+@updateScsi29 = 
+
+# scsi12: String
+@updateScsi12 = 
+
+# netin: String
+@updateNetin = 
+
+# agent: String
+@updateAgent = 
+
+# scsi9: String
+@updateScsi9 = 
+
+# balloon: String
+@updateBalloon = 
+
+# net8: String
+@updateNet8 = 
+
+# net24: String
+@updateNet24 = 
+
+# scsiSize0: String
+@updateScsisize0 = 
+
+# net19: String
+@updateNet19 = 
+
+# scsiSize25: String
+@updateScsisize25 = 
+
+# scsiSize30: String
+@updateScsisize30 = 
+
+# scsi2: String
+@updateScsi2 = 
+
+# scsi18: String
+@updateScsi18 = 
+
+# scsihw: String
+@updateScsihw = 
+
+# ostype: String
+@updateOstype = 
+
+# bootdisk: String
+@updateBootdisk = 
+
+# serial3: String
+@updateSerial3 = 
+
+# sata5: String
+@updateSata5 = 
+
+# scsi8: String
+@updateScsi8 = 
+
+# sataSize3: String
+@updateSatasize3 = 
+
+# scsiSize13: String
+@updateScsisize13 = 
+
+# scsi23: String
+@updateScsi23 = 
+
+
+###
+# @name updateProxmoxBaseVM
+POST {{baseUrl}}/gfs1/graphql HTTP/1.1
+Content-Type: application/json
+
+{ 
+  "query": "            mutation updateProxmoxBaseVM($id:String!, $status:String, $scsiSize24:String, $net15:String, $scsiSize14:String, $net7:String, $pid:String, $scsi1:String, $resourcePool:String, $scsiSize9:String, $scsiSize6:String, $net28:String, $net25:String, $net4:String, $boot:String, $serial2:String, $ideSize0:String, $net1:String, $scsi4:String, $startup:String, $scsiSize27:String, $net22:String, $net12:String, $scsiSize17:String, $sata1:String, $scsi25:String, $lastStatusModifiedTime:Integer, $ide1:String, $scsi7:String, $scsi10:String, $vmId:String, $scsi30:String, $ideSize3:String, $scsi28:String, $scsiSize11:String, $net18:String, $cores:String, $cpus:String, $scsi13:String, $netout:String, $scsi6:String, $scsi16:String, $sataSize1:String, $vmName:String, $scsiSize4:String, $scsiSize16:String, $ideSize2:String, $scsiSize29:String, $bios:String, $scsi26:String, $net20:String, $digest:String, $numa:String, $net10:String, $sataSize5:String, $net27:String, $scsiSize22:String, $net17:String, $lastPulseModifiedTime:Integer, $sata3:String, $ide3:String, $net6:String, $scsi15:String, $maxdisk:String, $scsi20:String, $sataSize0:String, $scsiSize10:String, $vmgenid:String, $vga:String, $statusTimeoutSecs:Integer, $net5:String, $scsiSize21:String, $net21:String, $scsiSize28:String, $scsi5:String, $scsiSize3:String, $net16:String, $sata2:String, $serial0:String, $name:String, $ideSize1:String, $scsi24:String, $memory:String, $machine:String, $ide2:String, $scsi21:String, $scsi11:String, $scsiSize2:String, $scsi17:String, $scsi14:String, $scsi27:String, $step:Integer, $smbios1:String, $sockets:String, $net14:String, $serial1:String, $scsiSize15:String, $sataSize2:String, $cpu:String, $scsiSize20:String, $lastAgentUpdateID:String, $net3:String, $diskwrite:String, $scsiSize5:String, $net29:String, $onboot:String, $scsiSize18:String, $scsiSize8:String, $net31:String, $scsi3:String, $net0:String, $net11:String, $scsiSize23:String, $scsiSize26:String, $cpulimit:String, $net26:String, $scsi0:String, $net2:String, $ide0:String, $net23:String, $uptime:String, $net13:String, $net9:String, $sata0:String, $scsiSize1:String, $scsiSize19:String, $net30:String, $sata4:String, $scsi22:String, $scsiSize12:String, $scsiSize7:String, $sataSize4:String, $scsi19:String, $scsi29:String, $scsi12:String, $netin:String, $agent:String, $scsi9:String, $balloon:String, $net8:String, $net24:String, $scsiSize0:String, $net19:String, $scsiSize25:String, $scsiSize30:String, $scsi2:String, $scsi18:String, $scsihw:String, $ostype:String, $bootdisk:String, $serial3:String, $sata5:String, $scsi8:String, $sataSize3:String, $scsiSize13:String, $scsi23:String, ) {                updateProxmoxBaseVM(id:$id, status:$status, scsiSize24:$scsiSize24, net15:$net15, scsiSize14:$scsiSize14, net7:$net7, pid:$pid, scsi1:$scsi1, resourcePool:$resourcePool, scsiSize9:$scsiSize9, scsiSize6:$scsiSize6, net28:$net28, net25:$net25, net4:$net4, boot:$boot, serial2:$serial2, ideSize0:$ideSize0, net1:$net1, scsi4:$scsi4, startup:$startup, scsiSize27:$scsiSize27, net22:$net22, net12:$net12, scsiSize17:$scsiSize17, sata1:$sata1, scsi25:$scsi25, lastStatusModifiedTime:$lastStatusModifiedTime, ide1:$ide1, scsi7:$scsi7, scsi10:$scsi10, vmId:$vmId, scsi30:$scsi30, ideSize3:$ideSize3, scsi28:$scsi28, scsiSize11:$scsiSize11, net18:$net18, cores:$cores, cpus:$cpus, scsi13:$scsi13, netout:$netout, scsi6:$scsi6, scsi16:$scsi16, sataSize1:$sataSize1, vmName:$vmName, scsiSize4:$scsiSize4, scsiSize16:$scsiSize16, ideSize2:$ideSize2, scsiSize29:$scsiSize29, bios:$bios, scsi26:$scsi26, net20:$net20, digest:$digest, numa:$numa, net10:$net10, sataSize5:$sataSize5, net27:$net27, scsiSize22:$scsiSize22, net17:$net17, lastPulseModifiedTime:$lastPulseModifiedTime, sata3:$sata3, ide3:$ide3, net6:$net6, scsi15:$scsi15, maxdisk:$maxdisk, scsi20:$scsi20, sataSize0:$sataSize0, scsiSize10:$scsiSize10, vmgenid:$vmgenid, vga:$vga, statusTimeoutSecs:$statusTimeoutSecs, net5:$net5, scsiSize21:$scsiSize21, net21:$net21, scsiSize28:$scsiSize28, scsi5:$scsi5, scsiSize3:$scsiSize3, net16:$net16, sata2:$sata2, serial0:$serial0, name:$name, ideSize1:$ideSize1, scsi24:$scsi24, memory:$memory, machine:$machine, ide2:$ide2, scsi21:$scsi21, scsi11:$scsi11, scsiSize2:$scsiSize2, scsi17:$scsi17, scsi14:$scsi14, scsi27:$scsi27, step:$step, smbios1:$smbios1, sockets:$sockets, net14:$net14, serial1:$serial1, scsiSize15:$scsiSize15, sataSize2:$sataSize2, cpu:$cpu, scsiSize20:$scsiSize20, lastAgentUpdateID:$lastAgentUpdateID, net3:$net3, diskwrite:$diskwrite, scsiSize5:$scsiSize5, net29:$net29, onboot:$onboot, scsiSize18:$scsiSize18, scsiSize8:$scsiSize8, net31:$net31, scsi3:$scsi3, net0:$net0, net11:$net11, scsiSize23:$scsiSize23, scsiSize26:$scsiSize26, cpulimit:$cpulimit, net26:$net26, scsi0:$scsi0, net2:$net2, ide0:$ide0, net23:$net23, uptime:$uptime, net13:$net13, net9:$net9, sata0:$sata0, scsiSize1:$scsiSize1, scsiSize19:$scsiSize19, net30:$net30, sata4:$sata4, scsi22:$scsi22, scsiSize12:$scsiSize12, scsiSize7:$scsiSize7, sataSize4:$sataSize4, scsi19:$scsi19, scsi29:$scsi29, scsi12:$scsi12, netin:$netin, agent:$agent, scsi9:$scsi9, balloon:$balloon, net8:$net8, net24:$net24, scsiSize0:$scsiSize0, net19:$net19, scsiSize25:$scsiSize25, scsiSize30:$scsiSize30, scsi2:$scsi2, scsi18:$scsi18, scsihw:$scsihw, ostype:$ostype, bootdisk:$bootdisk, serial3:$serial3, sata5:$sata5, scsi8:$scsi8, sataSize3:$sataSize3, scsiSize13:$scsiSize13, scsi23:$scsi23, ) {                    instance {                        id, status, scsiSize24, net15, scsiSize14, net7, pid, scsi1, resourcePool, scsiSize9, scsiSize6, net28, net25, net4, boot, serial2, ideSize0, net1, scsi4, startup, scsiSize27, net22, net12, scsiSize17, sata1, scsi25, lastStatusModifiedTime, ide1, scsi7, scsi10, vmId, scsi30, ideSize3, scsi28, scsiSize11, net18, cores, cpus, scsi13, netout, scsi6, scsi16, sataSize1, vmName, scsiSize4, scsiSize16, ideSize2, scsiSize29, bios, scsi26, net20, digest, numa, net10, sataSize5, net27, scsiSize22, net17, lastPulseModifiedTime, sata3, ide3, net6, scsi15, maxdisk, scsi20, sataSize0, scsiSize10, vmgenid, vga, statusTimeoutSecs, net5, scsiSize21, net21, scsiSize28, scsi5, scsiSize3, net16, sata2, serial0, name, ideSize1, scsi24, memory, machine, ide2, scsi21, scsi11, scsiSize2, scsi17, scsi14, scsi27, step, smbios1, sockets, net14, serial1, scsiSize15, sataSize2, cpu, scsiSize20, lastAgentUpdateID, net3, diskwrite, scsiSize5, net29, onboot, scsiSize18, scsiSize8, net31, scsi3, net0, net11, scsiSize23, scsiSize26, cpulimit, net26, scsi0, net2, ide0, net23, uptime, net13, net9, sata0, scsiSize1, scsiSize19, net30, sata4, scsi22, scsiSize12, scsiSize7, sataSize4, scsi19, scsi29, scsi12, netin, agent, scsi9, balloon, net8, net24, scsiSize0, net19, scsiSize25, scsiSize30, scsi2, scsi18, scsihw, ostype, bootdisk, serial3, sata5, scsi8, sataSize3, scsiSize13, scsi23,                      },                    ok                }            }        ", 
+  "variables": {
+    "id": "{{GFSID}}", 
+    "status": "{{updateStatus}}",
+    "scsiSize24": "{{updateScsisize24}}",
+    "net15": "{{updateNet15}}",
+    "scsiSize14": "{{updateScsisize14}}",
+    "net7": "{{updateNet7}}",
+    "pid": "{{updatePid}}",
+    "scsi1": "{{updateScsi1}}",
+    "resourcePool": "{{updateResourcepool}}",
+    "scsiSize9": "{{updateScsisize9}}",
+    "scsiSize6": "{{updateScsisize6}}",
+    "net28": "{{updateNet28}}",
+    "net25": "{{updateNet25}}",
+    "net4": "{{updateNet4}}",
+    "boot": "{{updateBoot}}",
+    "serial2": "{{updateSerial2}}",
+    "ideSize0": "{{updateIdesize0}}",
+    "net1": "{{updateNet1}}",
+    "scsi4": "{{updateScsi4}}",
+    "startup": "{{updateStartup}}",
+    "scsiSize27": "{{updateScsisize27}}",
+    "net22": "{{updateNet22}}",
+    "net12": "{{updateNet12}}",
+    "scsiSize17": "{{updateScsisize17}}",
+    "sata1": "{{updateSata1}}",
+    "scsi25": "{{updateScsi25}}",
+    "lastStatusModifiedTime": "{{updateLaststatusmodifiedtime}}",
+    "ide1": "{{updateIde1}}",
+    "scsi7": "{{updateScsi7}}",
+    "scsi10": "{{updateScsi10}}",
+    "vmId": "{{updateVmid}}",
+    "scsi30": "{{updateScsi30}}",
+    "ideSize3": "{{updateIdesize3}}",
+    "scsi28": "{{updateScsi28}}",
+    "scsiSize11": "{{updateScsisize11}}",
+    "net18": "{{updateNet18}}",
+    "cores": "{{updateCores}}",
+    "cpus": "{{updateCpus}}",
+    "scsi13": "{{updateScsi13}}",
+    "netout": "{{updateNetout}}",
+    "scsi6": "{{updateScsi6}}",
+    "scsi16": "{{updateScsi16}}",
+    "sataSize1": "{{updateSatasize1}}",
+    "vmName": "{{updateVmname}}",
+    "scsiSize4": "{{updateScsisize4}}",
+    "scsiSize16": "{{updateScsisize16}}",
+    "ideSize2": "{{updateIdesize2}}",
+    "scsiSize29": "{{updateScsisize29}}",
+    "bios": "{{updateBios}}",
+    "scsi26": "{{updateScsi26}}",
+    "net20": "{{updateNet20}}",
+    "digest": "{{updateDigest}}",
+    "numa": "{{updateNuma}}",
+    "net10": "{{updateNet10}}",
+    "sataSize5": "{{updateSatasize5}}",
+    "net27": "{{updateNet27}}",
+    "scsiSize22": "{{updateScsisize22}}",
+    "net17": "{{updateNet17}}",
+    "lastPulseModifiedTime": "{{updateLastpulsemodifiedtime}}",
+    "sata3": "{{updateSata3}}",
+    "ide3": "{{updateIde3}}",
+    "net6": "{{updateNet6}}",
+    "scsi15": "{{updateScsi15}}",
+    "maxdisk": "{{updateMaxdisk}}",
+    "scsi20": "{{updateScsi20}}",
+    "sataSize0": "{{updateSatasize0}}",
+    "scsiSize10": "{{updateScsisize10}}",
+    "vmgenid": "{{updateVmgenid}}",
+    "vga": "{{updateVga}}",
+    "statusTimeoutSecs": "{{updateStatustimeoutsecs}}",
+    "net5": "{{updateNet5}}",
+    "scsiSize21": "{{updateScsisize21}}",
+    "net21": "{{updateNet21}}",
+    "scsiSize28": "{{updateScsisize28}}",
+    "scsi5": "{{updateScsi5}}",
+    "scsiSize3": "{{updateScsisize3}}",
+    "net16": "{{updateNet16}}",
+    "sata2": "{{updateSata2}}",
+    "serial0": "{{updateSerial0}}",
+    "name": "{{updateName}}",
+    "ideSize1": "{{updateIdesize1}}",
+    "scsi24": "{{updateScsi24}}",
+    "memory": "{{updateMemory}}",
+    "machine": "{{updateMachine}}",
+    "ide2": "{{updateIde2}}",
+    "scsi21": "{{updateScsi21}}",
+    "scsi11": "{{updateScsi11}}",
+    "scsiSize2": "{{updateScsisize2}}",
+    "scsi17": "{{updateScsi17}}",
+    "scsi14": "{{updateScsi14}}",
+    "scsi27": "{{updateScsi27}}",
+    "step": "{{updateStep}}",
+    "smbios1": "{{updateSmbios1}}",
+    "sockets": "{{updateSockets}}",
+    "net14": "{{updateNet14}}",
+    "serial1": "{{updateSerial1}}",
+    "scsiSize15": "{{updateScsisize15}}",
+    "sataSize2": "{{updateSatasize2}}",
+    "cpu": "{{updateCpu}}",
+    "scsiSize20": "{{updateScsisize20}}",
+    "lastAgentUpdateID": "{{updateLastagentupdateid}}",
+    "net3": "{{updateNet3}}",
+    "diskwrite": "{{updateDiskwrite}}",
+    "scsiSize5": "{{updateScsisize5}}",
+    "net29": "{{updateNet29}}",
+    "onboot": "{{updateOnboot}}",
+    "scsiSize18": "{{updateScsisize18}}",
+    "scsiSize8": "{{updateScsisize8}}",
+    "net31": "{{updateNet31}}",
+    "scsi3": "{{updateScsi3}}",
+    "net0": "{{updateNet0}}",
+    "net11": "{{updateNet11}}",
+    "scsiSize23": "{{updateScsisize23}}",
+    "scsiSize26": "{{updateScsisize26}}",
+    "cpulimit": "{{updateCpulimit}}",
+    "net26": "{{updateNet26}}",
+    "scsi0": "{{updateScsi0}}",
+    "net2": "{{updateNet2}}",
+    "ide0": "{{updateIde0}}",
+    "net23": "{{updateNet23}}",
+    "uptime": "{{updateUptime}}",
+    "net13": "{{updateNet13}}",
+    "net9": "{{updateNet9}}",
+    "sata0": "{{updateSata0}}",
+    "scsiSize1": "{{updateScsisize1}}",
+    "scsiSize19": "{{updateScsisize19}}",
+    "net30": "{{updateNet30}}",
+    "sata4": "{{updateSata4}}",
+    "scsi22": "{{updateScsi22}}",
+    "scsiSize12": "{{updateScsisize12}}",
+    "scsiSize7": "{{updateScsisize7}}",
+    "sataSize4": "{{updateSatasize4}}",
+    "scsi19": "{{updateScsi19}}",
+    "scsi29": "{{updateScsi29}}",
+    "scsi12": "{{updateScsi12}}",
+    "netin": "{{updateNetin}}",
+    "agent": "{{updateAgent}}",
+    "scsi9": "{{updateScsi9}}",
+    "balloon": "{{updateBalloon}}",
+    "net8": "{{updateNet8}}",
+    "net24": "{{updateNet24}}",
+    "scsiSize0": "{{updateScsisize0}}",
+    "net19": "{{updateNet19}}",
+    "scsiSize25": "{{updateScsisize25}}",
+    "scsiSize30": "{{updateScsisize30}}",
+    "scsi2": "{{updateScsi2}}",
+    "scsi18": "{{updateScsi18}}",
+    "scsihw": "{{updateScsihw}}",
+    "ostype": "{{updateOstype}}",
+    "bootdisk": "{{updateBootdisk}}",
+    "serial3": "{{updateSerial3}}",
+    "sata5": "{{updateSata5}}",
+    "scsi8": "{{updateScsi8}}",
+    "sataSize3": "{{updateSatasize3}}",
+    "scsiSize13": "{{updateScsisize13}}",
+    "scsi23": "{{updateScsi23}}"
+  }
+}
+
+###
+# @name contextProxmoxBaseVM
+GET {{baseUrl}}/api/v1.0/gfs1/context/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+###
+# @name renderProxmoxBaseVM
+GET {{baseUrl}}/api/v1.0/gfs1/render/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+###
+# @name deleteProxmoxBaseVM
+DELETE {{baseUrl}}/api/v1.0/gfs1/vertex/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+    

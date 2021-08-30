@@ -1,0 +1,16 @@
+mutation invoiceReceived(
+
+  $id: String!
+
+) {
+  updateInvoice(
+    id: $id
+    status: "received"
+  ) {
+    instance {
+      id,
+      status
+    }, 
+    ok
+  }
+}

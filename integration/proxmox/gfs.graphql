@@ -54,11 +54,4 @@ mutation updateStatus
     }
 }
 
-{
-  "id": "13",
-  "status": "FAILING",
-  "lastStatusModifiedTime": 1622425572,
-  "statusTimeoutMillis": 30000
-}
-
 

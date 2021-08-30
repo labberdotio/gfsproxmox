@@ -1,0 +1,75 @@
+
+
+#
+# Automatic GFS API HTTP Crud generator
+#
+
+@baseUrl = http://192.168.0.160:5000
+
+# description: String
+@createDescription = 
+
+# name: String
+@createName = 
+
+
+###
+# @name callGetAllNodes
+GET {{baseUrl}}/api/v1.0/gfs1/graph HTTP/1.1
+Content-Type: application/json
+
+{}
+
+###
+# @name createMachineGroup
+POST {{baseUrl}}/gfs1/graphql HTTP/1.1
+Content-Type: application/json
+
+{"query": "            mutation createMachineGroup($description:String, $name:String, ) {                createMachineGroup(description:$description, name:$name, ) {                    instance {                        id, description, name,                      },                    ok                }            }        ", 
+  "variables": { 
+    "description": "{{createDescription}}",
+    "name": "{{createName}}"
+  }
+}
+
+###
+@GFSID = {{createMachineGroup.response.body.$.data.createMachineGroup.instance.id}}
+
+
+# description: String
+@updateDescription = 
+
+# name: String
+@updateName = 
+
+
+###
+# @name updateMachineGroup
+POST {{baseUrl}}/gfs1/graphql HTTP/1.1
+Content-Type: application/json
+
+{ 
+  "query": "            mutation updateMachineGroup($id:String!, $description:String, $name:String, ) {                updateMachineGroup(id:$id, description:$description, name:$name, ) {                    instance {                        id, description, name,                      },                    ok                }            }        ", 
+  "variables": {
+    "id": "{{GFSID}}", 
+    "description": "{{updateDescription}}",
+    "name": "{{updateName}}"
+  }
+}
+
+###
+# @name contextMachineGroup
+GET {{baseUrl}}/api/v1.0/gfs1/context/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+###
+# @name renderMachineGroup
+GET {{baseUrl}}/api/v1.0/gfs1/render/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+###
+# @name deleteMachineGroup
+DELETE {{baseUrl}}/api/v1.0/gfs1/vertex/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+    

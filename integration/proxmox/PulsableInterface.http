@@ -1,0 +1,115 @@
+
+
+#
+# Automatic GFS API HTTP Crud generator
+#
+
+@baseUrl = http://192.168.0.160:5000
+
+# status: String
+@createStatus = 
+
+# lastStatusModifiedTime: Integer
+@createLaststatusmodifiedtime = 
+
+# lastAgentUpdateID: String
+@createLastagentupdateid = 
+
+# statusTimeoutSecs: Integer
+@createStatustimeoutsecs = 
+
+# lastPulseModifiedTime: Integer
+@createLastpulsemodifiedtime = 
+
+# step: Integer
+@createStep = 
+
+# name: String
+@createName = 
+
+
+###
+# @name callGetAllNodes
+GET {{baseUrl}}/api/v1.0/gfs1/graph HTTP/1.1
+Content-Type: application/json
+
+{}
+
+###
+# @name createPulsable
+POST {{baseUrl}}/gfs1/graphql HTTP/1.1
+Content-Type: application/json
+
+{"query": "            mutation createPulsable($status:String, $lastStatusModifiedTime:Integer, $lastAgentUpdateID:String, $statusTimeoutSecs:Integer, $lastPulseModifiedTime:Integer, $step:Integer, $name:String, ) {                createPulsable(status:$status, lastStatusModifiedTime:$lastStatusModifiedTime, lastAgentUpdateID:$lastAgentUpdateID, statusTimeoutSecs:$statusTimeoutSecs, lastPulseModifiedTime:$lastPulseModifiedTime, step:$step, name:$name, ) {                    instance {                        id, status, lastStatusModifiedTime, lastAgentUpdateID, statusTimeoutSecs, lastPulseModifiedTime, step, name,                      },                    ok                }            }        ", 
+  "variables": { 
+    "status": "{{createStatus}}",
+    "lastStatusModifiedTime": "{{createLaststatusmodifiedtime}}",
+    "lastAgentUpdateID": "{{createLastagentupdateid}}",
+    "statusTimeoutSecs": "{{createStatustimeoutsecs}}",
+    "lastPulseModifiedTime": "{{createLastpulsemodifiedtime}}",
+    "step": "{{createStep}}",
+    "name": "{{createName}}"
+  }
+}
+
+###
+@GFSID = {{createPulsable.response.body.$.data.createPulsable.instance.id}}
+
+
+# status: String
+@updateStatus = 
+
+# lastStatusModifiedTime: Integer
+@updateLaststatusmodifiedtime = 
+
+# lastAgentUpdateID: String
+@updateLastagentupdateid = 
+
+# statusTimeoutSecs: Integer
+@updateStatustimeoutsecs = 
+
+# lastPulseModifiedTime: Integer
+@updateLastpulsemodifiedtime = 
+
+# step: Integer
+@updateStep = 
+
+# name: String
+@updateName = 
+
+
+###
+# @name updatePulsable
+POST {{baseUrl}}/gfs1/graphql HTTP/1.1
+Content-Type: application/json
+
+{ 
+  "query": "            mutation updatePulsable($id:String!, $status:String, $lastStatusModifiedTime:Integer, $lastAgentUpdateID:String, $statusTimeoutSecs:Integer, $lastPulseModifiedTime:Integer, $step:Integer, $name:String, ) {                updatePulsable(id:$id, status:$status, lastStatusModifiedTime:$lastStatusModifiedTime, lastAgentUpdateID:$lastAgentUpdateID, statusTimeoutSecs:$statusTimeoutSecs, lastPulseModifiedTime:$lastPulseModifiedTime, step:$step, name:$name, ) {                    instance {                        id, status, lastStatusModifiedTime, lastAgentUpdateID, statusTimeoutSecs, lastPulseModifiedTime, step, name,                      },                    ok                }            }        ", 
+  "variables": {
+    "id": "{{GFSID}}", 
+    "status": "{{updateStatus}}",
+    "lastStatusModifiedTime": "{{updateLaststatusmodifiedtime}}",
+    "lastAgentUpdateID": "{{updateLastagentupdateid}}",
+    "statusTimeoutSecs": "{{updateStatustimeoutsecs}}",
+    "lastPulseModifiedTime": "{{updateLastpulsemodifiedtime}}",
+    "step": "{{updateStep}}",
+    "name": "{{updateName}}"
+  }
+}
+
+###
+# @name contextPulsable
+GET {{baseUrl}}/api/v1.0/gfs1/context/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+###
+# @name renderPulsable
+GET {{baseUrl}}/api/v1.0/gfs1/render/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+###
+# @name deletePulsable
+DELETE {{baseUrl}}/api/v1.0/gfs1/vertex/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+    

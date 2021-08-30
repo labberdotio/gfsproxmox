@@ -1,0 +1,22 @@
+mutation createInvoice (
+
+  $name: String!, 
+  $description: String!, 
+  $amount: String!
+
+) {
+  createInvoice(
+    name: $name, 
+    description: $description, 
+    amount: $amount
+  ) {
+    instance {
+      id, 
+      name, 
+      description, 
+      amount, 
+      status
+    }, 
+    ok
+  }
+}

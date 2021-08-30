@@ -1,0 +1,6 @@
+schema: http://192.168.0.160:5000/gfs1/graphql/schema
+documents: "*.{graphql,js,ts,jsx,tsx}"
+extensions:
+  endpoints:
+    default:
+      url: http://192.168.0.160:5000/gfs1/graphql

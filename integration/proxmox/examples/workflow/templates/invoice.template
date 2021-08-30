@@ -1,0 +1,24 @@
+
+INVOICE {{id}}
+
+NAME: {{name}}
+DESCRIPTION: {{description}}
+AMOUNT: {{amount}}
+
+STATUS: {{status}}
+
+{{#approvalOf}}
+APPROVAL {{id}}
+STATUS: {{status}}
+NOTICE: {{notice}}
+APPROVER: {{approver}}
+
+{{#reviewOf}}
+REVIEW {{id}}
+STATUS: {{status}}
+NOTICE: {{notice}}
+REVIEWER: {{approver}}
+
+{{/reviewOf}}
+
+{{/approvalOf}}

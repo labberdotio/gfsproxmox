@@ -1,0 +1,28 @@
+
+query getIPs {
+  Ips {
+    id,
+    name,
+    address
+  }
+}
+
+mutation updateIp
+   (
+       $id:String!, 
+       $name:String, 
+       $address:String, 
+    ) 
+{                
+    updateIp(
+      id:$id,
+      name:$name, 
+      address:$address, ) {                    
+        instance {                        
+            id, 
+            name, 
+            address,                      
+        },                    
+        ok                
+    }
+}

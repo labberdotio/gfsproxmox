@@ -1,0 +1,29 @@
+query getInvoice (
+
+  $id: String!
+
+) {
+  Invoice(
+    id: $id
+  ) {
+
+    id, 
+    name, 
+    description, 
+    amount, 
+    status, 
+    approvalOf {
+      id, 
+      status, 
+      notice, 
+      approver, 
+      reviewOf {
+        id, 
+        status, 
+        notice, 
+        reviewer
+      }
+    }
+
+  }
+}

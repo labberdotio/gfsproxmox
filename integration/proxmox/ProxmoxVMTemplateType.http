@@ -1,0 +1,75 @@
+
+
+#
+# Automatic GFS API HTTP Crud generator
+#
+
+@baseUrl = http://192.168.0.160:5000
+
+# template: String
+@createTemplate = 
+
+# name: String
+@createName = 
+
+
+###
+# @name callGetAllNodes
+GET {{baseUrl}}/api/v1.0/gfs1/graph HTTP/1.1
+Content-Type: application/json
+
+{}
+
+###
+# @name createProxmoxVMTemplate
+POST {{baseUrl}}/gfs1/graphql HTTP/1.1
+Content-Type: application/json
+
+{"query": "            mutation createProxmoxVMTemplate($template:String, $name:String, ) {                createProxmoxVMTemplate(template:$template, name:$name, ) {                    instance {                        id, template, name,                      },                    ok                }            }        ", 
+  "variables": { 
+    "template": "{{createTemplate}}",
+    "name": "{{createName}}"
+  }
+}
+
+###
+@GFSID = {{createProxmoxVMTemplate.response.body.$.data.createProxmoxVMTemplate.instance.id}}
+
+
+# template: String
+@updateTemplate = 
+
+# name: String
+@updateName = 
+
+
+###
+# @name updateProxmoxVMTemplate
+POST {{baseUrl}}/gfs1/graphql HTTP/1.1
+Content-Type: application/json
+
+{ 
+  "query": "            mutation updateProxmoxVMTemplate($id:String!, $template:String, $name:String, ) {                updateProxmoxVMTemplate(id:$id, template:$template, name:$name, ) {                    instance {                        id, template, name,                      },                    ok                }            }        ", 
+  "variables": {
+    "id": "{{GFSID}}", 
+    "template": "{{updateTemplate}}",
+    "name": "{{updateName}}"
+  }
+}
+
+###
+# @name contextProxmoxVMTemplate
+GET {{baseUrl}}/api/v1.0/gfs1/context/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+###
+# @name renderProxmoxVMTemplate
+GET {{baseUrl}}/api/v1.0/gfs1/render/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+###
+# @name deleteProxmoxVMTemplate
+DELETE {{baseUrl}}/api/v1.0/gfs1/vertex/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+    

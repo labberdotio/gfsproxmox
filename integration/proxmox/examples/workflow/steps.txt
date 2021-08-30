@@ -1,0 +1,68 @@
+
+> export HOST="localhost"
+
+> ./types.sh
+> ./queries.sh
+> ./templates.sh 
+
+> gfscli exec query @./queries/listInvoices.query --data name=invoice1
+{
+    "data": {
+        "Invoices": []
+    }
+}
+
+> gfscli exec query @./queries/createInvoice.query --data name=invoice1 description="invoice1 details" amount="100.0"
+{
+    "data": {
+        "createInvoice": {
+            "instance": {
+                "id": "#67:0",
+                "name": "invoice1",
+                "description": "invoice1 details",
+                "amount": "100.0",
+                "status": null
+            },
+            "ok": true
+        }
+    }
+}
+
+> ./createInvoice.sh "invoice2" "invoice2 details" "200.0"
+
+> gfscli exec query @./queries/getInvoice.query --data name=invoice1
+{
+    "data": {
+        "Invoices": [
+            {
+                "id": "#67:0",
+                "name": "invoice1",
+                "description": "invoice1 details",
+                "amount": "100.0",
+                "status": null,
+                "approvalOf": null
+            }
+        ]
+    }
+}
+
+> gfscli exec query @./queries/listInvoices.query
+{
+    "data": {
+        "Invoices": [
+            {
+                "id": "#67:0",
+                "name": "invoice1",
+                "description": "invoice1 details",
+                "amount": "100.0",
+                "status": null,
+                "approvalOf": null
+            }
+        ]
+    }
+}
+
+> python doc/example/workflow/listeners/invoiceListener.py 
+INFO:the server accepted the connection
+{'data': {'Invoice': {'event': 'create_node', 'node': {'id': '#67:2', 'name': 'invoice2', 'description': 'invoice2 details', 'amount': '200.0', 'status': None}}}}
+{'data': {'Invoice': {'event': 'create_link', 'node': {'id': '#67:2', 'name': 'invoice2', 'description': 'invoice2 details', 'amount': '200.0', 'status': None}}}}

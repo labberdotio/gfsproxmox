@@ -1,0 +1,147 @@
+
+
+#
+# Automatic GFS API HTTP Crud generator
+#
+
+@baseUrl = http://192.168.0.160:5000
+
+# gpu2: String
+@createGpu2 = 
+
+# memory: String
+@createMemory = 
+
+# gpu3: String
+@createGpu3 = 
+
+# bootdisk: String
+@createBootdisk = 
+
+# cores: String
+@createCores = 
+
+# gpu0: String
+@createGpu0 = 
+
+# arch: String
+@createArch = 
+
+# name: String
+@createName = 
+
+# primaryIp: String
+@createPrimaryip = 
+
+# gpu1: String
+@createGpu1 = 
+
+# sockets: String
+@createSockets = 
+
+
+###
+# @name callGetAllNodes
+GET {{baseUrl}}/api/v1.0/gfs1/graph HTTP/1.1
+Content-Type: application/json
+
+{}
+
+###
+# @name createMachine
+POST {{baseUrl}}/gfs1/graphql HTTP/1.1
+Content-Type: application/json
+
+{"query": "            mutation createMachine($gpu2:String, $memory:String, $gpu3:String, $bootdisk:String, $cores:String, $gpu0:String, $arch:String, $name:String, $primaryIp:String, $gpu1:String, $sockets:String, ) {                createMachine(gpu2:$gpu2, memory:$memory, gpu3:$gpu3, bootdisk:$bootdisk, cores:$cores, gpu0:$gpu0, arch:$arch, name:$name, primaryIp:$primaryIp, gpu1:$gpu1, sockets:$sockets, ) {                    instance {                        id, gpu2, memory, gpu3, bootdisk, cores, gpu0, arch, name, primaryIp, gpu1, sockets,                      },                    ok                }            }        ", 
+  "variables": { 
+    "gpu2": "{{createGpu2}}",
+    "memory": "{{createMemory}}",
+    "gpu3": "{{createGpu3}}",
+    "bootdisk": "{{createBootdisk}}",
+    "cores": "{{createCores}}",
+    "gpu0": "{{createGpu0}}",
+    "arch": "{{createArch}}",
+    "name": "{{createName}}",
+    "primaryIp": "{{createPrimaryip}}",
+    "gpu1": "{{createGpu1}}",
+    "sockets": "{{createSockets}}"
+  }
+}
+
+###
+@GFSID = {{createMachine.response.body.$.data.createMachine.instance.id}}
+
+
+# gpu2: String
+@updateGpu2 = 
+
+# memory: String
+@updateMemory = 
+
+# gpu3: String
+@updateGpu3 = 
+
+# bootdisk: String
+@updateBootdisk = 
+
+# cores: String
+@updateCores = 
+
+# gpu0: String
+@updateGpu0 = 
+
+# arch: String
+@updateArch = 
+
+# name: String
+@updateName = 
+
+# primaryIp: String
+@updatePrimaryip = 
+
+# gpu1: String
+@updateGpu1 = 
+
+# sockets: String
+@updateSockets = 
+
+
+###
+# @name updateMachine
+POST {{baseUrl}}/gfs1/graphql HTTP/1.1
+Content-Type: application/json
+
+{ 
+  "query": "            mutation updateMachine($id:String!, $gpu2:String, $memory:String, $gpu3:String, $bootdisk:String, $cores:String, $gpu0:String, $arch:String, $name:String, $primaryIp:String, $gpu1:String, $sockets:String, ) {                updateMachine(id:$id, gpu2:$gpu2, memory:$memory, gpu3:$gpu3, bootdisk:$bootdisk, cores:$cores, gpu0:$gpu0, arch:$arch, name:$name, primaryIp:$primaryIp, gpu1:$gpu1, sockets:$sockets, ) {                    instance {                        id, gpu2, memory, gpu3, bootdisk, cores, gpu0, arch, name, primaryIp, gpu1, sockets,                      },                    ok                }            }        ", 
+  "variables": {
+    "id": "{{GFSID}}", 
+    "gpu2": "{{updateGpu2}}",
+    "memory": "{{updateMemory}}",
+    "gpu3": "{{updateGpu3}}",
+    "bootdisk": "{{updateBootdisk}}",
+    "cores": "{{updateCores}}",
+    "gpu0": "{{updateGpu0}}",
+    "arch": "{{updateArch}}",
+    "name": "{{updateName}}",
+    "primaryIp": "{{updatePrimaryip}}",
+    "gpu1": "{{updateGpu1}}",
+    "sockets": "{{updateSockets}}"
+  }
+}
+
+###
+# @name contextMachine
+GET {{baseUrl}}/api/v1.0/gfs1/context/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+###
+# @name renderMachine
+GET {{baseUrl}}/api/v1.0/gfs1/render/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+###
+# @name deleteMachine
+DELETE {{baseUrl}}/api/v1.0/gfs1/vertex/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+    

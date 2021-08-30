@@ -1,0 +1,67 @@
+
+
+#
+# Automatic GFS API HTTP Crud generator
+#
+
+@baseUrl = http://192.168.0.160:5000
+
+# name: String
+@createName = 
+
+
+###
+# @name callGetAllNodes
+GET {{baseUrl}}/api/v1.0/gfs1/graph HTTP/1.1
+Content-Type: application/json
+
+{}
+
+###
+# @name createProxmoxVM
+POST {{baseUrl}}/gfs1/graphql HTTP/1.1
+Content-Type: application/json
+
+{"query": "            mutation createProxmoxVM($name:String, ) {                createProxmoxVM(name:$name, ) {                    instance {                        id, name,                      },                    ok                }            }        ", 
+  "variables": { 
+    "name": "{{createName}}"
+  }
+}
+
+###
+@GFSID = {{createProxmoxVM.response.body.$.data.createProxmoxVM.instance.id}}
+
+
+# name: String
+@updateName = 
+
+
+###
+# @name updateProxmoxVM
+POST {{baseUrl}}/gfs1/graphql HTTP/1.1
+Content-Type: application/json
+
+{ 
+  "query": "            mutation updateProxmoxVM($id:String!, $name:String, ) {                updateProxmoxVM(id:$id, name:$name, ) {                    instance {                        id, name,                      },                    ok                }            }        ", 
+  "variables": {
+    "id": "{{GFSID}}", 
+    "name": "{{updateName}}"
+  }
+}
+
+###
+# @name contextProxmoxVM
+GET {{baseUrl}}/api/v1.0/gfs1/context/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+###
+# @name renderProxmoxVM
+GET {{baseUrl}}/api/v1.0/gfs1/render/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+###
+# @name deleteProxmoxVM
+DELETE {{baseUrl}}/api/v1.0/gfs1/vertex/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+    

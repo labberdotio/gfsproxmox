@@ -1,0 +1,16 @@
+mutation approveInvoice(
+
+  $id: String!
+
+) {
+  updateInvoice(
+    id: $id
+    status: "approved"
+  ) {
+    instance {
+      id,
+      status
+    }, 
+    ok
+  }
+}

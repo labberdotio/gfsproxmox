@@ -1,0 +1,17 @@
+mutation approveReview(
+
+  $id: String!
+
+) {
+  updateReview(
+    id: $id
+    status: "approved", 
+    notice: "Review is approved"
+  ) {
+    instance {
+      id,
+      status
+    }, 
+    ok
+  }
+}

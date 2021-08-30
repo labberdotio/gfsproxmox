@@ -1,0 +1,38 @@
+#
+# Automatic GFS API HTTP Crud generator
+#
+@baseUrl = http://localhost:5000
+# memory: String
+@memoryVar = "10GB"
+# bootdisk: String
+@bootdiskVar = "none"
+# cores: String
+@coresVar = "2"
+# arch: String
+@archVar = "x86"
+# name: String
+@nameVar = "botnode11"
+# sockets: String
+@socketsVar = "none"
+###
+# @name callGetAllNodes
+GET {{baseUrl}}/api/v1.0/gfs1/graph HTTP/1.1
+Content-Type: application/json
+
+{}
+
+###
+# @name createMachine
+POST {{baseUrl}}/gfs1/graphql HTTP/1.1
+
+Content-Type: application/json
+{"query": "\n            mutation createMachine($memory:String, $bootdisk:String, $cores:String, $arch:String, $name:String, $sockets:String, ) {\n                createMachine(memory:$memory, bootdisk:$bootdisk, cores:$cores, arch:$arch, name:$name, sockets:$sockets, ) {\n                    instance {\n                        id, name, \n                    },\n                    ok\n                }\n            }\n        ", 
+  "variables": { 
+    "memory": "{{memoryVar}}",
+    "bootdisk": "{{bootdiskVar}}",
+    "cores": "{{coresVar}}",
+    "arch": "{{archVar}}",
+    "name": "{{nameVar}}",
+    "sockets": "{{socketsVar}}"
+  }
+}

@@ -1,0 +1,21 @@
+mutation createReview (
+
+  $status: String!, 
+  $notice: String!, 
+  $reviewer: String!
+
+) {
+  createReview(
+    status: $status, 
+    notice: $notice, 
+    reviewer: $reviewer
+  ) {
+    instance {
+      id, 
+      status, 
+      notice, 
+      reviewer
+    }, 
+    ok
+  }
+}

@@ -1,0 +1,21 @@
+mutation createApproval (
+
+  $status: String!, 
+  $notice: String!, 
+  $approver: String!
+
+) {
+  createApproval(
+    status: $status, 
+    notice: $notice, 
+    approver: $approver
+  ) {
+    instance {
+      id, 
+      status, 
+      notice, 
+      approver
+    }, 
+    ok
+  }
+}

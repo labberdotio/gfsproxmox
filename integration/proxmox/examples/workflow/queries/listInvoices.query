@@ -1,0 +1,29 @@
+query listInvoices (
+
+  $name: String!
+
+) {
+  Invoices(
+    name: $name
+  ) {
+
+    id, 
+    name, 
+    description, 
+    amount, 
+    status, 
+    approvalOf {
+      id, 
+      status, 
+      notice, 
+      approver, 
+      reviewOf {
+        id, 
+        status, 
+        notice, 
+        reviewer
+      }
+    }
+
+  }
+}

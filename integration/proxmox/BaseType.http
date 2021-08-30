@@ -1,0 +1,75 @@
+
+
+#
+# Automatic GFS API HTTP Crud generator
+#
+
+@baseUrl = http://192.168.0.160:5000
+
+# lastAgentUpdateID: String
+@createLastagentupdateid = 
+
+# name: String
+@createName = 
+
+
+###
+# @name callGetAllNodes
+GET {{baseUrl}}/api/v1.0/gfs1/graph HTTP/1.1
+Content-Type: application/json
+
+{}
+
+###
+# @name createBase
+POST {{baseUrl}}/gfs1/graphql HTTP/1.1
+Content-Type: application/json
+
+{"query": "            mutation createBase($lastAgentUpdateID:String, $name:String, ) {                createBase(lastAgentUpdateID:$lastAgentUpdateID, name:$name, ) {                    instance {                        id, lastAgentUpdateID, name,                      },                    ok                }            }        ", 
+  "variables": { 
+    "lastAgentUpdateID": "{{createLastagentupdateid}}",
+    "name": "{{createName}}"
+  }
+}
+
+###
+@GFSID = {{createBase.response.body.$.data.createBase.instance.id}}
+
+
+# lastAgentUpdateID: String
+@updateLastagentupdateid = 
+
+# name: String
+@updateName = 
+
+
+###
+# @name updateBase
+POST {{baseUrl}}/gfs1/graphql HTTP/1.1
+Content-Type: application/json
+
+{ 
+  "query": "            mutation updateBase($id:String!, $lastAgentUpdateID:String, $name:String, ) {                updateBase(id:$id, lastAgentUpdateID:$lastAgentUpdateID, name:$name, ) {                    instance {                        id, lastAgentUpdateID, name,                      },                    ok                }            }        ", 
+  "variables": {
+    "id": "{{GFSID}}", 
+    "lastAgentUpdateID": "{{updateLastagentupdateid}}",
+    "name": "{{updateName}}"
+  }
+}
+
+###
+# @name contextBase
+GET {{baseUrl}}/api/v1.0/gfs1/context/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+###
+# @name renderBase
+GET {{baseUrl}}/api/v1.0/gfs1/render/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+###
+# @name deleteBase
+DELETE {{baseUrl}}/api/v1.0/gfs1/vertex/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+    

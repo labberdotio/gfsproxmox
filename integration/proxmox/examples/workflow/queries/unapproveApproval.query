@@ -1,0 +1,17 @@
+mutation unapproveApproval(
+
+  $id: String!
+
+) {
+  updateApproval(
+    id: $id
+    status: "unapproved", 
+    notice: "Approval is not approved"
+  ) {
+    instance {
+      id,
+      status
+    }, 
+    ok
+  }
+}

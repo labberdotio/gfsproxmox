@@ -1,0 +1,23 @@
+# Proxmox CRUD for cloning a VM 
+#
+
+# APITOKEN == 192.168.0.207 == automation-user == 1-roU9B5w6iZz8zh8V2xDxl0rRHL3ev00V9AdWh1fuKhnDjgkdvISQPC41BfpkbPQt
+# APITOKEN == 2-kHWg6viAHjqmq8WKfwZpp1XdJ4aUuCvkdhAwJPFNzrFREv6CvhQgOrcMGnGv2MaZ
+@APIToken = Basic cm9vdDpyb290MTIz
+@baseUrl = http://192.168.0.200
+@pool = dev
+@voldataset = iscsi-volumes
+
+
+###
+# @name getDatasets
+GET {{baseUrl}}/api/v2.0/pool
+Content-Type: application/json
+authorization: {{APIToken}}
+
+###
+
+# @name getDatasets
+GET {{baseUrl}}/api/v2.0/poolIdId/1
+Content-Type: application/json
+authorization: {{APIToken}}

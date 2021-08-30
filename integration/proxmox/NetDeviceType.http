@@ -1,0 +1,75 @@
+
+
+#
+# Automatic GFS API HTTP Crud generator
+#
+
+@baseUrl = http://192.168.0.160:5000
+
+# hwaddr: String
+@createHwaddr = 
+
+# name: String
+@createName = 
+
+
+###
+# @name callGetAllNodes
+GET {{baseUrl}}/api/v1.0/gfs1/graph HTTP/1.1
+Content-Type: application/json
+
+{}
+
+###
+# @name createNetDevice
+POST {{baseUrl}}/gfs1/graphql HTTP/1.1
+Content-Type: application/json
+
+{"query": "            mutation createNetDevice($hwaddr:String, $name:String, ) {                createNetDevice(hwaddr:$hwaddr, name:$name, ) {                    instance {                        id, hwaddr, name,                      },                    ok                }            }        ", 
+  "variables": { 
+    "hwaddr": "{{createHwaddr}}",
+    "name": "{{createName}}"
+  }
+}
+
+###
+@GFSID = {{createNetDevice.response.body.$.data.createNetDevice.instance.id}}
+
+
+# hwaddr: String
+@updateHwaddr = 
+
+# name: String
+@updateName = 
+
+
+###
+# @name updateNetDevice
+POST {{baseUrl}}/gfs1/graphql HTTP/1.1
+Content-Type: application/json
+
+{ 
+  "query": "            mutation updateNetDevice($id:String!, $hwaddr:String, $name:String, ) {                updateNetDevice(id:$id, hwaddr:$hwaddr, name:$name, ) {                    instance {                        id, hwaddr, name,                      },                    ok                }            }        ", 
+  "variables": {
+    "id": "{{GFSID}}", 
+    "hwaddr": "{{updateHwaddr}}",
+    "name": "{{updateName}}"
+  }
+}
+
+###
+# @name contextNetDevice
+GET {{baseUrl}}/api/v1.0/gfs1/context/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+###
+# @name renderNetDevice
+GET {{baseUrl}}/api/v1.0/gfs1/render/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+###
+# @name deleteNetDevice
+DELETE {{baseUrl}}/api/v1.0/gfs1/vertex/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+    

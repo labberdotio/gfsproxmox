@@ -1,0 +1,115 @@
+
+
+#
+# Automatic GFS API HTTP Crud generator
+#
+
+@baseUrl = http://192.168.0.160:5000
+
+# rangeStart: String
+@createRangestart = 
+
+# network: String
+@createNetwork = 
+
+# netmask: String
+@createNetmask = 
+
+# routers: String
+@createRouters = 
+
+# rangeEnd: String
+@createRangeend = 
+
+# nextServer: String
+@createNextserver = 
+
+# name: String
+@createName = 
+
+
+###
+# @name callGetAllNodes
+GET {{baseUrl}}/api/v1.0/gfs1/graph HTTP/1.1
+Content-Type: application/json
+
+{}
+
+###
+# @name createSubnet
+POST {{baseUrl}}/gfs1/graphql HTTP/1.1
+Content-Type: application/json
+
+{"query": "            mutation createSubnet($rangeStart:String, $network:String, $netmask:String, $routers:String, $rangeEnd:String, $nextServer:String, $name:String, ) {                createSubnet(rangeStart:$rangeStart, network:$network, netmask:$netmask, routers:$routers, rangeEnd:$rangeEnd, nextServer:$nextServer, name:$name, ) {                    instance {                        id, rangeStart, network, netmask, routers, rangeEnd, nextServer, name,                      },                    ok                }            }        ", 
+  "variables": { 
+    "rangeStart": "{{createRangestart}}",
+    "network": "{{createNetwork}}",
+    "netmask": "{{createNetmask}}",
+    "routers": "{{createRouters}}",
+    "rangeEnd": "{{createRangeend}}",
+    "nextServer": "{{createNextserver}}",
+    "name": "{{createName}}"
+  }
+}
+
+###
+@GFSID = {{createSubnet.response.body.$.data.createSubnet.instance.id}}
+
+
+# rangeStart: String
+@updateRangestart = 
+
+# network: String
+@updateNetwork = 
+
+# netmask: String
+@updateNetmask = 
+
+# routers: String
+@updateRouters = 
+
+# rangeEnd: String
+@updateRangeend = 
+
+# nextServer: String
+@updateNextserver = 
+
+# name: String
+@updateName = 
+
+
+###
+# @name updateSubnet
+POST {{baseUrl}}/gfs1/graphql HTTP/1.1
+Content-Type: application/json
+
+{ 
+  "query": "            mutation updateSubnet($id:String!, $rangeStart:String, $network:String, $netmask:String, $routers:String, $rangeEnd:String, $nextServer:String, $name:String, ) {                updateSubnet(id:$id, rangeStart:$rangeStart, network:$network, netmask:$netmask, routers:$routers, rangeEnd:$rangeEnd, nextServer:$nextServer, name:$name, ) {                    instance {                        id, rangeStart, network, netmask, routers, rangeEnd, nextServer, name,                      },                    ok                }            }        ", 
+  "variables": {
+    "id": "{{GFSID}}", 
+    "rangeStart": "{{updateRangestart}}",
+    "network": "{{updateNetwork}}",
+    "netmask": "{{updateNetmask}}",
+    "routers": "{{updateRouters}}",
+    "rangeEnd": "{{updateRangeend}}",
+    "nextServer": "{{updateNextserver}}",
+    "name": "{{updateName}}"
+  }
+}
+
+###
+# @name contextSubnet
+GET {{baseUrl}}/api/v1.0/gfs1/context/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+###
+# @name renderSubnet
+GET {{baseUrl}}/api/v1.0/gfs1/render/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+###
+# @name deleteSubnet
+DELETE {{baseUrl}}/api/v1.0/gfs1/vertex/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+    

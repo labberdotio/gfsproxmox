@@ -1,0 +1,75 @@
+
+
+#
+# Automatic GFS API HTTP Crud generator
+#
+
+@baseUrl = http://192.168.0.160:5000
+
+# name: String
+@createName = 
+
+# address: String
+@createAddress = 
+
+
+###
+# @name callGetAllNodes
+GET {{baseUrl}}/api/v1.0/gfs1/graph HTTP/1.1
+Content-Type: application/json
+
+{}
+
+###
+# @name createIp
+POST {{baseUrl}}/gfs1/graphql HTTP/1.1
+Content-Type: application/json
+
+{"query": "            mutation createIp($name:String, $address:String, ) {                createIp(name:$name, address:$address, ) {                    instance {                        id, name, address,                      },                    ok                }            }        ", 
+  "variables": { 
+    "name": "{{createName}}",
+    "address": "{{createAddress}}"
+  }
+}
+
+###
+@GFSID = {{createIp.response.body.$.data.createIp.instance.id}}
+
+
+# name: String
+@updateName = 
+
+# address: String
+@updateAddress = 
+
+
+###
+# @name updateIp
+POST {{baseUrl}}/gfs1/graphql HTTP/1.1
+Content-Type: application/json
+
+{ 
+  "query": "            mutation updateIp($id:String!, $name:String, $address:String, ) {                updateIp(id:$id, name:$name, address:$address, ) {                    instance {                        id, name, address,                      },                    ok                }            }        ", 
+  "variables": {
+    "id": "{{GFSID}}", 
+    "name": "{{updateName}}",
+    "address": "{{updateAddress}}"
+  }
+}
+
+###
+# @name contextIp
+GET {{baseUrl}}/api/v1.0/gfs1/context/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+###
+# @name renderIp
+GET {{baseUrl}}/api/v1.0/gfs1/render/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+###
+# @name deleteIp
+DELETE {{baseUrl}}/api/v1.0/gfs1/vertex/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+    

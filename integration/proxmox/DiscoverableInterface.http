@@ -1,0 +1,83 @@
+
+
+#
+# Automatic GFS API HTTP Crud generator
+#
+
+@baseUrl = http://192.168.0.160:5000
+
+# agentCreated: String
+@createAgentcreated = 
+
+# discovered: String
+@createDiscovered = 
+
+# name: String
+@createName = 
+
+
+###
+# @name callGetAllNodes
+GET {{baseUrl}}/api/v1.0/gfs1/graph HTTP/1.1
+Content-Type: application/json
+
+{}
+
+###
+# @name createDiscoverable
+POST {{baseUrl}}/gfs1/graphql HTTP/1.1
+Content-Type: application/json
+
+{"query": "            mutation createDiscoverable($agentCreated:String, $discovered:String, $name:String, ) {                createDiscoverable(agentCreated:$agentCreated, discovered:$discovered, name:$name, ) {                    instance {                        id, agentCreated, discovered, name,                      },                    ok                }            }        ", 
+  "variables": { 
+    "agentCreated": "{{createAgentcreated}}",
+    "discovered": "{{createDiscovered}}",
+    "name": "{{createName}}"
+  }
+}
+
+###
+@GFSID = {{createDiscoverable.response.body.$.data.createDiscoverable.instance.id}}
+
+
+# agentCreated: String
+@updateAgentcreated = 
+
+# discovered: String
+@updateDiscovered = 
+
+# name: String
+@updateName = 
+
+
+###
+# @name updateDiscoverable
+POST {{baseUrl}}/gfs1/graphql HTTP/1.1
+Content-Type: application/json
+
+{ 
+  "query": "            mutation updateDiscoverable($id:String!, $agentCreated:String, $discovered:String, $name:String, ) {                updateDiscoverable(id:$id, agentCreated:$agentCreated, discovered:$discovered, name:$name, ) {                    instance {                        id, agentCreated, discovered, name,                      },                    ok                }            }        ", 
+  "variables": {
+    "id": "{{GFSID}}", 
+    "agentCreated": "{{updateAgentcreated}}",
+    "discovered": "{{updateDiscovered}}",
+    "name": "{{updateName}}"
+  }
+}
+
+###
+# @name contextDiscoverable
+GET {{baseUrl}}/api/v1.0/gfs1/context/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+###
+# @name renderDiscoverable
+GET {{baseUrl}}/api/v1.0/gfs1/render/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+###
+# @name deleteDiscoverable
+DELETE {{baseUrl}}/api/v1.0/gfs1/vertex/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+    

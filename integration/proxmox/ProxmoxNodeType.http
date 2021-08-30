@@ -1,0 +1,619 @@
+
+
+#
+# Automatic GFS API HTTP Crud generator
+#
+
+@baseUrl = http://192.168.0.160:5000
+
+# lvmThinDevice1: String
+@createLvmthindevice1 = 
+
+# status: String
+@createStatus = 
+
+# idle: String
+@createIdle = 
+
+# lvmDevice4: String
+@createLvmdevice4 = 
+
+# diskDevice0: String
+@createDiskdevice0 = 
+
+# firewall: String
+@createFirewall = 
+
+# memory: String
+@createMemory = 
+
+# networkDevice2: String
+@createNetworkdevice2 = 
+
+# diskController0: String
+@createDiskcontroller0 = 
+
+# lvmDevice1: String
+@createLvmdevice1 = 
+
+# networkDevice5: String
+@createNetworkdevice5 = 
+
+# diskDevice7: String
+@createDiskdevice7 = 
+
+# icon: String
+@createIcon = 
+
+# step: Integer
+@createStep = 
+
+# dns2: String
+@createDns2 = 
+
+# sockets: String
+@createSockets = 
+
+# search: String
+@createSearch = 
+
+# lastStatusModifiedTime: Integer
+@createLaststatusmodifiedtime = 
+
+# lvmDevice3: String
+@createLvmdevice3 = 
+
+# cpu: String
+@createCpu = 
+
+# dns3: String
+@createDns3 = 
+
+# diskDevice6: String
+@createDiskdevice6 = 
+
+# diskController1: String
+@createDiskcontroller1 = 
+
+# lastAgentUpdateID: String
+@createLastagentupdateid = 
+
+# networkDevice1: String
+@createNetworkdevice1 = 
+
+# directory: String
+@createDirectory = 
+
+# swap: String
+@createSwap = 
+
+# lvmThinDevice5: String
+@createLvmthindevice5 = 
+
+# lvmDevice0: String
+@createLvmdevice0 = 
+
+# networkDevice7: String
+@createNetworkdevice7 = 
+
+# cores: String
+@createCores = 
+
+# lvmDevice7: String
+@createLvmdevice7 = 
+
+# diskDevice3: String
+@createDiskdevice3 = 
+
+# networkDevice4: String
+@createNetworkdevice4 = 
+
+# lvmThinDevice2: String
+@createLvmthindevice2 = 
+
+# ceph: String
+@createCeph = 
+
+# uptime: String
+@createUptime = 
+
+# loadavg: String
+@createLoadavg = 
+
+# numa: String
+@createNuma = 
+
+# diskDevice5: String
+@createDiskdevice5 = 
+
+# networkDevice0: String
+@createNetworkdevice0 = 
+
+# kversion: String
+@createKversion = 
+
+# lastPulseModifiedTime: Integer
+@createLastpulsemodifiedtime = 
+
+# zfs: String
+@createZfs = 
+
+# diskDevice2: String
+@createDiskdevice2 = 
+
+# lvmThinDevice3: String
+@createLvmthindevice3 = 
+
+# time: String
+@createTime = 
+
+# lvmThinDevice6: String
+@createLvmthindevice6 = 
+
+# rootfs: String
+@createRootfs = 
+
+# lvmDevice6: String
+@createLvmdevice6 = 
+
+# networkDevice3: String
+@createNetworkdevice3 = 
+
+# lvmThinDevice7: String
+@createLvmthindevice7 = 
+
+# cpuinfo: String
+@createCpuinfo = 
+
+# diskDevice4: String
+@createDiskdevice4 = 
+
+# diskDevice1: String
+@createDiskdevice1 = 
+
+# hosts: String
+@createHosts = 
+
+# ksm: String
+@createKsm = 
+
+# lvmThinDevice0: String
+@createLvmthindevice0 = 
+
+# statusTimeoutSecs: Integer
+@createStatustimeoutsecs = 
+
+# pveversion: String
+@createPveversion = 
+
+# networkDevice6: String
+@createNetworkdevice6 = 
+
+# dns1: String
+@createDns1 = 
+
+# lvmThinDevice4: String
+@createLvmthindevice4 = 
+
+# ostype: String
+@createOstype = 
+
+# bootdisk: String
+@createBootdisk = 
+
+# wait: String
+@createWait = 
+
+# certs: String
+@createCerts = 
+
+# lvmDevice2: String
+@createLvmdevice2 = 
+
+# lvmDevice5: String
+@createLvmdevice5 = 
+
+# name: String
+@createName = 
+
+
+###
+# @name callGetAllNodes
+GET {{baseUrl}}/api/v1.0/gfs1/graph HTTP/1.1
+Content-Type: application/json
+
+{}
+
+###
+# @name createProxmoxNode
+POST {{baseUrl}}/gfs1/graphql HTTP/1.1
+Content-Type: application/json
+
+{"query": "            mutation createProxmoxNode($lvmThinDevice1:String, $status:String, $idle:String, $lvmDevice4:String, $diskDevice0:String, $firewall:String, $memory:String, $networkDevice2:String, $diskController0:String, $lvmDevice1:String, $networkDevice5:String, $diskDevice7:String, $icon:String, $step:Integer, $dns2:String, $sockets:String, $search:String, $lastStatusModifiedTime:Integer, $lvmDevice3:String, $cpu:String, $dns3:String, $diskDevice6:String, $diskController1:String, $lastAgentUpdateID:String, $networkDevice1:String, $directory:String, $swap:String, $lvmThinDevice5:String, $lvmDevice0:String, $networkDevice7:String, $cores:String, $lvmDevice7:String, $diskDevice3:String, $networkDevice4:String, $lvmThinDevice2:String, $ceph:String, $uptime:String, $loadavg:String, $numa:String, $diskDevice5:String, $networkDevice0:String, $kversion:String, $lastPulseModifiedTime:Integer, $zfs:String, $diskDevice2:String, $lvmThinDevice3:String, $time:String, $lvmThinDevice6:String, $rootfs:String, $lvmDevice6:String, $networkDevice3:String, $lvmThinDevice7:String, $cpuinfo:String, $diskDevice4:String, $diskDevice1:String, $hosts:String, $ksm:String, $lvmThinDevice0:String, $statusTimeoutSecs:Integer, $pveversion:String, $networkDevice6:String, $dns1:String, $lvmThinDevice4:String, $ostype:String, $bootdisk:String, $wait:String, $certs:String, $lvmDevice2:String, $lvmDevice5:String, $name:String, ) {                createProxmoxNode(lvmThinDevice1:$lvmThinDevice1, status:$status, idle:$idle, lvmDevice4:$lvmDevice4, diskDevice0:$diskDevice0, firewall:$firewall, memory:$memory, networkDevice2:$networkDevice2, diskController0:$diskController0, lvmDevice1:$lvmDevice1, networkDevice5:$networkDevice5, diskDevice7:$diskDevice7, icon:$icon, step:$step, dns2:$dns2, sockets:$sockets, search:$search, lastStatusModifiedTime:$lastStatusModifiedTime, lvmDevice3:$lvmDevice3, cpu:$cpu, dns3:$dns3, diskDevice6:$diskDevice6, diskController1:$diskController1, lastAgentUpdateID:$lastAgentUpdateID, networkDevice1:$networkDevice1, directory:$directory, swap:$swap, lvmThinDevice5:$lvmThinDevice5, lvmDevice0:$lvmDevice0, networkDevice7:$networkDevice7, cores:$cores, lvmDevice7:$lvmDevice7, diskDevice3:$diskDevice3, networkDevice4:$networkDevice4, lvmThinDevice2:$lvmThinDevice2, ceph:$ceph, uptime:$uptime, loadavg:$loadavg, numa:$numa, diskDevice5:$diskDevice5, networkDevice0:$networkDevice0, kversion:$kversion, lastPulseModifiedTime:$lastPulseModifiedTime, zfs:$zfs, diskDevice2:$diskDevice2, lvmThinDevice3:$lvmThinDevice3, time:$time, lvmThinDevice6:$lvmThinDevice6, rootfs:$rootfs, lvmDevice6:$lvmDevice6, networkDevice3:$networkDevice3, lvmThinDevice7:$lvmThinDevice7, cpuinfo:$cpuinfo, diskDevice4:$diskDevice4, diskDevice1:$diskDevice1, hosts:$hosts, ksm:$ksm, lvmThinDevice0:$lvmThinDevice0, statusTimeoutSecs:$statusTimeoutSecs, pveversion:$pveversion, networkDevice6:$networkDevice6, dns1:$dns1, lvmThinDevice4:$lvmThinDevice4, ostype:$ostype, bootdisk:$bootdisk, wait:$wait, certs:$certs, lvmDevice2:$lvmDevice2, lvmDevice5:$lvmDevice5, name:$name, ) {                    instance {                        id, lvmThinDevice1, status, idle, lvmDevice4, diskDevice0, firewall, memory, networkDevice2, diskController0, lvmDevice1, networkDevice5, diskDevice7, icon, step, dns2, sockets, search, lastStatusModifiedTime, lvmDevice3, cpu, dns3, diskDevice6, diskController1, lastAgentUpdateID, networkDevice1, directory, swap, lvmThinDevice5, lvmDevice0, networkDevice7, cores, lvmDevice7, diskDevice3, networkDevice4, lvmThinDevice2, ceph, uptime, loadavg, numa, diskDevice5, networkDevice0, kversion, lastPulseModifiedTime, zfs, diskDevice2, lvmThinDevice3, time, lvmThinDevice6, rootfs, lvmDevice6, networkDevice3, lvmThinDevice7, cpuinfo, diskDevice4, diskDevice1, hosts, ksm, lvmThinDevice0, statusTimeoutSecs, pveversion, networkDevice6, dns1, lvmThinDevice4, ostype, bootdisk, wait, certs, lvmDevice2, lvmDevice5, name,                      },                    ok                }            }        ", 
+  "variables": { 
+    "lvmThinDevice1": "{{createLvmthindevice1}}",
+    "status": "{{createStatus}}",
+    "idle": "{{createIdle}}",
+    "lvmDevice4": "{{createLvmdevice4}}",
+    "diskDevice0": "{{createDiskdevice0}}",
+    "firewall": "{{createFirewall}}",
+    "memory": "{{createMemory}}",
+    "networkDevice2": "{{createNetworkdevice2}}",
+    "diskController0": "{{createDiskcontroller0}}",
+    "lvmDevice1": "{{createLvmdevice1}}",
+    "networkDevice5": "{{createNetworkdevice5}}",
+    "diskDevice7": "{{createDiskdevice7}}",
+    "icon": "{{createIcon}}",
+    "step": "{{createStep}}",
+    "dns2": "{{createDns2}}",
+    "sockets": "{{createSockets}}",
+    "search": "{{createSearch}}",
+    "lastStatusModifiedTime": "{{createLaststatusmodifiedtime}}",
+    "lvmDevice3": "{{createLvmdevice3}}",
+    "cpu": "{{createCpu}}",
+    "dns3": "{{createDns3}}",
+    "diskDevice6": "{{createDiskdevice6}}",
+    "diskController1": "{{createDiskcontroller1}}",
+    "lastAgentUpdateID": "{{createLastagentupdateid}}",
+    "networkDevice1": "{{createNetworkdevice1}}",
+    "directory": "{{createDirectory}}",
+    "swap": "{{createSwap}}",
+    "lvmThinDevice5": "{{createLvmthindevice5}}",
+    "lvmDevice0": "{{createLvmdevice0}}",
+    "networkDevice7": "{{createNetworkdevice7}}",
+    "cores": "{{createCores}}",
+    "lvmDevice7": "{{createLvmdevice7}}",
+    "diskDevice3": "{{createDiskdevice3}}",
+    "networkDevice4": "{{createNetworkdevice4}}",
+    "lvmThinDevice2": "{{createLvmthindevice2}}",
+    "ceph": "{{createCeph}}",
+    "uptime": "{{createUptime}}",
+    "loadavg": "{{createLoadavg}}",
+    "numa": "{{createNuma}}",
+    "diskDevice5": "{{createDiskdevice5}}",
+    "networkDevice0": "{{createNetworkdevice0}}",
+    "kversion": "{{createKversion}}",
+    "lastPulseModifiedTime": "{{createLastpulsemodifiedtime}}",
+    "zfs": "{{createZfs}}",
+    "diskDevice2": "{{createDiskdevice2}}",
+    "lvmThinDevice3": "{{createLvmthindevice3}}",
+    "time": "{{createTime}}",
+    "lvmThinDevice6": "{{createLvmthindevice6}}",
+    "rootfs": "{{createRootfs}}",
+    "lvmDevice6": "{{createLvmdevice6}}",
+    "networkDevice3": "{{createNetworkdevice3}}",
+    "lvmThinDevice7": "{{createLvmthindevice7}}",
+    "cpuinfo": "{{createCpuinfo}}",
+    "diskDevice4": "{{createDiskdevice4}}",
+    "diskDevice1": "{{createDiskdevice1}}",
+    "hosts": "{{createHosts}}",
+    "ksm": "{{createKsm}}",
+    "lvmThinDevice0": "{{createLvmthindevice0}}",
+    "statusTimeoutSecs": "{{createStatustimeoutsecs}}",
+    "pveversion": "{{createPveversion}}",
+    "networkDevice6": "{{createNetworkdevice6}}",
+    "dns1": "{{createDns1}}",
+    "lvmThinDevice4": "{{createLvmthindevice4}}",
+    "ostype": "{{createOstype}}",
+    "bootdisk": "{{createBootdisk}}",
+    "wait": "{{createWait}}",
+    "certs": "{{createCerts}}",
+    "lvmDevice2": "{{createLvmdevice2}}",
+    "lvmDevice5": "{{createLvmdevice5}}",
+    "name": "{{createName}}"
+  }
+}
+
+###
+@GFSID = {{createProxmoxNode.response.body.$.data.createProxmoxNode.instance.id}}
+
+
+# lvmThinDevice1: String
+@updateLvmthindevice1 = 
+
+# status: String
+@updateStatus = 
+
+# idle: String
+@updateIdle = 
+
+# lvmDevice4: String
+@updateLvmdevice4 = 
+
+# diskDevice0: String
+@updateDiskdevice0 = 
+
+# firewall: String
+@updateFirewall = 
+
+# memory: String
+@updateMemory = 
+
+# networkDevice2: String
+@updateNetworkdevice2 = 
+
+# diskController0: String
+@updateDiskcontroller0 = 
+
+# lvmDevice1: String
+@updateLvmdevice1 = 
+
+# networkDevice5: String
+@updateNetworkdevice5 = 
+
+# diskDevice7: String
+@updateDiskdevice7 = 
+
+# icon: String
+@updateIcon = 
+
+# step: Integer
+@updateStep = 
+
+# dns2: String
+@updateDns2 = 
+
+# sockets: String
+@updateSockets = 
+
+# search: String
+@updateSearch = 
+
+# lastStatusModifiedTime: Integer
+@updateLaststatusmodifiedtime = 
+
+# lvmDevice3: String
+@updateLvmdevice3 = 
+
+# cpu: String
+@updateCpu = 
+
+# dns3: String
+@updateDns3 = 
+
+# diskDevice6: String
+@updateDiskdevice6 = 
+
+# diskController1: String
+@updateDiskcontroller1 = 
+
+# lastAgentUpdateID: String
+@updateLastagentupdateid = 
+
+# networkDevice1: String
+@updateNetworkdevice1 = 
+
+# directory: String
+@updateDirectory = 
+
+# swap: String
+@updateSwap = 
+
+# lvmThinDevice5: String
+@updateLvmthindevice5 = 
+
+# lvmDevice0: String
+@updateLvmdevice0 = 
+
+# networkDevice7: String
+@updateNetworkdevice7 = 
+
+# cores: String
+@updateCores = 
+
+# lvmDevice7: String
+@updateLvmdevice7 = 
+
+# diskDevice3: String
+@updateDiskdevice3 = 
+
+# networkDevice4: String
+@updateNetworkdevice4 = 
+
+# lvmThinDevice2: String
+@updateLvmthindevice2 = 
+
+# ceph: String
+@updateCeph = 
+
+# uptime: String
+@updateUptime = 
+
+# loadavg: String
+@updateLoadavg = 
+
+# numa: String
+@updateNuma = 
+
+# diskDevice5: String
+@updateDiskdevice5 = 
+
+# networkDevice0: String
+@updateNetworkdevice0 = 
+
+# kversion: String
+@updateKversion = 
+
+# lastPulseModifiedTime: Integer
+@updateLastpulsemodifiedtime = 
+
+# zfs: String
+@updateZfs = 
+
+# diskDevice2: String
+@updateDiskdevice2 = 
+
+# lvmThinDevice3: String
+@updateLvmthindevice3 = 
+
+# time: String
+@updateTime = 
+
+# lvmThinDevice6: String
+@updateLvmthindevice6 = 
+
+# rootfs: String
+@updateRootfs = 
+
+# lvmDevice6: String
+@updateLvmdevice6 = 
+
+# networkDevice3: String
+@updateNetworkdevice3 = 
+
+# lvmThinDevice7: String
+@updateLvmthindevice7 = 
+
+# cpuinfo: String
+@updateCpuinfo = 
+
+# diskDevice4: String
+@updateDiskdevice4 = 
+
+# diskDevice1: String
+@updateDiskdevice1 = 
+
+# hosts: String
+@updateHosts = 
+
+# ksm: String
+@updateKsm = 
+
+# lvmThinDevice0: String
+@updateLvmthindevice0 = 
+
+# statusTimeoutSecs: Integer
+@updateStatustimeoutsecs = 
+
+# pveversion: String
+@updatePveversion = 
+
+# networkDevice6: String
+@updateNetworkdevice6 = 
+
+# dns1: String
+@updateDns1 = 
+
+# lvmThinDevice4: String
+@updateLvmthindevice4 = 
+
+# ostype: String
+@updateOstype = 
+
+# bootdisk: String
+@updateBootdisk = 
+
+# wait: String
+@updateWait = 
+
+# certs: String
+@updateCerts = 
+
+# lvmDevice2: String
+@updateLvmdevice2 = 
+
+# lvmDevice5: String
+@updateLvmdevice5 = 
+
+# name: String
+@updateName = 
+
+
+###
+# @name updateProxmoxNode
+POST {{baseUrl}}/gfs1/graphql HTTP/1.1
+Content-Type: application/json
+
+{ 
+  "query": "            mutation updateProxmoxNode($id:String!, $lvmThinDevice1:String, $status:String, $idle:String, $lvmDevice4:String, $diskDevice0:String, $firewall:String, $memory:String, $networkDevice2:String, $diskController0:String, $lvmDevice1:String, $networkDevice5:String, $diskDevice7:String, $icon:String, $step:Integer, $dns2:String, $sockets:String, $search:String, $lastStatusModifiedTime:Integer, $lvmDevice3:String, $cpu:String, $dns3:String, $diskDevice6:String, $diskController1:String, $lastAgentUpdateID:String, $networkDevice1:String, $directory:String, $swap:String, $lvmThinDevice5:String, $lvmDevice0:String, $networkDevice7:String, $cores:String, $lvmDevice7:String, $diskDevice3:String, $networkDevice4:String, $lvmThinDevice2:String, $ceph:String, $uptime:String, $loadavg:String, $numa:String, $diskDevice5:String, $networkDevice0:String, $kversion:String, $lastPulseModifiedTime:Integer, $zfs:String, $diskDevice2:String, $lvmThinDevice3:String, $time:String, $lvmThinDevice6:String, $rootfs:String, $lvmDevice6:String, $networkDevice3:String, $lvmThinDevice7:String, $cpuinfo:String, $diskDevice4:String, $diskDevice1:String, $hosts:String, $ksm:String, $lvmThinDevice0:String, $statusTimeoutSecs:Integer, $pveversion:String, $networkDevice6:String, $dns1:String, $lvmThinDevice4:String, $ostype:String, $bootdisk:String, $wait:String, $certs:String, $lvmDevice2:String, $lvmDevice5:String, $name:String, ) {                updateProxmoxNode(id:$id, lvmThinDevice1:$lvmThinDevice1, status:$status, idle:$idle, lvmDevice4:$lvmDevice4, diskDevice0:$diskDevice0, firewall:$firewall, memory:$memory, networkDevice2:$networkDevice2, diskController0:$diskController0, lvmDevice1:$lvmDevice1, networkDevice5:$networkDevice5, diskDevice7:$diskDevice7, icon:$icon, step:$step, dns2:$dns2, sockets:$sockets, search:$search, lastStatusModifiedTime:$lastStatusModifiedTime, lvmDevice3:$lvmDevice3, cpu:$cpu, dns3:$dns3, diskDevice6:$diskDevice6, diskController1:$diskController1, lastAgentUpdateID:$lastAgentUpdateID, networkDevice1:$networkDevice1, directory:$directory, swap:$swap, lvmThinDevice5:$lvmThinDevice5, lvmDevice0:$lvmDevice0, networkDevice7:$networkDevice7, cores:$cores, lvmDevice7:$lvmDevice7, diskDevice3:$diskDevice3, networkDevice4:$networkDevice4, lvmThinDevice2:$lvmThinDevice2, ceph:$ceph, uptime:$uptime, loadavg:$loadavg, numa:$numa, diskDevice5:$diskDevice5, networkDevice0:$networkDevice0, kversion:$kversion, lastPulseModifiedTime:$lastPulseModifiedTime, zfs:$zfs, diskDevice2:$diskDevice2, lvmThinDevice3:$lvmThinDevice3, time:$time, lvmThinDevice6:$lvmThinDevice6, rootfs:$rootfs, lvmDevice6:$lvmDevice6, networkDevice3:$networkDevice3, lvmThinDevice7:$lvmThinDevice7, cpuinfo:$cpuinfo, diskDevice4:$diskDevice4, diskDevice1:$diskDevice1, hosts:$hosts, ksm:$ksm, lvmThinDevice0:$lvmThinDevice0, statusTimeoutSecs:$statusTimeoutSecs, pveversion:$pveversion, networkDevice6:$networkDevice6, dns1:$dns1, lvmThinDevice4:$lvmThinDevice4, ostype:$ostype, bootdisk:$bootdisk, wait:$wait, certs:$certs, lvmDevice2:$lvmDevice2, lvmDevice5:$lvmDevice5, name:$name, ) {                    instance {                        id, lvmThinDevice1, status, idle, lvmDevice4, diskDevice0, firewall, memory, networkDevice2, diskController0, lvmDevice1, networkDevice5, diskDevice7, icon, step, dns2, sockets, search, lastStatusModifiedTime, lvmDevice3, cpu, dns3, diskDevice6, diskController1, lastAgentUpdateID, networkDevice1, directory, swap, lvmThinDevice5, lvmDevice0, networkDevice7, cores, lvmDevice7, diskDevice3, networkDevice4, lvmThinDevice2, ceph, uptime, loadavg, numa, diskDevice5, networkDevice0, kversion, lastPulseModifiedTime, zfs, diskDevice2, lvmThinDevice3, time, lvmThinDevice6, rootfs, lvmDevice6, networkDevice3, lvmThinDevice7, cpuinfo, diskDevice4, diskDevice1, hosts, ksm, lvmThinDevice0, statusTimeoutSecs, pveversion, networkDevice6, dns1, lvmThinDevice4, ostype, bootdisk, wait, certs, lvmDevice2, lvmDevice5, name,                      },                    ok                }            }        ", 
+  "variables": {
+    "id": "{{GFSID}}", 
+    "lvmThinDevice1": "{{updateLvmthindevice1}}",
+    "status": "{{updateStatus}}",
+    "idle": "{{updateIdle}}",
+    "lvmDevice4": "{{updateLvmdevice4}}",
+    "diskDevice0": "{{updateDiskdevice0}}",
+    "firewall": "{{updateFirewall}}",
+    "memory": "{{updateMemory}}",
+    "networkDevice2": "{{updateNetworkdevice2}}",
+    "diskController0": "{{updateDiskcontroller0}}",
+    "lvmDevice1": "{{updateLvmdevice1}}",
+    "networkDevice5": "{{updateNetworkdevice5}}",
+    "diskDevice7": "{{updateDiskdevice7}}",
+    "icon": "{{updateIcon}}",
+    "step": "{{updateStep}}",
+    "dns2": "{{updateDns2}}",
+    "sockets": "{{updateSockets}}",
+    "search": "{{updateSearch}}",
+    "lastStatusModifiedTime": "{{updateLaststatusmodifiedtime}}",
+    "lvmDevice3": "{{updateLvmdevice3}}",
+    "cpu": "{{updateCpu}}",
+    "dns3": "{{updateDns3}}",
+    "diskDevice6": "{{updateDiskdevice6}}",
+    "diskController1": "{{updateDiskcontroller1}}",
+    "lastAgentUpdateID": "{{updateLastagentupdateid}}",
+    "networkDevice1": "{{updateNetworkdevice1}}",
+    "directory": "{{updateDirectory}}",
+    "swap": "{{updateSwap}}",
+    "lvmThinDevice5": "{{updateLvmthindevice5}}",
+    "lvmDevice0": "{{updateLvmdevice0}}",
+    "networkDevice7": "{{updateNetworkdevice7}}",
+    "cores": "{{updateCores}}",
+    "lvmDevice7": "{{updateLvmdevice7}}",
+    "diskDevice3": "{{updateDiskdevice3}}",
+    "networkDevice4": "{{updateNetworkdevice4}}",
+    "lvmThinDevice2": "{{updateLvmthindevice2}}",
+    "ceph": "{{updateCeph}}",
+    "uptime": "{{updateUptime}}",
+    "loadavg": "{{updateLoadavg}}",
+    "numa": "{{updateNuma}}",
+    "diskDevice5": "{{updateDiskdevice5}}",
+    "networkDevice0": "{{updateNetworkdevice0}}",
+    "kversion": "{{updateKversion}}",
+    "lastPulseModifiedTime": "{{updateLastpulsemodifiedtime}}",
+    "zfs": "{{updateZfs}}",
+    "diskDevice2": "{{updateDiskdevice2}}",
+    "lvmThinDevice3": "{{updateLvmthindevice3}}",
+    "time": "{{updateTime}}",
+    "lvmThinDevice6": "{{updateLvmthindevice6}}",
+    "rootfs": "{{updateRootfs}}",
+    "lvmDevice6": "{{updateLvmdevice6}}",
+    "networkDevice3": "{{updateNetworkdevice3}}",
+    "lvmThinDevice7": "{{updateLvmthindevice7}}",
+    "cpuinfo": "{{updateCpuinfo}}",
+    "diskDevice4": "{{updateDiskdevice4}}",
+    "diskDevice1": "{{updateDiskdevice1}}",
+    "hosts": "{{updateHosts}}",
+    "ksm": "{{updateKsm}}",
+    "lvmThinDevice0": "{{updateLvmthindevice0}}",
+    "statusTimeoutSecs": "{{updateStatustimeoutsecs}}",
+    "pveversion": "{{updatePveversion}}",
+    "networkDevice6": "{{updateNetworkdevice6}}",
+    "dns1": "{{updateDns1}}",
+    "lvmThinDevice4": "{{updateLvmthindevice4}}",
+    "ostype": "{{updateOstype}}",
+    "bootdisk": "{{updateBootdisk}}",
+    "wait": "{{updateWait}}",
+    "certs": "{{updateCerts}}",
+    "lvmDevice2": "{{updateLvmdevice2}}",
+    "lvmDevice5": "{{updateLvmdevice5}}",
+    "name": "{{updateName}}"
+  }
+}
+
+###
+# @name contextProxmoxNode
+GET {{baseUrl}}/api/v1.0/gfs1/context/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+###
+# @name renderProxmoxNode
+GET {{baseUrl}}/api/v1.0/gfs1/render/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+###
+# @name deleteProxmoxNode
+DELETE {{baseUrl}}/api/v1.0/gfs1/vertex/{{GFSID}} HTTP/1.1
+Content-Type: application/json
+
+    
