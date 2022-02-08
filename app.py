@@ -1,459 +1,209 @@
-import os
-import requests
-import json
-import time
-from gfsgql import GFSGQL
+import asyncio, os
 
-# ignore InsecureRequestWarning: Unverified HTTPS request is being made to host ...
-requests.packages.urllib3.disable_warnings() 
+from threading import Lock
 
-PROXMOX_API_HOST = os.getenv('PROXMOX_API_HOST', '10.88.88.45')
-PROXMOX_API_PORT = os.getenv('PROXMOX_API_PORT', '8006')
-PROXMOX_API_TOKEN_ID = os.getenv('PROXMOX_API_TOKEN_ID', 'root@pam!integtesting')
-PROXMOX_API_TOKEN_SECRET = os.getenv('PROXMOX_API_TOKEN_SECRET', 'ad58e8e6-f1de-4d69-85c6-33bb1a635e12')
-PROXMOX_POOL=os.getenv('PROXMOX_POOL')
-PROXMOX_TARGET_HOST=os.getenv('PROXMOX_TARGET_HOST')
-PROXMOX_API = "https://" + PROXMOX_API_HOST + ":" + PROXMOX_API_PORT
+from flask import Flask
+from flask import render_template
+from flask import request
+from flask import Response
 
-GFSAPI_HOST = os.getenv('GFSAPI_HOST', 'gfsapi')
-GFSAPI_PORT = os.getenv('GFSAPI_PORT', '5000')
+from flask_socketio import SocketIO
+from flask_socketio import emit
+from flask_socketio import disconnect
 
-GFSWS_HOST = os.getenv('GFSWS_HOST', 'gfsapi')
-GFSWS_PORT = os.getenv('GFSWS_PORT', '5002')
+from python_graphql_client import GraphqlClient
 
-STATUS_FAILING = "FAILING"
-STATUS_UP_SYNCRONIZED = "UP"
-STATUS_PENDING_UPDATE = "PENDING"
-STATUS_LAGGING_UPDATE = "LAGGING"
+# from proxmoxer import ProxmoxAPI
+# from implementation import create_handler
+# from implementation import update_handler
+# from implementation import delete_handler
+# from implementation import link_handler
 
-AGENT_ID="NODE_AGENT"
-PROXMOX_NODE_TYPE="ProxmoxNode"
+# Set this variable to "threading", "eventlet" or "gevent" to test the
+# different async modes, or leave it set to None for the application to choose
+# the best option based on installed packages.
+async_mode = None
 
-PROXMOX_NODE_STATUS_ENDPOINT = PROXMOX_API + "/api2/extjs/nodes/{proxmox_node}/status"
-PROXMOX_QEMU_ENDPOINT = PROXMOX_API + "/api2/extjs/nodes/{proxmox_node}/qemu"
-PROXMOX_QEMU_CONFIG_ENDPOINT = PROXMOX_API + "/api2/extjs/nodes/{proxmox_node}/qemu/{vmid}/config"
+app = Flask(__name__)
+# app.config['SECRET_KEY'] = 'secret!'
+socketio = SocketIO(app, async_mode=async_mode)
 
-## pve VM on macbook air - JMK
-# headers = {
-#     'user-agent': "botcanics-restclient",
-#     'content-type': "application/json",
-#     'authorization': "PVEAPIToken=root@pam!rootadmin=02a34aa5-44cb-4e74-9c0e-6a630cc5f5b2"
-# }
+websocket_thread = None
+websocket_thread_lock = Lock()
 
-headers = {
-    'user-agent': "botcanics-restclient",
-    'content-type': "application/json",
-    'authorization': "PVEAPIToken=" + PROXMOX_API_TOKEN_ID + "=" + PROXMOX_API_TOKEN_SECRET
+# GFSAPI_HOST = "192.168.86.59" # "192.168.0.160"
+# GFSHOST = "localhost" # "192.168.0.160"
+# GFSAPI_PORT = 5000
+TYPE = "ProxmoxNode"
+
+GFSAPI_HOST = os.getenv('GFSAPI_HOST')
+GFSAPI_PORT = os.getenv('GFSAPI_PORT')
+
+LISTENERADDR = os.getenv('PROXMOX_NODE_LISTENER_LISTENERADDR')
+LISTENERPORT = os.getenv('PROXMOX_NODE_LISTENER_LISTENERPORT')
+
+state = {
+    "GFSHOST": GFSAPI_HOST, 
+    "GFSPORT": GFSAPI_PORT, 
+    "endpoint": "ws://" + GFSAPI_HOST + ":" + str(GFSAPI_PORT) + "/gfs1/graphql/subscriptions", 
+    "active": False, 
+    "type": TYPE, 
+    "query": """subscription """ + TYPE + """Subscriber {
+  """ + TYPE + """ {
+    event, 
+    id, 
+    label, 
+    sourceid, 
+    sourcelabel, 
+    targetid, 
+    targetlabel, 
+    chain, 
+    node {
+       id,
+       name
+    }
+  }
+}
+""", 
+    "models": []
 }
 
-gfs_gqlclient = GFSGQL (
-    gfs_host = GFSAPI_HOST, # gfs_host,
-    gfs_port = GFSAPI_PORT, # gfs_port,
-    gfs_username = None, # gfs_username,
-    gfs_password = None, # gfs_password,
+client = GraphqlClient(
+    endpoint=state.get("endpoint")
 )
 
-def current_sec_time():
-    return round(time.time())
+def callback(data = {}):
 
-#########################################################
-# 🔆 🔆 🔆 🔆    Impls     🔆 🔆 🔆 🔆
-#########################################################
+    typedata = data.get("data", {}).get(TYPE, {})
+    typenode = typedata.get("node", {})
 
-def get_proxmox_request(proxmox_url):
-    # print ("requesting: " + proxmox_url)
-    response = requests.get(
-        url=proxmox_url, 
-        headers=headers,
-        verify=False)
-    retval_obj = dict(json.loads(response.text))
-    # print (retval_obj)
+    # print(" ")
+    # print(" New " + TYPE + " event: ")
+    # print(" Event: " + str( typedata.get("event", "")) )
+    # print(" Id: " + str( typedata.get("id", "")) )
+    # print(" Label: " + str( typedata.get("label", "")) )
+    # print(" SourceId: " + str( typedata.get("sourceid", "")) )
+    # print(" SourceLabel: " + str( typedata.get("sourceid", "")) )
+    # print(" TargetId: " + str( typedata.get("targetid", "")) )
+    # print(" TargetLabel: " + str( typedata.get("targetlabel", "")) )
+    # print(" Chain: " + str( typedata.get("chain", "")) )
+    # print(" ")
 
-    retval = retval_obj['data']
-    # print ('---------')
-    # print (retval)
-    return (response.status_code, retval) 
+    event = typedata.get("event", None)
+    id = typedata.get("id", None)
+    label = typedata.get("label", None)
+    sourceid = typedata.get("sourceid", None)
+    sourcelabel = typedata.get("sourcelabel", None)
+    targetid = typedata.get("targetid", None)
+    targetlabel = typedata.get("targetlabel", None)
+    chain = ", ".join(typedata.get("chain", []))
 
-# This is to handle adding a proxmox server to the graph
-def sync_new_VMs(statedata):
-    vms = get_proxmox_request(PROXMOX_QEMU_ENDPOINT.format(
-        proxmox_node = statedata['data']['name'])
+    typenodeid = typenode.get("id")
+    typenodedesc = TYPE + "(" + typenodeid + ")"
+    for key in typenode:
+        typenodedesc += ", " + key + ": " + typenode.get(key, "[NONE]")
+
+    statedata = {
+        "event": event,
+        "id": id,
+        "label": label,
+        "sourceid": sourceid,
+        "sourcelabel": sourcelabel,
+        "targetid": targetid,
+        "targetlabel": targetlabel,
+        "chain": chain,
+        "data": typenode,
+        "description": typenodedesc
+    }
+
+    socketio.emit(
+        'update', statedata
     )
-    for vm in vms[1]:
-        vm_id = vm['vmid']
-        vm_name = vm['name']
-        vmname_composite = vm_id + " (" + vm_name + ")"
-        proxmox_id = statedata['id']
-        proxmox_node = statedata['data']['name']
 
-        vm_config = dict(get_proxmox_request(PROXMOX_QEMU_CONFIG_ENDPOINT.format(
-            proxmox_node = proxmox_node, 
-            vmid = vm_id))[1]
+    if event == "create_node":
+        create_handler(statedata)
+    elif event == "update_node":
+        update_handler(statedata)
+    elif event == "delete_node":
+        delete_handler(statedata)
+    elif event == "create_link":
+        link_handler(statedata)
+
+def websocket_background_thread():
+    state["active"] = True
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    loop.run_until_complete(
+        client.subscribe(
+            query=state.get("query"), 
+            handle=callback
         )
-        resources = "ProxmoxVMTemplates" if 'template' in vm_config else 'ProxmoxVMs'
-        resource = "ProxmoxVMTemplate" if 'template' in vm_config else 'ProxmoxVM'
-
-        # print (resource)
-        print ('')
-        print ("  🖥️  " + (str(vm['vmid'])) + " (" + str(vm_config.get('name', {})) + ")")
-        # print ("     " + str(vm_config))
- 
-        vm_gfs = gfs_gqlclient.gqlexec("""
-            query getVM($vmId:String!, $proxmoxNode:String!) {
-            """ + resources + """ (
-                vmId : $vmId,
-                HostedOn: {
-                    name: $proxmoxNode
-                }
-            ) {
-                id,
-                name,
-                HostedOn {
-                id,
-                name
-                }
-            }
-            }
-            """,
-            {
-                "vmId": vm_id,
-                "proxmoxNode": proxmox_node
-            }
-        )['data'][resources]
-        # print ("VM query result: " + str(vm_gfs) + " len(vm_gfs): " + str(len(vm_gfs)))
-        # print ("vmId: " + vm_id + "   proxmoxNode: " + proxmox_node)
-        # return
-
-        # create the VM if it wasn't found. 
-        ##  @TODO - createOrUpdate behavior
-        if (len(vm_gfs) == 0):
-            print ("     Didn't find VM [ " +  vm_id + "] in GFS on " + proxmox_node + ", creating minimal " + resource)
-            print 
-            if ('template' in vm_config):
-                createVM = gfs_gqlclient.gqlexec("""
-                    mutation createProxmoxVMTemplate($vmID:String!, $name:String!, $vmName: String!, $hostedOn:String, $template:String!, $status:String) {
-                        create""" + resource + """ (
-                            vmId: $vmID,
-                            name: $name,
-                            vmName: $vmName,
-                            setHostedOn: {
-                                id: $hostedOn
-                            },
-                            template: $template,
-                            discovered: \"yes\",
-                            status: $status,
-                            statusTimeoutSecs: 30
-                        ) {
-                            ok,
-                            error,
-                            instance {
-                                id,
-                                HostedOn {
-                                    id
-                                }
-                            }
-                        }
-                    }
-                """,
-                    {
-                        "vmID": vm_id,
-                        "name": vmname_composite,
-                        "vmName": vm_name,
-                        "hostedOn": proxmox_id,
-                        "template": "1",
-                        "status": STATUS_PENDING_UPDATE
-                    }
-                )
-            else:
-                createVM = gfs_gqlclient.gqlexec("""
-                    mutation createProxmoxVM($vmID:String!, $name:String!, $vmName: String!, $hostedOn:String, $status:String) {
-                        create""" + resource + """ (
-                            vmId: $vmID,
-                            name: $name,
-                            vmName: $vmName,
-                            setHostedOn: {
-                                id: $hostedOn
-                            },
-                            discovered: \"yes\",
-                            status: $status,
-                            statusTimeoutSecs: 30
-                        ) {
-                            ok,
-                            error,
-                            instance {
-                                id,
-                                HostedOn {
-                                    id
-                                }
-                            }
-                        }
-                    }
-                """,
-                    {
-                        "vmID": vm_id,
-                        "name": vmname_composite,
-                        "vmName": vm_name,                        
-                        "hostedOn": proxmox_id,
-                        "status": STATUS_PENDING_UPDATE
-                    }
-                )
-            print ('     Created ' + vm_id + ' [ ' + resource + '] in GFS on [ ' + proxmox_node + " ]")
-            # print ('          ' + str(createVM))
-        else: 
-            print ('     Skipping creation of ' +   vm_id + ' [ ' + resource + '] - Found in GFS HostedOn [ ' + proxmox_node + ' ] . ')
-    return
-
-def sync_proxmox_node(statedata):
-    # print (statedata)
-
-    # @TODO - fix the platform so update loops don't happen, only pulse-like
-    #   scenarios happen. 
-    id = statedata['id']
-    proxmox_node = statedata['data']['name']
-    label = statedata['label']
-
-    if (label != PROXMOX_NODE_TYPE):
-        print ('Not handling event for label: ' + label + '  [ id: ' + id + ' ]')
-        return False
-
-    print ('Event: 🟠  ' + proxmox_node + ' [' + PROXMOX_NODE_TYPE + ']')
-
-    gfs_node = gfs_gqlclient.gqlget(
-        resource=PROXMOX_NODE_TYPE,
-        arguments={
-            "id": "String!",
-        },
-        variables={
-            "id": id,
-        },
-        fields=[
-            'id',
-            'name',
-            'status',
-            'lastStatusModifiedTime',
-            'lastAgentUpdateID'
-        ]
     )
-    # print (gfs_node)
-    if (gfs_node['lastAgentUpdateID'] == AGENT_ID):
-        print ('found lastAgentUpdateID as this agent, returning from event: ' + str(statedata['description']))
-        return False
+    state["active"] = False
 
-    node = get_proxmox_request(PROXMOX_NODE_STATUS_ENDPOINT.format(
-            proxmox_node = proxmox_node
-        ))
-    if (node[0] != 200):
-        print ("node doesn't exist in proxmox via " + PROXMOX_NODE_STATUS_ENDPOINT.format(proxmox_node = statedata['data']['name']) + " - @TODO - set the node to MODEL_ERROR (or something).")
-    # print ("node: " + str(node[1]))
+def launch_websocket_background_thread():
+    global websocket_thread
+    with websocket_thread_lock:
+        if websocket_thread is None:
+            websocket_thread = socketio.start_background_task(websocket_background_thread)
 
-    gfs_node = gfs_gqlclient.gqlupdate(
-        resource=PROXMOX_NODE_TYPE,
-        arguments={
-            "id": "String!",
-            "cpuinfo": "String",
-            "cpu" : "String",
-            "memory" : "String",
-            "swap" : "String",
-            "uptime" : "String",
-            "loadavg" : "String",
-            "idle" : "String",
-            "wait" : "String",
-            "ksm" : "String",
-            "rootfs" : "String",
-            "kversion" : "String",
-            "pveversion" : "String",
-            "status" : "String",
-            "lastStatusModifiedTime" : "Int",
-            "lastAgentUpdateID" : "String",
-        },
-        variables={
-            "id": statedata['id'],
-            "cpuinfo": str(node[1]['cpuinfo']),
-            "cpu": str(node[1]['swap']),
-            "memory": str(node[1]['memory']),
-            "swap": str(node[1]['swap']),
-            "uptime": str(node[1]['uptime']),
-            "loadavg": str(node[1]['loadavg']),
-            "idle": str(node[1]['idle']),
-            "wait": str(node[1]['wait']),
-            "ksm": str(node[1]['ksm']),
-            "rootfs": str(node[1]['rootfs']),
-            "kversion": str(node[1]['kversion']),
-            "pveversion": str(node[1]['pveversion']),
-            "status": STATUS_UP_SYNCRONIZED,
-            "lastStatusModifiedTime": current_sec_time(),
-            "lastAgentUpdateID": AGENT_ID
-        },
-        fields=[
-            'name',
-            'status',
-            'lastStatusModifiedTime'
-        ]
+launch_websocket_background_thread()
+
+@app.route('/')
+def index():
+    status = "danger"
+    if state.get("active", False):
+        status = "success"
+    return render_template(
+        'index.html', 
+        # state = state, 
+        GFSHOST = state.get("GFSHOST"),
+        GFSPORT = state.get("GFSPORT"),
+        type = state.get("type", TYPE),
+        active = state.get("active", False),
+        status = status,
+        models = state.get("models", []),
+        async_mode = socketio.async_mode
     )
-    return True
 
-#########################################################
-# 🔆 🔆 🔆 🔆    Handlers     🔆 🔆 🔆 🔆
-#########################################################
+@socketio.event
+def fromclient(message):
+    emit('response', {
+        'data': 'Received from client: ' + message['data']
+    }
+)
 
-def create_handler(statedata):
-    print ("")
-    print ("---------Create Handler----------------")
-    sync_proxmox_node(statedata)
-    sync_new_VMs(statedata)
+@socketio.event
+def disconnect_request():
 
-def update_handler(statedata):
-    print ("")
-    print ("---------Update Handler----------------")
-    if (sync_proxmox_node(statedata)):
-        sync_new_VMs(statedata)
+    def can_disconnect():
+        disconnect()
 
-def delete_handler(statedata):
-    print ("---------Delete Handler----------------")
-    print ("Machine Name: " + statedata["data"]["name"])
-
-def link_handler(statedata):
-    print ("---------Link Handler----------------")
-    print (statedata)
-
-### Saved Stuff for Reference
-    # response = requests.get (
-    #     PROXMOX_API_STATUS_ENDPOINT, 
-    #     headers=headers,
-    #     verify=False)
-    # print (response.text)
-
-def main():
-    # print ("running query:")
-    # print (gfs_gqlclient.create(
-    #     resource = "ProxmoxMachine", 
-    #     arguments = {
-    #         "name": "String!",
-    #         "memory": "String",
-    #         "sockets": "String",
-    #         "smbios1": "String",
-    #         "ostype": "String",
-    #         "scsihw": "String",
-    #         "bootdisk": "String",
-    #         "net0": "String",
-    #         "ide2": "String",
-    #         "digest": "String",
-    #         "machine": "String",
-    #         "vmgenid": "String",
-    #         "scsi0": "String",
-    #         "cores": "String",
-    #         "numa": "String",
-    #     }, 
-    #     variables = {
-    #         "name": "test-vm",
-    #         "memory": "2048",
-    #         "sockets": "1",
-    #         "smbios1": "uuid=54a1e0ba-b062-4460-b659-f6681f2d1d35",
-    #         "ostype": "l26",
-    #         "scsihw": "pvscsi",
-    #         "bootdisk": "scsi0",
-    #         "net0": "virtio=B2:E7:CC:29:4C:7D,bridge=vmbr0,firewall=1",
-    #         "ide2": "none,media=cdrom",
-    #         "digest": "31e7b600d2fecc8f4953ef3cf8e72accafc40465",
-    #         "machine": "q35",
-    #         "vmgenid": "3c2289f7-e6d3-452c-874f-03e40825b7d8",
-    #         "scsi0": "local-lvm-1TB:vm-102-disk-0,size=50G",
-    #         "cores": "4",
-    #         "numa": "0",
-    #     }, 
-    #     fields = [
-    #         "id"
-    #     ]
-    # ))
-
-    # print (
-    #     gfs_gqlclient.gqlget(
-    #         resource="ProxmoxMachine",
-    #         arguments={
-    #             "id": "String!"
-    #         },
-    #         variables={
-    #             "id": "64"
-    #         },
-    #         fields=["name"]
-    #     )
-    # )
-
-    # response = requests.get(
-    #     PROXMOX_API_NEXTID_ENDPOINT,
-    #     headers = headers,
-    #     verify = False,
-    # )
-    # print(response.text)
-    # next_id = dict(json.loads(response.text))['data']
-    # print (next_id)
-    # endpoint = PROXMOX_QEMU_ENDPOINT.format (
-    #     proxmox_node = PROXMOX_NODE
-    # )
-    # print (endpoint)
-    # response = requests.get(
-    #     endpoint,
-    #     headers = headers,
-    #     verify = False,
-    # )
-    # print(response.text)
-    # next_id = dict(json.loads(response.text))['data']
-    # print (next_id)
-
-    status_fields = [
-            'id',
-            'name',
-            'status',
-            'statusTimeoutSecs',
-            'lastPulseModifiedTime',
-            'lastStatusModifiedTime',
-            'vmid'
-    ]
-#     vmid = '100'
-#     print (vmid)
-#  #   resource = "ProxmoxVMTemplates" if 'template' in vm_config else 'ProxmoxVMs'
-#     resource = 'ProxmoxVMTemplates'
-#     # print (resource)
-#     node_gfs = gfs_gqlclient.gqlget(
-#         resource=resource,
-#         arguments={
-#             "vmid": "String"
-#         },
-#         variables={
-#             "vmid": vmid
-#         },
-#         fields=status_fields
-#     )
-
-#     print (node_gfs)
-
-    status_fields = [
-            'id',
-            'name',
-            'status',
-            'statusTimeoutSecs',
-            'lastPulseModifiedTime',
-            'lastStatusModifiedTime',
-    ]
-    gfs_node = gfs_gqlclient.gqlupdate(
-        resource="ProxmoxNode",
-        arguments={
-            "id": "String!",
-            'status': "String",
+    # for this emit we use a callback function
+    # when the callback function is invoked we know that the message has been
+    # received and it is safe to disconnect
+    emit(
+        'response', {
+            'data': 'Disconnect!'
         },
-        variables={
-            "id": '218',
-            'status': 'testing',
-        },
-        fields=status_fields
+        callback=can_disconnect
     )
-    print (gfs_node)
 
+@socketio.event
+def connect():
+    # 
+    emit(
+        'response', {
+            'data': 'Connect'
+        }
+    )
 
-if __name__ == "__main__":
-    main()
+@socketio.on('disconnect')
+def test_disconnect():
+    print('Client disconnected')
 
-
-
-
-
+if __name__ == '__main__':
+    client = GraphqlClient(
+        endpoint=state.get("endpoint")
+    )
+    socketio.run(app, host=LISTENERADDR, port=LISTENERPORT)
