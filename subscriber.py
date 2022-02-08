@@ -114,6 +114,41 @@ def pathtostring(path):
 def current_sec_time():
     return round(time.time())
 
+def load_pulsable(id, label):
+
+    try:
+        gfs_node = gfs_gqlclient.gqlget(
+            resource=label, # PROXMOX_NODE_TYPE,
+            arguments={
+                "id": "String!",
+            },
+            variables={
+                "id": id,
+            },
+            # fields=[
+            #     'id',
+            #     'name',
+            #     'status',
+            #     'lastStatusModifiedTime',
+            #     'lastAgentUpdateID'
+            # ],
+            fields = [
+                "id", 
+                "name", 
+                "label", 
+                "status", 
+                "lastStatusModifiedTime", 
+                "statusTimeoutSecs", 
+                "lastPulseModifiedTime", 
+                "step", 
+                "lastAgentUpdateID"
+            ]
+        )
+        return gfs_node
+
+    except Exception as e:
+        return None
+
 #########################################################
 # 🔆 🔆 🔆 🔆    Impls     🔆 🔆 🔆 🔆
 #########################################################
@@ -267,34 +302,19 @@ def sync_proxmox_node(data):
     # @TODO - fix the platform so update loops don't happen, only pulse-like
     #   scenarios happen. 
     id = data['id']
-    # proxmox_node = data['data']['name']
+    proxmox_node = data['name']
     label = data['label']
 
     if (label != PROXMOX_NODE_TYPE):
         print ('Not handling event for label: ' + label + '  [ id: ' + id + ' ]')
         return False
 
-    print ('Event: 🟠  ' + id + ' [' + PROXMOX_NODE_TYPE + ']')
+    print ('Event: 🟠  ' + proxmox_node + ' [' + PROXMOX_NODE_TYPE + ']')
 
-    gfs_node = gfs_gqlclient.gqlget(
-        resource=PROXMOX_NODE_TYPE,
-        arguments={
-            "id": "String!",
-        },
-        variables={
-            "id": id,
-        },
-        fields=[
-            'id',
-            'name',
-            'status',
-            'lastStatusModifiedTime',
-            'lastAgentUpdateID'
-        ]
-    )
+    # gfs_node = data
     # print (gfs_node)
     proxmox_node = "lab1" # gfs_node.get("name") # data['data']['name']
-    if (gfs_node['lastAgentUpdateID'] == AGENT_ID):
+    if (data['lastAgentUpdateID'] == AGENT_ID):
         print ('found lastAgentUpdateID as this agent, returning from event')
         return False
 
@@ -453,35 +473,35 @@ def callback(data = {}):
 
         if event == "save_instance":
             if nodelabel == "ProxmoxNode":
-                save_proxmox_node(node)
+                save_proxmox_node(load_pulsable(nodeid, nodelabel))
             elif nodelabel == "ProxmoxVM":
-                save_proxmox_vm(node)
+                save_proxmox_vm(load_pulsable(nodeid, nodelabel))
             elif nodelabel == "ProxmoxVMTemplate":
-                save_proxmox_vmtpl(node)
+                save_proxmox_vmtpl(load_pulsable(nodeid, nodelabel))
 
         elif event == "create_instance":
             if nodelabel == "ProxmoxNode":
-                create_proxmox_node(node)
+                create_proxmox_node(load_pulsable(nodeid, nodelabel))
             elif nodelabel == "ProxmoxVM":
-                create_proxmox_vm(node)
+                create_proxmox_vm(load_pulsable(nodeid, nodelabel))
             elif nodelabel == "ProxmoxVMTemplate":
-                create_proxmox_vmtpl(node)
+                create_proxmox_vmtpl(load_pulsable(nodeid, nodelabel))
 
         elif event == "update_instance":
             if nodelabel == "ProxmoxNode":
-                update_proxmox_node(node)
+                update_proxmox_node(load_pulsable(nodeid, nodelabel))
             elif nodelabel == "ProxmoxVM":
-                update_proxmox_vm(node)
+                update_proxmox_vm(load_pulsable(nodeid, nodelabel))
             elif nodelabel == "ProxmoxVMTemplate":
-                update_proxmox_vmtpl(node)
+                update_proxmox_vmtpl(load_pulsable(nodeid, nodelabel))
 
         elif event == "delete_instance":
             if nodelabel == "ProxmoxNode":
-                delete_proxmox_node(node)
+                delete_proxmox_node(load_pulsable(nodeid, nodelabel))
             elif nodelabel == "ProxmoxVM":
-                delete_proxmox_vm(node)
+                delete_proxmox_vm(load_pulsable(nodeid, nodelabel))
             elif nodelabel == "ProxmoxVMTemplate":
-                delete_proxmox_vmtpl(node)
+                delete_proxmox_vmtpl(load_pulsable(nodeid, nodelabel))
 
 # Asynchronous request
 loop = asyncio.get_event_loop()
