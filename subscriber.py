@@ -267,14 +267,14 @@ def sync_proxmox_node(data):
     # @TODO - fix the platform so update loops don't happen, only pulse-like
     #   scenarios happen. 
     id = data['id']
-    proxmox_node = id # data['data']['name']
+    # proxmox_node = data['data']['name']
     label = data['label']
 
     if (label != PROXMOX_NODE_TYPE):
         print ('Not handling event for label: ' + label + '  [ id: ' + id + ' ]')
         return False
 
-    print ('Event: 🟠  ' + proxmox_node + ' [' + PROXMOX_NODE_TYPE + ']')
+    print ('Event: 🟠  ' + id + ' [' + PROXMOX_NODE_TYPE + ']')
 
     gfs_node = gfs_gqlclient.gqlget(
         resource=PROXMOX_NODE_TYPE,
@@ -293,8 +293,9 @@ def sync_proxmox_node(data):
         ]
     )
     # print (gfs_node)
+    proxmox_node = "lab1" # gfs_node.get("name") # data['data']['name']
     if (gfs_node['lastAgentUpdateID'] == AGENT_ID):
-        print ('found lastAgentUpdateID as this agent, returning from event: ' + str(data['description']))
+        print ('found lastAgentUpdateID as this agent, returning from event')
         return False
 
     node = get_proxmox_request(PROXMOX_NODE_STATUS_ENDPOINT.format(
@@ -302,7 +303,7 @@ def sync_proxmox_node(data):
         ))
     if (node[0] != 200):
         print ("node doesn't exist in proxmox via " + PROXMOX_NODE_STATUS_ENDPOINT.format(proxmox_node = data['data']['name']) + " - @TODO - set the node to MODEL_ERROR (or something).")
-    # print ("node: " + str(node[1]))
+    print ("node: " + str(node[1]))
 
     gfs_node = gfs_gqlclient.gqlupdate(
         resource=PROXMOX_NODE_TYPE,
