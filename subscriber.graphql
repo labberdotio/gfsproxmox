@@ -1,0 +1,33 @@
+
+subscription nodeevent {
+    nodeEvent {
+        namespace,
+        event,
+        chain,
+        node {
+            namespace,
+            id,
+            label
+        },
+        origin {
+            namespace,
+            id,
+            label
+        },
+        path {
+            namespace,
+            id,
+            label,
+            source {
+                namespace,
+                id,
+                label
+            },
+            target {
+                namespace,
+                id,
+                label
+            }
+        },
+    }
+}
