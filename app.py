@@ -14,10 +14,10 @@ from flask_socketio import disconnect
 from python_graphql_client import GraphqlClient
 
 # from proxmoxer import ProxmoxAPI
-# from implementation import create_handler
-# from implementation import update_handler
-# from implementation import delete_handler
-# from implementation import link_handler
+from implementation import create_handler
+from implementation import update_handler
+from implementation import delete_handler
+from implementation import link_handler
 
 # Set this variable to "threading", "eventlet" or "gevent" to test the
 # different async modes, or leave it set to None for the application to choose
@@ -36,8 +36,11 @@ websocket_thread_lock = Lock()
 # GFSAPI_PORT = 5000
 TYPE = "ProxmoxNode"
 
-GFSAPI_HOST = os.getenv('GFSAPI_HOST')
-GFSAPI_PORT = os.getenv('GFSAPI_PORT')
+GFSAPI_HOST = os.getenv('GFSAPI_HOST', 'gfsapi')
+GFSAPI_PORT = os.getenv('GFSAPI_PORT', '5000')
+
+GFSWS_HOST = os.getenv('GFSWS_HOST', 'gfsapi')
+GFSWS_PORT = os.getenv('GFSWS_PORT', '5002')
 
 LISTENERADDR = os.getenv('PROXMOX_NODE_LISTENER_LISTENERADDR')
 LISTENERPORT = os.getenv('PROXMOX_NODE_LISTENER_LISTENERPORT')
@@ -45,25 +48,42 @@ LISTENERPORT = os.getenv('PROXMOX_NODE_LISTENER_LISTENERPORT')
 state = {
     "GFSHOST": GFSAPI_HOST, 
     "GFSPORT": GFSAPI_PORT, 
-    "endpoint": "ws://" + GFSAPI_HOST + ":" + str(GFSAPI_PORT) + "/gfs1/graphql/subscriptions", 
+    "endpoint": "ws://" + GFSWS_HOST + ":" + str(GFSWS_PORT) + "/gfs1/graphql/subscriptions", 
     "active": False, 
-    "type": TYPE, 
-    "query": """subscription """ + TYPE + """Subscriber {
-  """ + TYPE + """ {
-    event, 
-    id, 
-    label, 
-    sourceid, 
-    sourcelabel, 
-    targetid, 
-    targetlabel, 
-    chain, 
-    node {
-       id,
-       name
+    "type": TYPE,   
+    "query": """
+    subscription nodeevent {
+        nodeEvent {
+            namespace,
+            event,
+            chain,
+            node {
+                namespace,
+                id,
+                label
+            },
+            origin {
+                namespace,
+                id,
+                label
+            },
+            path {
+                namespace,
+                id,
+                label,
+                source {
+                    namespace,
+                    id,
+                    label
+                },
+                target {
+                    namespace,
+                    id,
+                    label
+                }
+            },
+        }
     }
-  }
-}
 """, 
     "models": []
 }
@@ -74,8 +94,10 @@ client = GraphqlClient(
 
 def callback(data = {}):
 
-    typedata = data.get("data", {}).get(TYPE, {})
-    typenode = typedata.get("node", {})
+    print(data)
+
+    # typedata = data.get("data", {}).get(TYPE, {})
+    # typenode = typedata.get("node", {})
 
     # print(" ")
     # print(" New " + TYPE + " event: ")
@@ -89,19 +111,33 @@ def callback(data = {}):
     # print(" Chain: " + str( typedata.get("chain", "")) )
     # print(" ")
 
-    event = typedata.get("event", None)
-    id = typedata.get("id", None)
-    label = typedata.get("label", None)
-    sourceid = typedata.get("sourceid", None)
-    sourcelabel = typedata.get("sourcelabel", None)
-    targetid = typedata.get("targetid", None)
-    targetlabel = typedata.get("targetlabel", None)
-    chain = ", ".join(typedata.get("chain", []))
+    # event = typedata.get("event", None)
+    # id = typedata.get("id", None)
+    # label = typedata.get("label", None)
+    # sourceid = typedata.get("sourceid", None)
+    # sourcelabel = typedata.get("sourcelabel", None)
+    # targetid = typedata.get("targetid", None)
+    # targetlabel = typedata.get("targetlabel", None)
+    # chain = ", ".join(typedata.get("chain", []))
 
-    typenodeid = typenode.get("id")
-    typenodedesc = TYPE + "(" + typenodeid + ")"
-    for key in typenode:
-        typenodedesc += ", " + key + ": " + typenode.get(key, "[NONE]")
+    event = ""
+    id = ""
+    label = ""
+    sourceid = ""
+    sourcelabel = ""
+    targetid = ""
+    targetlabel = ""
+    chain = ""
+
+    # typenodeid = typenode.get("id")
+    # typenodedesc = TYPE + "(" + typenodeid + ")"
+    # for key in typenode:
+    #     typenodedesc += ", " + key + ": " + typenode.get(key, "[NONE]")
+
+    typenodeid = ""
+    typenodedesc = ""
+    # for key in typenode:
+    #     typenodedesc += ", " + key + ": " + typenode.get(key, "[NONE]")
 
     statedata = {
         "event": event,
@@ -112,7 +148,7 @@ def callback(data = {}):
         "targetid": targetid,
         "targetlabel": targetlabel,
         "chain": chain,
-        "data": typenode,
+        "data": "", # typenode,
         "description": typenodedesc
     }
 
